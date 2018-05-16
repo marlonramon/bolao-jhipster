@@ -1,0 +1,44 @@
+
+<div *ngIf="partida">
+    <h2><span>Partida</span> {{partida.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span>Data Partida</span></dt>
+        <dd>
+            <span>{{partida.dataPartida | date:'medium'}}</span>
+        </dd>
+        <dt><span>Clube Mandante</span></dt>
+        <dd>
+            <div *ngIf="partida.clubeMandanteId">
+                <a [routerLink]="['/clube', partida.clubeMandanteId]">{{partida.clubeMandanteId}}</a>
+            </div>
+        </dd>
+        <dt><span>Clube Visitante</span></dt>
+        <dd>
+            <div *ngIf="partida.clubeVisitanteId">
+                <a [routerLink]="['/clube', partida.clubeVisitanteId]">{{partida.clubeVisitanteId}}</a>
+            </div>
+        </dd>
+        <dt><span>Rodada</span></dt>
+        <dd>
+            <div *ngIf="partida.rodadaId">
+                <a [routerLink]="['/rodada', partida.rodadaId]">{{partida.rodadaId}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'partida/'+ partida.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span> Edit</span>
+    </button>
+</div>

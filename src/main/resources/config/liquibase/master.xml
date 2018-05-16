@@ -5,6 +5,17 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
 
     <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180512191344_added_entity_Bolao.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180512191345_added_entity_Campeonato.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180512191346_added_entity_Rodada.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180512191347_added_entity_Partida.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180512191348_added_entity_Clube.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180512191349_added_entity_Aposta.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
+    <include file="config/liquibase/changelog/20180512191344_added_entity_constraints_Bolao.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180512191345_added_entity_constraints_Campeonato.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180512191346_added_entity_constraints_Rodada.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180512191347_added_entity_constraints_Partida.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180512191349_added_entity_constraints_Aposta.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>

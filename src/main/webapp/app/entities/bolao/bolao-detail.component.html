@@ -1,0 +1,44 @@
+
+<div *ngIf="bolao">
+    <h2><span>Bolao</span> {{bolao.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span>Descricao</span></dt>
+        <dd>
+            <span>{{bolao.descricao}}</span>
+        </dd>
+        <dt><span>Pontos Acerto Dois Placares</span></dt>
+        <dd>
+            <span>{{bolao.pontosAcertoDoisPlacares}}</span>
+        </dd>
+        <dt><span>Pontos Acerto Um Placar</span></dt>
+        <dd>
+            <span>{{bolao.pontosAcertoUmPlacar}}</span>
+        </dd>
+        <dt><span>Pontos Acerto Resultado</span></dt>
+        <dd>
+            <span>{{bolao.pontosAcertoResultado}}</span>
+        </dd>
+        <dt><span>Users Bolao</span></dt>
+        <dd>
+            <span *ngFor="let usersBolao of bolao.usersBolaos; let last = last">
+                {{usersBolao.id}}{{last ? '' : ', '}}
+            </span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'bolao/'+ bolao.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span> Edit</span>
+    </button>
+</div>

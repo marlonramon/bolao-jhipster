@@ -1,0 +1,59 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myClubeLabel">Create or edit a Clube</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!clube.id">
+            <label for="id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="clube.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_nome">Nome</label>
+            <input type="text" class="form-control" name="nome" id="field_nome"
+                [(ngModel)]="clube.nome" required/>
+            <div [hidden]="!(editForm.controls.nome?.dirty && editForm.controls.nome?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.nome?.errors?.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_bandeira">Bandeira</label>
+            <div>
+                <img [src]="'data:' + clube.bandeiraContentType + ';base64,' + clube.bandeira" style="max-height: 100px;" *ngIf="clube.bandeira" alt="clube image"/>
+                <div *ngIf="clube.bandeira" class="form-text text-danger clearfix">
+                    <span class="pull-left">{{clube.bandeiraContentType}}, {{byteSize(clube.bandeira)}}</span>
+                    <button type="button" (click)="clearInputImage('bandeira', 'bandeiraContentType', 'fileImage')" class="btn btn-secondary btn-xs pull-right">
+                        <span class="fa fa-times"></span>
+                    </button>
+                </div>
+                <input type="file" id="file_bandeira" (change)="setFileData($event, clube, 'bandeira', true)" accept="image/*"/>
+            </div>
+            <input type="hidden" class="form-control" name="bandeira" id="field_bandeira"
+                [(ngModel)]="clube.bandeira" required/>
+            <input type="hidden" class="form-control" name="bandeiraContentType" id="field_bandeiraContentType"
+                [(ngModel)]="clube.bandeiraContentType" />
+            <div [hidden]="!(editForm.controls.bandeira?.dirty && editForm.controls.bandeira?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.bandeira?.errors?.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span>Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span>Save</span>
+        </button>
+    </div>
+</form>

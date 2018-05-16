@@ -1,0 +1,64 @@
+<div>
+    <h2>
+        <span>Campeonatoes</span>
+        <button class="btn btn-primary float-right jh-create-entity create-campeonato" [routerLink]="['/', { outlets: { popup: ['campeonato-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span >
+            Create new Campeonato
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="campeonatoes">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
+            <th jhiSortBy="id"><span>ID</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="descricao"><span>Descricao</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="campeonatoId"><span>Campeonato</span> <span class="fa fa-sort"></span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+            <tr *ngFor="let campeonato of campeonatoes ;trackBy: trackId">
+                <td><a [routerLink]="['../campeonato', campeonato.id ]">{{campeonato.id}}</a></td>
+                <td>{{campeonato.descricao}}</td>
+                <td>
+                    <div *ngIf="campeonato.campeonatoId">
+                        <a [routerLink]="['../bolao', campeonato.campeonatoId  ]" >{{campeonato.campeonatoId}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../campeonato', campeonato.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'campeonato/'+ campeonato.id + '/edit'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'campeonato/'+ campeonato.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

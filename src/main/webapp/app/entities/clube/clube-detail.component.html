@@ -1,0 +1,35 @@
+
+<div *ngIf="clube">
+    <h2><span>Clube</span> {{clube.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span>Nome</span></dt>
+        <dd>
+            <span>{{clube.nome}}</span>
+        </dd>
+        <dt><span>Bandeira</span></dt>
+        <dd>
+            <div *ngIf="clube.bandeira">
+                <a (click)="openFile(clube.bandeiraContentType, clube.bandeira)">
+                    <img [src]="'data:' + clube.bandeiraContentType + ';base64,' + clube.bandeira" style="max-width: 100%;" alt="clube image"/>
+                </a>
+                {{clube.bandeiraContentType}}, {{byteSize(clube.bandeira)}}
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'clube/'+ clube.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span> Edit</span>
+    </button>
+</div>

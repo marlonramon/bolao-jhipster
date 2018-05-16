@@ -41,6 +41,13 @@ public class CacheConfiguration {
             cm.createCache(br.com.bolao.domain.User.class.getName(), jcacheConfiguration);
             cm.createCache(br.com.bolao.domain.Authority.class.getName(), jcacheConfiguration);
             cm.createCache(br.com.bolao.domain.User.class.getName() + ".authorities", jcacheConfiguration);
+            cm.createCache(br.com.bolao.domain.Bolao.class.getName(), jcacheConfiguration);
+            cm.createCache(br.com.bolao.domain.Bolao.class.getName() + ".usersBolaos", jcacheConfiguration);
+            cm.createCache(br.com.bolao.domain.Campeonato.class.getName(), jcacheConfiguration);
+            cm.createCache(br.com.bolao.domain.Rodada.class.getName(), jcacheConfiguration);
+            cm.createCache(br.com.bolao.domain.Partida.class.getName(), jcacheConfiguration);
+            cm.createCache(br.com.bolao.domain.Clube.class.getName(), jcacheConfiguration);
+            cm.createCache(br.com.bolao.domain.Aposta.class.getName(), jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }

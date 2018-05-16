@@ -1,0 +1,23 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "partida",
+            "otherEntityName": "partida",
+            "otherEntityField": "id"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "dataAposta",
+            "fieldType": "ZonedDateTime"
+        }
+    ],
+    "changelogDate": "20180512191349",
+    "entityTableName": "aposta",
+    "dto": "mapstruct",
+    "pagination": "infinite-scroll",
+    "service": "no",
+    "jpaMetamodelFiltering": false
+}

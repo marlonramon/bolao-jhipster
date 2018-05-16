@@ -1,0 +1,76 @@
+<div>
+    <h2>
+        <span>Partidas</span>
+        <button class="btn btn-primary float-right jh-create-entity create-partida" [routerLink]="['/', { outlets: { popup: ['partida-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span >
+            Create new Partida
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="partidas">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
+            <th jhiSortBy="id"><span>ID</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="dataPartida"><span>Data Partida</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="clubeMandanteId"><span>Clube Mandante</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="clubeVisitanteId"><span>Clube Visitante</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="rodadaId"><span>Rodada</span> <span class="fa fa-sort"></span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+            <tr *ngFor="let partida of partidas ;trackBy: trackId">
+                <td><a [routerLink]="['../partida', partida.id ]">{{partida.id}}</a></td>
+                <td>{{partida.dataPartida | date:'medium'}}</td>
+                <td>
+                    <div *ngIf="partida.clubeMandanteId">
+                        <a [routerLink]="['../clube', partida.clubeMandanteId  ]" >{{partida.clubeMandanteId}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="partida.clubeVisitanteId">
+                        <a [routerLink]="['../clube', partida.clubeVisitanteId  ]" >{{partida.clubeVisitanteId}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="partida.rodadaId">
+                        <a [routerLink]="['../rodada', partida.rodadaId  ]" >{{partida.rodadaId}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../partida', partida.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'partida/'+ partida.id + '/edit'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'partida/'+ partida.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

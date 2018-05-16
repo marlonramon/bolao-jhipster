@@ -1,0 +1,87 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myBolaoLabel">Create or edit a Bolao</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!bolao.id">
+            <label for="id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="bolao.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_descricao">Descricao</label>
+            <input type="text" class="form-control" name="descricao" id="field_descricao"
+                [(ngModel)]="bolao.descricao" required/>
+            <div [hidden]="!(editForm.controls.descricao?.dirty && editForm.controls.descricao?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.descricao?.errors?.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_pontosAcertoDoisPlacares">Pontos Acerto Dois Placares</label>
+            <input type="number" class="form-control" name="pontosAcertoDoisPlacares" id="field_pontosAcertoDoisPlacares"
+                [(ngModel)]="bolao.pontosAcertoDoisPlacares" required/>
+            <div [hidden]="!(editForm.controls.pontosAcertoDoisPlacares?.dirty && editForm.controls.pontosAcertoDoisPlacares?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.pontosAcertoDoisPlacares?.errors?.required">
+                   This field is required.
+                </small>
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.pontosAcertoDoisPlacares?.errors?.number">
+                    This field should be a number.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_pontosAcertoUmPlacar">Pontos Acerto Um Placar</label>
+            <input type="number" class="form-control" name="pontosAcertoUmPlacar" id="field_pontosAcertoUmPlacar"
+                [(ngModel)]="bolao.pontosAcertoUmPlacar" required/>
+            <div [hidden]="!(editForm.controls.pontosAcertoUmPlacar?.dirty && editForm.controls.pontosAcertoUmPlacar?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.pontosAcertoUmPlacar?.errors?.required">
+                   This field is required.
+                </small>
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.pontosAcertoUmPlacar?.errors?.number">
+                    This field should be a number.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_pontosAcertoResultado">Pontos Acerto Resultado</label>
+            <input type="number" class="form-control" name="pontosAcertoResultado" id="field_pontosAcertoResultado"
+                [(ngModel)]="bolao.pontosAcertoResultado" required/>
+            <div [hidden]="!(editForm.controls.pontosAcertoResultado?.dirty && editForm.controls.pontosAcertoResultado?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.pontosAcertoResultado?.errors?.required">
+                   This field is required.
+                </small>
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.pontosAcertoResultado?.errors?.number">
+                    This field should be a number.
+                </small>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="field_usersBolao">Users Bolao</label>
+            <select class="form-control" id="field_usersBolao" multiple name="usersBolao" [(ngModel)]="bolao.usersBolaos">
+                <option [ngValue]="getSelected(bolao.usersBolaos, userOption)" *ngFor="let userOption of users; trackBy: trackUserById">{{userOption.id}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span>Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span>Save</span>
+        </button>
+    </div>
+</form>

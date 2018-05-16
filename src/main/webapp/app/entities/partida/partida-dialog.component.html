@@ -1,0 +1,63 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myPartidaLabel">Create or edit a Partida</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!partida.id">
+            <label for="id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="partida.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_dataPartida">Data Partida</label>
+            <div class="d-flex">
+                <input id="field_dataPartida" type="datetime-local" class="form-control" name="dataPartida" [(ngModel)]="partida.dataPartida"
+                required/>
+            </div>
+            <div [hidden]="!(editForm.controls.dataPartida?.dirty && editForm.controls.dataPartida?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.dataPartida?.errors?.required">
+                   This field is required.
+                </small>
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.dataPartida?.errors?.ZonedDateTimelocal">
+                    This field should be a date and time.
+                </small>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-control-label" for="field_clubeMandante">Clube Mandante</label>
+            <select class="form-control" id="field_clubeMandante" name="clubeMandante" [(ngModel)]="partida.clubeMandanteId" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="clubeOption.id" *ngFor="let clubeOption of clubes; trackBy: trackClubeById">{{clubeOption.id}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_clubeVisitante">Clube Visitante</label>
+            <select class="form-control" id="field_clubeVisitante" name="clubeVisitante" [(ngModel)]="partida.clubeVisitanteId" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="clubeOption.id" *ngFor="let clubeOption of clubes; trackBy: trackClubeById">{{clubeOption.id}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_rodada">Rodada</label>
+            <select class="form-control" id="field_rodada" name="rodada" [(ngModel)]="partida.rodadaId" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="rodadaOption.id" *ngFor="let rodadaOption of rodadas; trackBy: trackRodadaById">{{rodadaOption.id}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span>Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span>Save</span>
+        </button>
+    </div>
+</form>

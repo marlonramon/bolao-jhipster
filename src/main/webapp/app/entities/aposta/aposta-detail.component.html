@@ -1,0 +1,32 @@
+
+<div *ngIf="aposta">
+    <h2><span>Aposta</span> {{aposta.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span>Data Aposta</span></dt>
+        <dd>
+            <span>{{aposta.dataAposta | date:'medium'}}</span>
+        </dd>
+        <dt><span>Partida</span></dt>
+        <dd>
+            <div *ngIf="aposta.partidaId">
+                <a [routerLink]="['/partida', aposta.partidaId]">{{aposta.partidaId}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'aposta/'+ aposta.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span> Edit</span>
+    </button>
+</div>

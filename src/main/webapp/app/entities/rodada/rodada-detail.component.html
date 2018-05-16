@@ -1,0 +1,36 @@
+
+<div *ngIf="rodada">
+    <h2><span>Rodada</span> {{rodada.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span>Numero</span></dt>
+        <dd>
+            <span>{{rodada.numero}}</span>
+        </dd>
+        <dt><span>Inicio Rodada</span></dt>
+        <dd>
+            <span>{{rodada.inicioRodada | date:'medium'}}</span>
+        </dd>
+        <dt><span>Campeonato</span></dt>
+        <dd>
+            <div *ngIf="rodada.campeonatoId">
+                <a [routerLink]="['/campeonato', rodada.campeonatoId]">{{rodada.campeonatoId}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'rodada/'+ rodada.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span> Edit</span>
+    </button>
+</div>
