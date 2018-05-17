@@ -4,6 +4,7 @@ import com.codahale.metrics.annotation.Timed;
 import br.com.bolao.domain.Rodada;
 
 import br.com.bolao.repository.RodadaRepository;
+import br.com.bolao.security.AuthoritiesConstants;
 import br.com.bolao.web.rest.errors.BadRequestAlertException;
 import br.com.bolao.web.rest.util.HeaderUtil;
 import br.com.bolao.web.rest.util.PaginationUtil;
@@ -17,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -26,9 +28,6 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * REST controller for managing Rodada.
- */
 @RestController
 @RequestMapping("/api")
 public class RodadaResource {
@@ -46,15 +45,9 @@ public class RodadaResource {
         this.rodadaMapper = rodadaMapper;
     }
 
-    /**
-     * POST  /rodadas : Create a new rodada.
-     *
-     * @param rodadaDTO the rodadaDTO to create
-     * @return the ResponseEntity with status 201 (Created) and with body the new rodadaDTO, or with status 400 (Bad Request) if the rodada has already an ID
-     * @throws URISyntaxException if the Location URI syntax is incorrect
-     */
     @PostMapping("/rodadas")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<RodadaDTO> createRodada(@Valid @RequestBody RodadaDTO rodadaDTO) throws URISyntaxException {
         log.debug("REST request to save Rodada : {}", rodadaDTO);
         if (rodadaDTO.getId() != null) {
@@ -68,17 +61,9 @@ public class RodadaResource {
             .body(result);
     }
 
-    /**
-     * PUT  /rodadas : Updates an existing rodada.
-     *
-     * @param rodadaDTO the rodadaDTO to update
-     * @return the ResponseEntity with status 200 (OK) and with body the updated rodadaDTO,
-     * or with status 400 (Bad Request) if the rodadaDTO is not valid,
-     * or with status 500 (Internal Server Error) if the rodadaDTO couldn't be updated
-     * @throws URISyntaxException if the Location URI syntax is incorrect
-     */
     @PutMapping("/rodadas")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<RodadaDTO> updateRodada(@Valid @RequestBody RodadaDTO rodadaDTO) throws URISyntaxException {
         log.debug("REST request to update Rodada : {}", rodadaDTO);
         if (rodadaDTO.getId() == null) {
@@ -92,14 +77,9 @@ public class RodadaResource {
             .body(result);
     }
 
-    /**
-     * GET  /rodadas : get all the rodadas.
-     *
-     * @param pageable the pagination information
-     * @return the ResponseEntity with status 200 (OK) and the list of rodadas in body
-     */
     @GetMapping("/rodadas")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<List<RodadaDTO>> getAllRodadas(Pageable pageable) {
         log.debug("REST request to get a page of Rodadas");
         Page<Rodada> page = rodadaRepository.findAll(pageable);
@@ -107,14 +87,9 @@ public class RodadaResource {
         return new ResponseEntity<>(rodadaMapper.toDto(page.getContent()), headers, HttpStatus.OK);
     }
 
-    /**
-     * GET  /rodadas/:id : get the "id" rodada.
-     *
-     * @param id the id of the rodadaDTO to retrieve
-     * @return the ResponseEntity with status 200 (OK) and with body the rodadaDTO, or with status 404 (Not Found)
-     */
     @GetMapping("/rodadas/{id}")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<RodadaDTO> getRodada(@PathVariable Long id) {
         log.debug("REST request to get Rodada : {}", id);
         Rodada rodada = rodadaRepository.findOne(id);
@@ -122,17 +97,16 @@ public class RodadaResource {
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(rodadaDTO));
     }
 
-    /**
-     * DELETE  /rodadas/:id : delete the "id" rodada.
-     *
-     * @param id the id of the rodadaDTO to delete
-     * @return the ResponseEntity with status 200 (OK)
-     */
     @DeleteMapping("/rodadas/{id}")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<Void> deleteRodada(@PathVariable Long id) {
         log.debug("REST request to delete Rodada : {}", id);
         rodadaRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
+    
+   
+    
+    
 }

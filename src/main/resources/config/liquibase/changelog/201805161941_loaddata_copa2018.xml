@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <property name="now" value="now()" dbms="h2"/>
+
+    <property name="now" value="now()" dbms="mysql"/>
+    <property name="autoIncrement" value="true"/>
+
+    <property name="floatType" value="float4" dbms="postgresql, h2"/>
+    <property name="floatType" value="float" dbms="mysql, oracle, mssql"/>
+
+    <changeSet id="20180516194148-1" author="marlon">
+    
+    	<loadData encoding="UTF-8"
+                  file="config/liquibase/campeonato_copa2018.csv"
+                  separator=";"
+                  tableName="campeonato">
+            <column name="activated" type="boolean"/>
+            <column name="created_date" type="timestamp"/>
+        </loadData>
+    
+    	<loadData encoding="UTF-8"
+                  file="config/liquibase/bolao_copa2018.csv"
+                  separator=";"
+                  tableName="bolao">
+            <column name="activated" type="boolean"/>
+            <column name="created_date" type="timestamp"/>
+        </loadData>
+        
+    	<loadData encoding="UTF-8"
+                  file="config/liquibase/clubes_copa2018.csv"
+                  separator=";"
+                  tableName="clube">
+            <column name="activated" type="boolean"/>
+            <column name="created_date" type="timestamp"/>
+        </loadData>
+        
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/rodadas_copa2018.csv"
+                  separator=";"
+                  tableName="rodada">
+            <column name="activated" type="boolean"/>
+            <column name="created_date" type="timestamp"/>
+        </loadData>
+    
+                
+    </changeSet>
+
+</databaseChangeLog>

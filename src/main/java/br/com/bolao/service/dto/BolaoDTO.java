@@ -29,6 +29,8 @@ public class BolaoDTO implements Serializable {
     @NotNull
     private Long pontosAcertoResultado;
     
+    private CampeonatoDTO campeonatoDTO;
+    
     private Set<UserDTO> usersBolaos = new HashSet<>();
 
     public Long getId() {
@@ -78,6 +80,14 @@ public class BolaoDTO implements Serializable {
     public void setPontosAcertoResultado(Long pontosAcertoResultado) {
         this.pontosAcertoResultado = pontosAcertoResultado;
     }
+    
+    public CampeonatoDTO getCampeonatoDTO() {
+		return campeonatoDTO;
+	}
+    
+    public void setCampeonatoDTO(CampeonatoDTO campeonatoDTO) {
+		this.campeonatoDTO = campeonatoDTO;
+	}
 
     
     @Override

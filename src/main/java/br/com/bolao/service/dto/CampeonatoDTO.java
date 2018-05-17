@@ -2,21 +2,15 @@ package br.com.bolao.service.dto;
 
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
 
-/**
- * A DTO for the Campeonato entity.
- */
 public class CampeonatoDTO implements Serializable {
 
-    private Long id;
+    private static final long serialVersionUID = 1L;
+
+	private Long id;
 
     private String descricao;
-
-    private Long campeonatoId;
-
     public Long getId() {
         return id;
     }
@@ -31,14 +25,6 @@ public class CampeonatoDTO implements Serializable {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
-    }
-
-    public Long getCampeonatoId() {
-        return campeonatoId;
-    }
-
-    public void setCampeonatoId(Long bolaoId) {
-        this.campeonatoId = bolaoId;
     }
 
     @Override

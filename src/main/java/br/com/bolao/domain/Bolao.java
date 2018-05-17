@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -48,6 +49,10 @@ public class Bolao implements Serializable {
     @NotNull
     @Column(name = "pontos_acerto_resultado", nullable = false)
     private Long pontosAcertoResultado;
+    
+    @ManyToOne
+    private Campeonato campeonato;
+    
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -139,6 +144,15 @@ public class Bolao implements Serializable {
     public void setUsersBolaos(Set<User> users) {
         this.usersBolaos = users;
     }
+    
+    public Campeonato getCampeonato() {
+		return campeonato;
+	}
+    
+    public void setCampeonato(Campeonato campeonato) {
+		this.campeonato = campeonato;
+	}
+    
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override

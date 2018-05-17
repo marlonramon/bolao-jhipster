@@ -13,11 +13,21 @@
                                  constraintName="fk_bolao_users_bolao_bolaos_id"
                                  referencedColumnNames="id"
                                  referencedTableName="bolao"/>
+                                 
         <addForeignKeyConstraint baseColumnNames="users_bolaos_id"
                                  baseTableName="bolao_users_bolao"
                                  constraintName="fk_bolao_users_bolao_users_bolaos_id"
                                  referencedColumnNames="id"
                                  referencedTableName="jhi_user"/>
+                                 
+        
+        <addForeignKeyConstraint baseColumnNames="campeonato_id"
+                                 baseTableName="bolao"
+                                 constraintName="fk_campeonato_campeonato_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="campeonato"/>
+
+                              
         
     </changeSet>
 </databaseChangeLog>

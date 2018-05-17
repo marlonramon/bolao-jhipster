@@ -37,17 +37,13 @@
             <column name="pontos_acerto_resultado" type="bigint">
                 <constraints nullable="false" />
             </column>
+            
+            <column name="campeonato_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
 
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
-        
-        <loadData encoding="UTF-8"
-                  file="config/liquibase/Bolao.csv"
-                  separator=";"
-                  tableName="bolao">
-            <column name="activated" type="boolean"/>
-            <column name="created_date" type="timestamp"/>
-        </loadData>
         
         <createTable tableName="bolao_users_bolao">
             <column name="users_bolaos_id" type="bigint">

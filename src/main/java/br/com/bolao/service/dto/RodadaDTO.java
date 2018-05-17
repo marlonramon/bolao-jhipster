@@ -1,24 +1,25 @@
 package br.com.bolao.service.dto;
 
 
-import java.time.ZonedDateTime;
-import javax.validation.constraints.*;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.time.ZonedDateTime;
 import java.util.Objects;
 
-/**
- * A DTO for the Rodada entity.
- */
+import javax.validation.constraints.NotNull;
+
 public class RodadaDTO implements Serializable {
 
-    private Long id;
+    private static final long serialVersionUID = 1L;
+
+	private Long id;
 
     private Long numero;
 
     @NotNull
     private ZonedDateTime inicioRodada;
+    
+    @NotNull
+    private ZonedDateTime fimRodada;
 
     private Long campeonatoId;
 
@@ -45,6 +46,14 @@ public class RodadaDTO implements Serializable {
     public void setInicioRodada(ZonedDateTime inicioRodada) {
         this.inicioRodada = inicioRodada;
     }
+    
+    public ZonedDateTime getFimRodada() {
+		return fimRodada;
+	}
+    
+    public void setFimRodada(ZonedDateTime fimRodada) {
+		this.fimRodada = fimRodada;
+	}
 
     public Long getCampeonatoId() {
         return campeonatoId;

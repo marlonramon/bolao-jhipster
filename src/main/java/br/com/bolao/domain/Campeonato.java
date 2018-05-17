@@ -24,10 +24,7 @@ public class Campeonato implements Serializable {
 
     @Column(name = "descricao")
     private String descricao;
-
-    @ManyToOne
-    private Bolao campeonato;
-
+    
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -50,18 +47,6 @@ public class Campeonato implements Serializable {
         this.descricao = descricao;
     }
 
-    public Bolao getCampeonato() {
-        return campeonato;
-    }
-
-    public Campeonato campeonato(Bolao bolao) {
-        this.campeonato = bolao;
-        return this;
-    }
-
-    public void setCampeonato(Bolao bolao) {
-        this.campeonato = bolao;
-    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override

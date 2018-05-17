@@ -30,6 +30,10 @@ public class Rodada implements Serializable {
     @NotNull
     @Column(name = "inicio_rodada", nullable = false)
     private ZonedDateTime inicioRodada;
+    
+    @NotNull
+    @Column(name = "fim_rodada", nullable = false)
+    private ZonedDateTime fimRodada;
 
     @ManyToOne
     private Campeonato campeonato;
@@ -68,6 +72,14 @@ public class Rodada implements Serializable {
     public void setInicioRodada(ZonedDateTime inicioRodada) {
         this.inicioRodada = inicioRodada;
     }
+    
+    public ZonedDateTime getFimRodada() {
+		return fimRodada;
+	}
+    
+    public void setFimRodada(ZonedDateTime fimRodada) {
+		this.fimRodada = fimRodada;
+	}
 
     public Campeonato getCampeonato() {
         return campeonato;

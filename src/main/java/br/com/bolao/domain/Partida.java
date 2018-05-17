@@ -36,6 +36,9 @@ public class Partida implements Serializable {
 
     @ManyToOne
     private Rodada rodada;
+    
+    @Embedded
+    private Placar placar;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -93,6 +96,14 @@ public class Partida implements Serializable {
         this.rodada = rodada;
         return this;
     }
+    
+    public Placar getPlacar() {
+		return placar;
+	}
+    
+    public void setPlacar(Placar placar) {
+		this.placar = placar;
+	}
 
     public void setRodada(Rodada rodada) {
         this.rodada = rodada;

@@ -29,6 +29,10 @@
             <column name="inicio_rodada" type="timestamp">
                 <constraints nullable="false" />
             </column>
+            
+            <column name="fim_rodada" type="timestamp">
+                <constraints nullable="false" />
+            </column>
 
             <column name="campeonato_id" type="bigint">
                 <constraints nullable="true" />

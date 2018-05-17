@@ -11,12 +11,7 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring", uses = {BolaoMapper.class})
 public interface CampeonatoMapper extends EntityMapper<CampeonatoDTO, Campeonato> {
 
-    @Mapping(source = "campeonato.id", target = "campeonatoId")
-    CampeonatoDTO toDto(Campeonato campeonato);
-
-    @Mapping(source = "campeonatoId", target = "campeonato")
-    Campeonato toEntity(CampeonatoDTO campeonatoDTO);
-
+    
     default Campeonato fromId(Long id) {
         if (id == null) {
             return null;
