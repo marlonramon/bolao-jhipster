@@ -20,9 +20,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.codahale.metrics.annotation.Timed;
 
 import br.com.bolao.domain.Aposta;
-import br.com.bolao.domain.Rodada;
+import br.com.bolao.domain.User;
 import br.com.bolao.repository.ApostaRepository;
 import br.com.bolao.security.AuthoritiesConstants;
+import br.com.bolao.service.ApostaService;
+import br.com.bolao.service.UserService;
 import br.com.bolao.service.dto.ApostaDTO;
 import br.com.bolao.service.mapper.ApostaMapper;
 import br.com.bolao.web.rest.errors.BadRequestAlertException;
@@ -40,9 +42,17 @@ public class ApostaResource {
 
     private final ApostaMapper apostaMapper;
 
-    public ApostaResource(ApostaRepository apostaRepository, ApostaMapper apostaMapper) {
+	private ApostaService apostaService;
+
+	private UserService userService;
+	
+
+    public ApostaResource(ApostaRepository apostaRepository, ApostaMapper apostaMapper, ApostaService apostaService, UserService userService) {
         this.apostaRepository = apostaRepository;
         this.apostaMapper = apostaMapper;
+        this.apostaService = apostaService;
+        this.userService = userService;
+        
     }
 
     @PostMapping("/apostas")
@@ -75,20 +85,19 @@ public class ApostaResource {
             .body(result);
     }
     
-//    @GetMapping("/rodada/{id}/apostas")
-//    @Timed
-//    @Secured(AuthoritiesConstants.USER)
-//    public ResponseEntity<List<ApostaDTO>> getApostasFromRodada(@PathVariable Long id) {
-//        
-//    	log.debug("REST request to get a page of Rodadas");
-//        
-//    	Rodada page = rodadaRepository.findOne(id);
-//        
-//    	
-//    	
-//        
-//        return new ResponseEntity<>(rodadaMapper.toDto(page), HttpStatus.OK);
-//    }
+    @GetMapping("/user/me/rodada/{idRodada}/apostas")
+    @Timed
+    @Secured(AuthoritiesConstants.USER)
+    public ResponseEntity<List<ApostaDTO>> getApostasFromRodada(@PathVariable Long idRodada) {
+        
+    	log.debug("REST request to get a page of Rodadas");
+    	
+        User userLogado = userService.getUserWithAuthorities().get();
+        
+        List<Aposta> obterApostasUsuarioParaRodada = apostaService.obterApostasUsuarioParaRodada(userLogado, idRodada);
+        
+		return new ResponseEntity<>(apostaMapper.toDto(obterApostasUsuarioParaRodada), HttpStatus.OK);
+    }
 
     
     

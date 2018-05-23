@@ -1,12 +1,19 @@
 package br.com.bolao.web.rest;
 
-import br.com.bolao.BolaoApp;
+import static br.com.bolao.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import br.com.bolao.domain.Clube;
-import br.com.bolao.repository.ClubeRepository;
-import br.com.bolao.service.dto.ClubeDTO;
-import br.com.bolao.service.mapper.ClubeMapper;
-import br.com.bolao.web.rest.errors.ExceptionTranslator;
+import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -21,16 +28,13 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Base64Utils;
 
-import javax.persistence.EntityManager;
-import java.util.List;
-
-import static br.com.bolao.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import br.com.bolao.BolaoApp;
+import br.com.bolao.domain.Clube;
+import br.com.bolao.repository.ClubeRepository;
+import br.com.bolao.service.dto.ClubeDTO;
+import br.com.bolao.service.mapper.ClubeMapper;
+import br.com.bolao.web.rest.errors.ExceptionTranslator;
 
 /**
  * Test class for the ClubeResource REST controller.
@@ -44,10 +48,10 @@ public class ClubeResourceIntTest {
     private static final String DEFAULT_NOME = "AAAAAAAAAA";
     private static final String UPDATED_NOME = "BBBBBBBBBB";
 
-    private static final byte[] DEFAULT_BANDEIRA = TestUtil.createByteArray(1, "0");
-    private static final byte[] UPDATED_BANDEIRA = TestUtil.createByteArray(2, "1");
-    private static final String DEFAULT_BANDEIRA_CONTENT_TYPE = "image/jpg";
-    private static final String UPDATED_BANDEIRA_CONTENT_TYPE = "image/png";
+    private static final String DEFAULT_BANDEIRA = "";
+    private static final String UPDATED_BANDEIRA = "1";
+  
+    
 
     @Autowired
     private ClubeRepository clubeRepository;
@@ -91,8 +95,8 @@ public class ClubeResourceIntTest {
     public static Clube createEntity(EntityManager em) {
         Clube clube = new Clube()
             .nome(DEFAULT_NOME)
-            .bandeira(DEFAULT_BANDEIRA)
-            .bandeiraContentType(DEFAULT_BANDEIRA_CONTENT_TYPE);
+            .bandeira(DEFAULT_BANDEIRA);
+            
         return clube;
     }
 
@@ -119,7 +123,7 @@ public class ClubeResourceIntTest {
         Clube testClube = clubeList.get(clubeList.size() - 1);
         assertThat(testClube.getNome()).isEqualTo(DEFAULT_NOME);
         assertThat(testClube.getBandeira()).isEqualTo(DEFAULT_BANDEIRA);
-        assertThat(testClube.getBandeiraContentType()).isEqualTo(DEFAULT_BANDEIRA_CONTENT_TYPE);
+        
     }
 
     @Test
@@ -192,8 +196,7 @@ public class ClubeResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(clube.getId().intValue())))
             .andExpect(jsonPath("$.[*].nome").value(hasItem(DEFAULT_NOME.toString())))
-            .andExpect(jsonPath("$.[*].bandeiraContentType").value(hasItem(DEFAULT_BANDEIRA_CONTENT_TYPE)))
-            .andExpect(jsonPath("$.[*].bandeira").value(hasItem(Base64Utils.encodeToString(DEFAULT_BANDEIRA))));
+            .andExpect(jsonPath("$.[*].bandeira").value(hasItem(DEFAULT_BANDEIRA)));
     }
 
     @Test
@@ -208,8 +211,7 @@ public class ClubeResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(clube.getId().intValue()))
             .andExpect(jsonPath("$.nome").value(DEFAULT_NOME.toString()))
-            .andExpect(jsonPath("$.bandeiraContentType").value(DEFAULT_BANDEIRA_CONTENT_TYPE))
-            .andExpect(jsonPath("$.bandeira").value(Base64Utils.encodeToString(DEFAULT_BANDEIRA)));
+            .andExpect(jsonPath("$.bandeira").value(DEFAULT_BANDEIRA));
     }
 
     @Test
@@ -233,8 +235,7 @@ public class ClubeResourceIntTest {
         em.detach(updatedClube);
         updatedClube
             .nome(UPDATED_NOME)
-            .bandeira(UPDATED_BANDEIRA)
-            .bandeiraContentType(UPDATED_BANDEIRA_CONTENT_TYPE);
+            .bandeira(UPDATED_BANDEIRA);
         ClubeDTO clubeDTO = clubeMapper.toDto(updatedClube);
 
         restClubeMockMvc.perform(put("/api/clubes")
@@ -248,7 +249,7 @@ public class ClubeResourceIntTest {
         Clube testClube = clubeList.get(clubeList.size() - 1);
         assertThat(testClube.getNome()).isEqualTo(UPDATED_NOME);
         assertThat(testClube.getBandeira()).isEqualTo(UPDATED_BANDEIRA);
-        assertThat(testClube.getBandeiraContentType()).isEqualTo(UPDATED_BANDEIRA_CONTENT_TYPE);
+        
     }
 
     @Test

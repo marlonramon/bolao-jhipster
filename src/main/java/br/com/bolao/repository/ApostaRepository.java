@@ -1,16 +1,18 @@
 package br.com.bolao.repository;
 
-import br.com.bolao.domain.Aposta;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import org.springframework.data.jpa.repository.*;
+import br.com.bolao.domain.Aposta;
+import br.com.bolao.domain.Rodada;
+import br.com.bolao.domain.User;
 
 
-/**
- * Spring Data JPA repository for the Aposta entity.
- */
-@SuppressWarnings("unused")
 @Repository
 public interface ApostaRepository extends JpaRepository<Aposta, Long> {
+	
+	Aposta findByRodadaAndUser(Rodada rodada, User user);
+	
+	
 
 }

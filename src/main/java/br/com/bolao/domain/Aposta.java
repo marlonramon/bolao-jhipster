@@ -31,6 +31,19 @@ public class Aposta implements Serializable {
     
     @Embedded
     private Placar placar;
+    
+    @ManyToOne
+    private User user;
+    
+    public Aposta() {
+	
+	}
+    
+    public Aposta(Partida partida, User user) {
+    	this.partida = partida;
+    	this.user = user;
+	}
+    
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -73,6 +86,14 @@ public class Aposta implements Serializable {
     
     public void setPlacar(Placar placar) {
 		this.placar = placar;
+	}
+    
+    public User getUser() {
+		return user;
+	}
+    
+    public void setUser(User user) {
+		this.user = user;
 	}
     
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove

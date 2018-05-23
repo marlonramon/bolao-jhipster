@@ -1,22 +1,20 @@
 package br.com.bolao.service.dto;
 
 
-import java.time.ZonedDateTime;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.time.ZonedDateTime;
 import java.util.Objects;
 
-/**
- * A DTO for the Aposta entity.
- */
+
 public class ApostaDTO implements Serializable {
 
-    private Long id;
+	private static final long serialVersionUID = 1L;
+
+	private Long id;
 
     private ZonedDateTime dataAposta;
 
-    private Long partidaId;
+    private PartidaDTO partida;
 
     public Long getId() {
         return id;
@@ -34,12 +32,12 @@ public class ApostaDTO implements Serializable {
         this.dataAposta = dataAposta;
     }
 
-    public Long getPartidaId() {
-        return partidaId;
+    public PartidaDTO getPartida() {
+        return partida;
     }
 
-    public void setPartidaId(Long partidaId) {
-        this.partidaId = partidaId;
+    public void setPartida(PartidaDTO partida) {
+        this.partida = partida;
     }
 
     @Override

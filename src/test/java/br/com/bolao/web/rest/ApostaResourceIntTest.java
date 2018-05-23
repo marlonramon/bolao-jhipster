@@ -1,12 +1,24 @@
 package br.com.bolao.web.rest;
 
-import br.com.bolao.BolaoApp;
+import static br.com.bolao.web.rest.TestUtil.createFormattingConversionService;
+import static br.com.bolao.web.rest.TestUtil.sameInstant;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import br.com.bolao.domain.Aposta;
-import br.com.bolao.repository.ApostaRepository;
-import br.com.bolao.service.dto.ApostaDTO;
-import br.com.bolao.service.mapper.ApostaMapper;
-import br.com.bolao.web.rest.errors.ExceptionTranslator;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -22,19 +34,14 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import java.time.Instant;
-import java.time.ZonedDateTime;
-import java.time.ZoneOffset;
-import java.time.ZoneId;
-import java.util.List;
-
-import static br.com.bolao.web.rest.TestUtil.sameInstant;
-import static br.com.bolao.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import br.com.bolao.BolaoApp;
+import br.com.bolao.domain.Aposta;
+import br.com.bolao.repository.ApostaRepository;
+import br.com.bolao.service.ApostaService;
+import br.com.bolao.service.UserService;
+import br.com.bolao.service.dto.ApostaDTO;
+import br.com.bolao.service.mapper.ApostaMapper;
+import br.com.bolao.web.rest.errors.ExceptionTranslator;
 
 /**
  * Test class for the ApostaResource REST controller.
@@ -53,6 +60,12 @@ public class ApostaResourceIntTest {
 
     @Autowired
     private ApostaMapper apostaMapper;
+    
+    @Autowired
+    private UserService userService;
+    
+    @Autowired
+    private ApostaService apostaService;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -73,7 +86,7 @@ public class ApostaResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final ApostaResource apostaResource = new ApostaResource(apostaRepository, apostaMapper);
+        final ApostaResource apostaResource = new ApostaResource(apostaRepository, apostaMapper, apostaService, userService);
         this.restApostaMockMvc = MockMvcBuilders.standaloneSetup(apostaResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
