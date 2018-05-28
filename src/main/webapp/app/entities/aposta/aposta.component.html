@@ -1,64 +1,62 @@
-<div>
-    <h2>
-        <span>Apostas</span>
-        <button class="btn btn-primary float-right jh-create-entity create-aposta" [routerLink]="['/', { outlets: { popup: ['aposta-new'] } }]">
-            <span class="fa fa-plus"></span>
-            <span >
-            Create new Aposta
-            </span>
-        </button>
-    </h2>
-    <jhi-alert></jhi-alert>
-    <div class="row">
-    </div>
-    <br/>
-    <div class="table-responsive" *ngIf="apostas">
-        <table class="table table-striped">
-            <thead>
-            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
-            <th jhiSortBy="id"><span>ID</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="dataAposta"><span>Data Aposta</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="partidaId"><span>Partida</span> <span class="fa fa-sort"></span></th>
-            <th></th>
-            </tr>
-            </thead>
-            <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
-            <tr *ngFor="let aposta of apostas ;trackBy: trackId">
-                <td><a [routerLink]="['../aposta', aposta.id ]">{{aposta.id}}</a></td>
-                <td>{{aposta.dataAposta | date:'medium'}}</td>
-                <td>
-                    <div *ngIf="aposta.partidaId">
-                        <a [routerLink]="['../partida', aposta.partidaId  ]" >{{aposta.partidaId}}</a>
+<div class="main-content" *ngIf="bolao">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-tabs card-header-primary">
+                        <h3>{{bolao.descricao + ' - ' + bolao.campeonatoDTO.descricao}}</h3>
+                        <div class="nav-tabs-navigation">
+                            <div class="nav-tabs-wrapper" *ngIf="rodadas">
+                                <span class="nav-tabs-title">Rodadas:</span>
+                                <ul class="nav nav-tabs" data-tabs="tabs" >
+                                        <li class="nav-item" *ngFor="let rodada of rodadas" >
+                                                <a mat-button class="nav-link" [ngClass]="{ 'active':rodada.numero === 1}" (click)="loadApostas(rodada)" data-toggle="tab">
+                                                    {{rodada.numero}}
+                                                    <div class="ripple-container"></div>
+                                                </a>
+                                        </li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
-                </td>
-                <td class="text-right">
-                    <div class="btn-group flex-btn-group-container">
-                        <button type="submit"
-                                [routerLink]="['../aposta', aposta.id ]"
-                                class="btn btn-info btn-sm">
-                            <span class="fa fa-eye"></span>
-                            <span class="d-none d-md-inline">View</span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/', { outlets: { popup: 'aposta/'+ aposta.id + '/edit'} }]"
-                                replaceUrl="true"
-                                queryParamsHandling="merge"
-                                class="btn btn-primary btn-sm">
-                            <span class="fa fa-pencil"></span>
-                            <span class="d-none d-md-inline">Edit</span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/', { outlets: { popup: 'aposta/'+ aposta.id + '/delete'} }]"
-                                replaceUrl="true"
-                                queryParamsHandling="merge"
-                                class="btn btn-danger btn-sm">
-                            <span class="fa fa-remove"></span>
-                            <span class="d-none d-md-inline">Delete</span>
-                        </button>
+                    <div class="card-body">
+                        
+                        <div class="tab-content">
+                            <button mat-raised-button type="submit" (click)="salvarApostas()" class="btn btn-primary pull-right">Salvar Apostas</button>
+                            <div class="tab-pane active" id="rodadaAtiva">
+                                
+                                <table class="table">
+                                    <tbody *ngIf="apostas" >
+                                        <tr *ngFor="let aposta of apostas">
+                                            <td>{{aposta.partida.dataPartida |  date: 'dd/MM/yyyy hh:mm'}}</td>
+                                            <td>{{aposta.partida.clubeMandante.nome}}</td>
+                                            <td><img class="img-teams" [src]="loadBandeira(aposta.partida.clubeMandante.bandeira)"/></td>
+                                            <td><input class="form-control text-right" type="number"  
+                                                id="inputPlacarVisitante" 
+                                                min="0" max="99"
+                                                [(ngModel)]="aposta.placar.placarMandante"
+                                                style="width: 70px" />
+                                            </td>
+                                            <td> 
+                                                <input class="form-control text-right" type="number"  
+                                                        id="inputPlacarVisitante" 
+							                            min="0" max="99"
+                                                        [(ngModel)]="aposta.placar.placarVisitante"
+                                                        style="width: 70px" />
+
+                                            </td>
+                                            <td><img class="img-teams" [src]="loadBandeira(aposta.partida.clubeVisitante.bandeira)"/></td>
+                                            <td>{{aposta.partida.clubeVisitante.nome}}</td>
+                                            
+                                            
+                                        </tr>
+                                        
+                                    </tbody>
+                                </table>
+                            </div>                            
+                        </div>
                     </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+            </div>            
+        </div>
     </div>
-</div>
+  </div>

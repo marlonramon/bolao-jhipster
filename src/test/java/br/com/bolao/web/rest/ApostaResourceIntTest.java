@@ -86,7 +86,7 @@ public class ApostaResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final ApostaResource apostaResource = new ApostaResource(apostaRepository, apostaMapper, apostaService, userService);
+        final ApostaResource apostaResource = new ApostaResource(apostaMapper, apostaService, userService);
         this.restApostaMockMvc = MockMvcBuilders.standaloneSetup(apostaResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)

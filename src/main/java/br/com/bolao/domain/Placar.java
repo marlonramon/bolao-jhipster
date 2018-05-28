@@ -12,6 +12,15 @@ public class Placar {
 	@Column(name="placar_visitante")
 	private Short placarVisitante;
 	
+	public Placar() {
+	
+	}
+	
+	public Placar(Short placarMandante, Short placarVisitante) {
+		this.placarMandante = placarMandante;
+		this.placarVisitante = placarVisitante;
+	}
+	
 	public Short getPlacarMandante() {
 		return placarMandante;
 	}
@@ -26,6 +35,10 @@ public class Placar {
 	
 	public void setPlacarVisitante(Short placarVisitante) {
 		this.placarVisitante = placarVisitante;
+	}
+	
+	public boolean isValido() {
+		return placarMandante != null && placarVisitante != null;
 	}
 	
 	

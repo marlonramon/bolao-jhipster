@@ -6,6 +6,14 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgJhipsterModule } from 'ng-jhipster';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { CookieModule } from 'ngx-cookie';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import {
+    MatButtonModule,
+    MatInputModule,
+    MatRippleModule,
+    MatTooltipModule,
+  } from '@angular/material';
 
 @NgModule({
     imports: [
@@ -15,7 +23,12 @@ import { CookieModule } from 'ngx-cookie';
             alertAsToast: false,
         }),
         InfiniteScrollModule,
-        CookieModule.forRoot()
+        CookieModule.forRoot(),
+        MatButtonModule,
+        MatRippleModule,
+        MatInputModule,
+        MatTooltipModule,  
+        BrowserAnimationsModule,
     ],
     exports: [
         FormsModule,
@@ -23,7 +36,12 @@ import { CookieModule } from 'ngx-cookie';
         CommonModule,
         NgbModule,
         NgJhipsterModule,
-        InfiniteScrollModule
+        InfiniteScrollModule,
+        MatButtonModule,
+        MatRippleModule,
+        MatInputModule,
+        MatTooltipModule,  
+        BrowserAnimationsModule,
     ]
 })
 export class BolaoSharedLibsModule {}

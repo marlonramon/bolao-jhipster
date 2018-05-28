@@ -4,6 +4,7 @@ import br.com.bolao.BolaoApp;
 
 import br.com.bolao.domain.Rodada;
 import br.com.bolao.repository.RodadaRepository;
+import br.com.bolao.service.RodadaService;
 import br.com.bolao.service.dto.RodadaDTO;
 import br.com.bolao.service.mapper.RodadaMapper;
 import br.com.bolao.web.rest.errors.ExceptionTranslator;
@@ -56,6 +57,9 @@ public class RodadaResourceIntTest {
 
     @Autowired
     private RodadaMapper rodadaMapper;
+    
+    @Autowired
+    private RodadaService rodadaService;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -76,7 +80,7 @@ public class RodadaResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final RodadaResource rodadaResource = new RodadaResource(rodadaRepository, rodadaMapper);
+        final RodadaResource rodadaResource = new RodadaResource(rodadaRepository, rodadaMapper, rodadaService);
         this.restRodadaMockMvc = MockMvcBuilders.standaloneSetup(rodadaResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)

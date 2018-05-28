@@ -1,4 +1,5 @@
-import { BaseEntity, User } from './../../shared';
+import { BaseEntity,  } from './../../shared';
+import { Campeonato } from './../campeonato';
 
 export class Bolao implements BaseEntity {
     constructor(
@@ -7,7 +8,7 @@ export class Bolao implements BaseEntity {
         public pontosAcertoDoisPlacares?: number,
         public pontosAcertoUmPlacar?: number,
         public pontosAcertoResultado?: number,
-        public usersBolaos?: User[],
+        public campeonatoDTO?: Campeonato
     ) {
     }
 }

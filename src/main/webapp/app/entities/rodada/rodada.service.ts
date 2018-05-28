@@ -40,6 +40,11 @@ export class RodadaService {
             .map((res: HttpResponse<Rodada[]>) => this.convertArrayResponse(res));
     }
 
+    queryByCampeonato(idCampeonato: number): Observable<HttpResponse<Rodada[]>> {
+        return this.http.get<Rodada[]>(`api/campeonato/${idCampeonato}/rodadas`, { observe: 'response' })
+            .map((res: HttpResponse<Rodada[]>) => this.convertArrayResponse(res));
+    }
+
     delete(id: number): Observable<HttpResponse<any>> {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response'});
     }

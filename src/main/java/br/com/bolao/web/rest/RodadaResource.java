@@ -8,6 +8,7 @@ import br.com.bolao.security.AuthoritiesConstants;
 import br.com.bolao.web.rest.errors.BadRequestAlertException;
 import br.com.bolao.web.rest.util.HeaderUtil;
 import br.com.bolao.web.rest.util.PaginationUtil;
+import br.com.bolao.service.RodadaService;
 import br.com.bolao.service.dto.RodadaDTO;
 import br.com.bolao.service.mapper.RodadaMapper;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -39,10 +40,13 @@ public class RodadaResource {
     private final RodadaRepository rodadaRepository;
 
     private final RodadaMapper rodadaMapper;
+    
+    private final RodadaService rodadaService;
 
-    public RodadaResource(RodadaRepository rodadaRepository, RodadaMapper rodadaMapper) {
+    public RodadaResource(RodadaRepository rodadaRepository, RodadaMapper rodadaMapper, RodadaService rodadaService) {
         this.rodadaRepository = rodadaRepository;
         this.rodadaMapper = rodadaMapper;
+        this.rodadaService = rodadaService;
     }
 
     @PostMapping("/rodadas")
@@ -106,6 +110,15 @@ public class RodadaResource {
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
     
+    @GetMapping("/campeonato/{idCampeonato}/rodadas")
+    public ResponseEntity<List<RodadaDTO>> findRodadasByCampeonato(@PathVariable Long idCampeonato) {
+    	
+    	log.debug("REST request to Rodadas from campeonato : {}", idCampeonato);
+    	
+    	List<Rodada> rodadasDoCampeonato = rodadaService.findRodadaByidCampeonato(idCampeonato);
+    	    	
+    	return new ResponseEntity<>(rodadaMapper.toDto(rodadasDoCampeonato), HttpStatus.OK);
+    }
    
     
     

@@ -1,20 +1,20 @@
 package br.com.bolao.service.mapper;
 
-import br.com.bolao.domain.*;
-import br.com.bolao.service.dto.ApostaDTO;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
-import org.mapstruct.*;
+import br.com.bolao.domain.Aposta;
+import br.com.bolao.service.dto.ApostaDTO;
 
 /**
  * Mapper for the entity Aposta and its DTO ApostaDTO.
  */
-@Mapper(componentModel = "spring", uses = {PartidaMapper.class})
+@Mapper(componentModel = "spring", uses = {PartidaMapper.class, PlacarMapper.class})
 public interface ApostaMapper extends EntityMapper<ApostaDTO, Aposta> {
 
-    @Mapping(source = "partida.id", target = "partidaId")
+    
     ApostaDTO toDto(Aposta aposta);
 
-    @Mapping(source = "partidaId", target = "partida")
     Aposta toEntity(ApostaDTO apostaDTO);
 
     default Aposta fromId(Long id) {

@@ -28,17 +28,17 @@ public class Partida implements Serializable {
     @Column(name = "data_partida", nullable = false)
     private ZonedDateTime dataPartida;
 
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.EAGER)
     private Clube clubeMandante;
 
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.EAGER)
     private Clube clubeVisitante;
 
     @ManyToOne
     private Rodada rodada;
     
     @Embedded
-    private Placar placar;
+    private Placar placar ;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {

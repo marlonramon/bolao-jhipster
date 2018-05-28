@@ -1,16 +1,17 @@
 package br.com.bolao.repository;
 
-import br.com.bolao.domain.Rodada;
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import org.springframework.data.jpa.repository.*;
+import br.com.bolao.domain.Campeonato;
+import br.com.bolao.domain.Rodada;
 
 
-/**
- * Spring Data JPA repository for the Rodada entity.
- */
-@SuppressWarnings("unused")
 @Repository
 public interface RodadaRepository extends JpaRepository<Rodada, Long> {
+	
+	List<Rodada> findByCampeonato(Campeonato campeonato);
 
 }

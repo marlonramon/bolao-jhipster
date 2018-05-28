@@ -47,6 +47,14 @@
             <column name="activated" type="boolean"/>
             <column name="created_date" type="timestamp"/>
         </loadData>
+        
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/partidas_fase_grupos_copa2019.csv"
+                  separator=";"
+                  tableName="partida">
+            <column name="activated" type="boolean"/>
+            <column name="created_date" type="timestamp"/>
+        </loadData>
     
                 
     </changeSet>

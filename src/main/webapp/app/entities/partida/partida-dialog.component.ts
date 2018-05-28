@@ -37,7 +37,7 @@ export class PartidaDialogComponent implements OnInit {
 
     ngOnInit() {
         this.isSaving = false;
-        this.clubeService.query()
+        this.clubeService.query({size: 200})
             .subscribe((res: HttpResponse<Clube[]>) => { this.clubes = res.body; }, (res: HttpErrorResponse) => this.onError(res.message));
         this.rodadaService.query()
             .subscribe((res: HttpResponse<Rodada[]>) => { this.rodadas = res.body; }, (res: HttpErrorResponse) => this.onError(res.message));
@@ -56,6 +56,17 @@ export class PartidaDialogComponent implements OnInit {
             this.subscribeToSaveResponse(
                 this.partidaService.create(this.partida));
         }
+    }
+
+    compareByOptionId(firstId, secondId) {
+        if (firstId && secondId) {
+            console.log(firstId.id);
+            console.log(secondId.id);
+
+        }
+
+        return firstId && secondId && firstId.id == secondId.id;
+
     }
 
     private subscribeToSaveResponse(result: Observable<HttpResponse<Partida>>) {

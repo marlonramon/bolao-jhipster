@@ -2,15 +2,11 @@ package br.com.bolao.service.dto;
 
 
 import java.io.Serializable;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 import javax.validation.constraints.NotNull;
 
-/**
- * A DTO for the Bolao entity.
- */
+
 public class BolaoDTO implements Serializable {
 
     private static final long serialVersionUID = 460728414415156336L;
@@ -30,8 +26,7 @@ public class BolaoDTO implements Serializable {
     private Long pontosAcertoResultado;
     
     private CampeonatoDTO campeonatoDTO;
-    
-    private Set<UserDTO> usersBolaos = new HashSet<>();
+
 
     public Long getId() {
         return id;
@@ -40,14 +35,6 @@ public class BolaoDTO implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-    
-    public Set<UserDTO> getUsersBolaos() {
-		return usersBolaos;
-	}
-    
-    public void setUsersBolaos(Set<UserDTO> usersBolaos) {
-		this.usersBolaos = usersBolaos;
-	}
 
     public String getDescricao() {
         return descricao;

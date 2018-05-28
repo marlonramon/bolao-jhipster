@@ -21,6 +21,11 @@
           "src": "./content/images/logo-jhipster.png",
           "sizes": "512x512",
           "type": "image/png"
+      },
+      {
+          "src": "./content/images/bandeiras/russia.png",
+          "sizes": "32x32",
+          "type": "image/png"
       }
   ],
   "theme_color": "#000000",

@@ -7,11 +7,6 @@
     </div>
     <div class="modal-body">
         <jhi-alert-error></jhi-alert-error>
-        <div class="form-group" [hidden]="!partida.id">
-            <label for="id">ID</label>
-            <input type="text" class="form-control" id="id" name="id"
-                   [(ngModel)]="partida.id" readonly />
-        </div>
         <div class="form-group">
             <label class="form-control-label" for="field_dataPartida">Data Partida</label>
             <div class="d-flex">
@@ -32,18 +27,35 @@
 
         <div class="form-group">
             <label class="form-control-label" for="field_clubeMandante">Clube Mandante</label>
-            <select class="form-control" id="field_clubeMandante" name="clubeMandante" [(ngModel)]="partida.clubeMandanteId" >
+            <select class="form-control" id="field_clubeMandante" name="clubeMandante" [(ngModel)]="partida.clubeMandante" [compareWith]="compareByOptionId" >
                 <option [ngValue]="null"></option>
-                <option [ngValue]="clubeOption.id" *ngFor="let clubeOption of clubes; trackBy: trackClubeById">{{clubeOption.id}}</option>
+                <option [ngValue]="clubeOption" *ngFor="let clubeOption of clubes; trackBy: trackClubeById">{{clubeOption.nome}}</option>
             </select>
         </div>
         <div class="form-group">
             <label class="form-control-label" for="field_clubeVisitante">Clube Visitante</label>
-            <select class="form-control" id="field_clubeVisitante" name="clubeVisitante" [(ngModel)]="partida.clubeVisitanteId" >
+            <select class="form-control" id="field_clubeVisitante" name="clubeVisitante" [(ngModel)]="partida.clubeVisitante" [compareWith]="compareByOptionId" >
                 <option [ngValue]="null"></option>
-                <option [ngValue]="clubeOption.id" *ngFor="let clubeOption of clubes; trackBy: trackClubeById">{{clubeOption.id}}</option>
+                <option [ngValue]="clubeOption" *ngFor="let clubeOption of clubes; trackBy: trackClubeById">{{clubeOption.nome}}</option>
             </select>
         </div>
+
+        <div class="form-group">
+                <label class="form-control-label" for="field_placarMandante">Placar Mandante</label>
+                <div class="d-flex">
+                    <input id="field_placarMandante" type="number" class="form-control" name="placarMandate" [(ngModel)]="partida.placar.placarMandante"/>
+                </div>                
+        </div>
+
+        <div class="form-group">
+                <label class="form-control-label" for="field_placarVisitante">Placar Mandante</label>
+                <div class="d-flex">
+                    <input id="field_placarVisitante" type="number" class="form-control" name="placarVisitante" [(ngModel)]="partida.placar.placarVisitante"/>
+                </div>                
+        </div>
+
+
+
         <div class="form-group">
             <label class="form-control-label" for="field_rodada">Rodada</label>
             <select class="form-control" id="field_rodada" name="rodada" [(ngModel)]="partida.rodadaId" >

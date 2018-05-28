@@ -3,17 +3,28 @@ import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs/Subscription';
 import { JhiEventManager, JhiParseLinks, JhiAlertService } from 'ng-jhipster';
 
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/forkJoin';
 import { Aposta } from './aposta.model';
+import { Rodada } from '../rodada/rodada.model';
+import { Bolao } from '../bolao/bolao.model';
 import { ApostaService } from './aposta.service';
+import { RodadaService } from '../rodada/rodada.service';
+import { BolaoService } from '../bolao/bolao.service';
 import { ITEMS_PER_PAGE, Principal } from '../../shared';
 
 @Component({
     selector: 'jhi-aposta',
     templateUrl: './aposta.component.html'
+    
 })
 export class ApostaComponent implements OnInit, OnDestroy {
 
+    rodadas: Rodada[];
     apostas: Aposta[];
+    isSaving: boolean;
+    boloes: Bolao[];
+    bolao: Bolao;
     currentAccount: any;
     eventSubscriber: Subscription;
     itemsPerPage: number;
@@ -29,9 +40,13 @@ export class ApostaComponent implements OnInit, OnDestroy {
         private jhiAlertService: JhiAlertService,
         private eventManager: JhiEventManager,
         private parseLinks: JhiParseLinks,
-        private principal: Principal
+        private principal: Principal,
+        private bolaoService: BolaoService,
+        private rodadaService: RodadaService
     ) {
         this.apostas = [];
+        this.boloes = [];
+        this.rodadas = [];
         this.itemsPerPage = ITEMS_PER_PAGE;
         this.page = 0;
         this.links = {
@@ -42,14 +57,13 @@ export class ApostaComponent implements OnInit, OnDestroy {
     }
 
     loadAll() {
-        this.apostaService.query({
-            page: this.page,
-            size: this.itemsPerPage,
-            sort: this.sort()
-        }).subscribe(
-            (res: HttpResponse<Aposta[]>) => this.onSuccess(res.body, res.headers),
-            (res: HttpErrorResponse) => this.onError(res.message)
+        
+        this.bolaoService.queryByLoggedUser().subscribe(
+            (res: HttpResponse<Aposta[]>) => {this.onSuccessBolao(res.body, res.headers)},
+            (res: HttpErrorResponse) => this.onError(res.message),
+
         );
+        
     }
 
     reset() {
@@ -81,6 +95,61 @@ export class ApostaComponent implements OnInit, OnDestroy {
         this.eventSubscriber = this.eventManager.subscribe('apostaListModification', (response) => this.reset());
     }
 
+    loadRodadas(idCampeonato) {
+        this.rodadaService.queryByCampeonato(idCampeonato).subscribe(
+            (res: HttpResponse<Rodada[]>) => this.onSuccessRodada(res.body, res.headers),
+            (res: HttpErrorResponse) => this.onError(res.message)
+        );
+    }
+
+    loadBandeira(bandeira) {
+        return require('../../../content/images/bandeiras/' + bandeira);
+    }
+
+    salvarApostas() {
+        const calls = []
+        this.isSaving = true;
+        this.apostas.forEach(aposta => {
+            calls.push(this.save(aposta))
+        });
+
+        Observable.forkJoin(calls).subscribe();
+
+        this.isSaving = false;        
+
+        this.loadApostas(this.rodadas[0]);
+        
+    }
+
+    save(aposta) {
+        
+        if (aposta.id !== undefined) {
+            return this.apostaService.update(aposta);
+        } else {
+            return  this.apostaService.create(aposta);
+        }
+    }
+
+    private subscribeToSaveResponse(result: Observable<HttpResponse<Aposta>>) {
+        result.subscribe((res: HttpResponse<Aposta>) =>(res: HttpErrorResponse) => this.onSaveError());
+    }
+
+    private onSaveSuccess(result: Aposta) {
+        this.eventManager.broadcast({ name: 'apostaListModification', content: 'OK'});
+        
+    }
+
+    loadApostas(rodada) {
+        this.apostaService.queryByLoggedUserAndRodada(rodada.id).subscribe(
+            (res: HttpResponse<Aposta[]>) => this.onSuccess(res.body, res.headers),
+            (res: HttpErrorResponse) => this.onError(res.message)
+        );
+    }
+    
+    private onSaveError() {
+        this.isSaving = false;
+    }
+
     sort() {
         const result = [this.predicate + ',' + (this.reverse ? 'asc' : 'desc')];
         if (this.predicate !== 'id') {
@@ -90,10 +159,27 @@ export class ApostaComponent implements OnInit, OnDestroy {
     }
 
     private onSuccess(data, headers) {
-        this.links = this.parseLinks.parse(headers.get('link'));
-        this.totalItems = headers.get('X-Total-Count');
+        this.apostas = [];
         for (let i = 0; i < data.length; i++) {
             this.apostas.push(data[i]);
+        }
+    }
+
+    private onSuccessBolao(data, headers) {
+        for (let i = 0; i < data.length; i++) {
+            this.bolao = data[i];            
+            this.loadRodadas(this.bolao.campeonatoDTO.id);
+        }
+    }
+
+    private onSuccessRodada(data, headers) {
+        for (let i = 0; i < data.length; i++) {
+            let rodada = data[i];
+            this.rodadas.push(rodada);
+            if (rodada.numero === 1) {
+                this.loadApostas(rodada);
+            }
+
         }
     }
 

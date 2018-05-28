@@ -6,6 +6,7 @@ import { SERVER_API_URL } from '../../app.constants';
 import { JhiDateUtils } from 'ng-jhipster';
 
 import { Partida } from './partida.model';
+import { Placar } from '../../shared';
 import { createRequestOption } from '../../shared';
 
 export type EntityResponseType = HttpResponse<Partida>;
@@ -65,6 +66,15 @@ export class PartidaService {
         const copy: Partida = Object.assign({}, partida);
         copy.dataPartida = this.dateUtils
             .convertDateTimeFromServer(partida.dataPartida);
+
+        let placar : Placar = {
+
+        }
+        if(!copy.placar) {
+            copy.placar = placar;
+        }    
+
+
         return copy;
     }
 
@@ -75,6 +85,9 @@ export class PartidaService {
         const copy: Partida = Object.assign({}, partida);
 
         copy.dataPartida = this.dateUtils.toDate(partida.dataPartida);
+
+        
+
         return copy;
     }
 }

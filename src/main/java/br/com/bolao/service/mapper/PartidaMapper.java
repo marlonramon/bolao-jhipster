@@ -1,23 +1,20 @@
 package br.com.bolao.service.mapper;
 
-import br.com.bolao.domain.*;
-import br.com.bolao.service.dto.PartidaDTO;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
-import org.mapstruct.*;
+import br.com.bolao.domain.Partida;
+import br.com.bolao.service.dto.PartidaDTO;
 
 /**
  * Mapper for the entity Partida and its DTO PartidaDTO.
  */
-@Mapper(componentModel = "spring", uses = {ClubeMapper.class, RodadaMapper.class})
+@Mapper(componentModel = "spring", uses = {ClubeMapper.class, RodadaMapper.class, ClubeMapper.class, PlacarMapper.class})
 public interface PartidaMapper extends EntityMapper<PartidaDTO, Partida> {
 
-    @Mapping(source = "clubeMandante.id", target = "clubeMandanteId")
-    @Mapping(source = "clubeVisitante.id", target = "clubeVisitanteId")
     @Mapping(source = "rodada.id", target = "rodadaId")
     PartidaDTO toDto(Partida partida);
 
-    @Mapping(source = "clubeMandanteId", target = "clubeMandante")
-    @Mapping(source = "clubeVisitanteId", target = "clubeVisitante")
     @Mapping(source = "rodadaId", target = "rodada")
     Partida toEntity(PartidaDTO partidaDTO);
 

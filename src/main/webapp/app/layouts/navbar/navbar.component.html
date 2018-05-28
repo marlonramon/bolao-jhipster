@@ -1,25 +1,27 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-warning">
     <div class="container">
-        
-        
+
+
         <div class="jh-logo-container float-left">
-            <a class="jh-navbar-toggler d-lg-none float-right" href="javascript:void(0);" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation" (click)="toggleNavbar()">
+            <a class="jh-navbar-toggler d-lg-none float-right" href="javascript:void(0);" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation" (click)="toggleNavbar()">
                 <i class="fas fa-bars"></i>
             </a>
             <a class="navbar-brand logo float-left" routerLink="/" (click)="collapseNavbar()">
                 <span class="logo-img"></span>
-                <span class="navbar-title">Bolão</span> <span class="navbar-version">{{version}}</span>
+                <span class="navbar-title">Bolão</span>
+                <span class="navbar-version">{{version}}</span>
             </a>
         </div>
 
-        <div class="navbar-collapse collapse" id="navbarResponsive" [ngbCollapse]="isNavbarCollapsed" >
-            
+        <div class="navbar-collapse collapse" id="navbarResponsive" [ngbCollapse]="isNavbarCollapsed">
+
             <ul class="navbar-nav ml-auto" [ngSwitch]="isAuthenticated()">
 
                 <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
 
                 <li class="nav-item" *ngSwitchCase="true" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                    <a class="nav-link" routerLink="bank-account" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                    <a class="nav-link" routerLink="aposta" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
                         <i class="fas fa-fw fa-asterisk" aria-hidden="true"></i>
                         <span>Palpites</span>
                     </a>
@@ -32,6 +34,36 @@
                 </li>
                 <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
 
+                <li *jhiHasAnyAuthority="'ROLE_ADMIN'" ngbDropdown class="nav-item dropdown pointer" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                    <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="cadastros-menu">
+                        <span>
+                            <i class="fas fa-user-plus" aria-hidden="true"></i>
+                            <span>Cadastros</span>
+                        </span>
+                    </a>
+                    <ul class="dropdown-menu" ngbDropdownMenu>
+                            <li>
+                                <a class="dropdown-item" routerLink="partida" routerLinkActive="active" (click)="collapseNavbar()">
+                                    <i class="fas fa-fw fa-user" aria-hidden="true"></i>
+                                    <span>Partidas</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" routerLink="clube" routerLinkActive="active" (click)="collapseNavbar()">
+                                    <i class="fas fa-fw fa-tachometer-alt" aria-hidden="true"></i>
+                                    <span>Clubes</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" routerLink="bolao" routerLinkActive="active" (click)="collapseNavbar()">
+                                    <i class="fas fa-fw fa-heart" aria-hidden="true"></i>
+                                    <span>Bolão</span>
+                                </a>
+                            </li>
+                            
+                        </ul>
+
+                </li>
 
                 <li *jhiHasAnyAuthority="'ROLE_ADMIN'" ngbDropdown class="nav-item dropdown pointer" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                     <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="admin-menu">

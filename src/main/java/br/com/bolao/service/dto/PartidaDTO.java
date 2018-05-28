@@ -1,27 +1,27 @@
 package br.com.bolao.service.dto;
 
 
-import java.time.ZonedDateTime;
-import javax.validation.constraints.*;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.time.ZonedDateTime;
 import java.util.Objects;
 
-/**
- * A DTO for the Partida entity.
- */
+import javax.validation.constraints.NotNull;
+
 public class PartidaDTO implements Serializable {
 
-    private Long id;
+    private static final long serialVersionUID = 1L;
+
+	private Long id;
 
     @NotNull
     private ZonedDateTime dataPartida;
 
-    private Long clubeMandanteId;
+    private ClubeDTO clubeMandante;
 
-    private Long clubeVisitanteId;
-
+    private ClubeDTO clubeVisitante;
+    
+    private PlacarDTO placar;
+    
     private Long rodadaId;
 
     public Long getId() {
@@ -40,22 +40,23 @@ public class PartidaDTO implements Serializable {
         this.dataPartida = dataPartida;
     }
 
-    public Long getClubeMandanteId() {
-        return clubeMandanteId;
-    }
-
-    public void setClubeMandanteId(Long clubeId) {
-        this.clubeMandanteId = clubeId;
-    }
-
-    public Long getClubeVisitanteId() {
-        return clubeVisitanteId;
-    }
-
-    public void setClubeVisitanteId(Long clubeId) {
-        this.clubeVisitanteId = clubeId;
-    }
-
+    public ClubeDTO getClubeMandante() {
+		return clubeMandante;
+	}
+    
+    public void setClubeMandante(ClubeDTO clubeMandante) {
+		this.clubeMandante = clubeMandante;
+	}
+    
+    public ClubeDTO getClubeVisitante() {
+		return clubeVisitante;
+	}
+    
+    public void setClubeVisitante(ClubeDTO clubeVisitante) {
+		this.clubeVisitante = clubeVisitante;
+	}
+    
+    
     public Long getRodadaId() {
         return rodadaId;
     }
@@ -63,6 +64,14 @@ public class PartidaDTO implements Serializable {
     public void setRodadaId(Long rodadaId) {
         this.rodadaId = rodadaId;
     }
+    
+    public PlacarDTO getPlacar() {
+		return placar;
+	}
+    
+    public void setPlacar(PlacarDTO placar) {
+		this.placar = placar;
+	}
 
     @Override
     public boolean equals(Object o) {

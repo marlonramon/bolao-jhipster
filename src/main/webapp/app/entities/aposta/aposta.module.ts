@@ -4,20 +4,14 @@ import { RouterModule } from '@angular/router';
 import { BolaoSharedModule } from '../../shared';
 import {
     ApostaService,
-    ApostaPopupService,
     ApostaComponent,
-    ApostaDetailComponent,
-    ApostaDialogComponent,
-    ApostaPopupComponent,
-    ApostaDeletePopupComponent,
-    ApostaDeleteDialogComponent,
     apostaRoute,
-    apostaPopupRoute,
+    
 } from './';
 
 const ENTITY_STATES = [
     ...apostaRoute,
-    ...apostaPopupRoute,
+    
 ];
 
 @NgModule({
@@ -26,23 +20,14 @@ const ENTITY_STATES = [
         RouterModule.forChild(ENTITY_STATES)
     ],
     declarations: [
-        ApostaComponent,
-        ApostaDetailComponent,
-        ApostaDialogComponent,
-        ApostaDeleteDialogComponent,
-        ApostaPopupComponent,
-        ApostaDeletePopupComponent,
+        ApostaComponent,        
     ],
     entryComponents: [
         ApostaComponent,
-        ApostaDialogComponent,
-        ApostaPopupComponent,
-        ApostaDeleteDialogComponent,
-        ApostaDeletePopupComponent,
+        
     ],
     providers: [
-        ApostaService,
-        ApostaPopupService,
+        ApostaService,        
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

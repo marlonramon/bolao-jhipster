@@ -8,6 +8,8 @@ import { BolaoClubeModule } from './clube/clube.module';
 import { BolaoApostaModule } from './aposta/aposta.module';
 /* jhipster-needle-add-entity-module-import - JHipster will add entity modules imports here */
 
+
+
 @NgModule({
     imports: [
         BolaoBolaoModule,
@@ -15,7 +17,7 @@ import { BolaoApostaModule } from './aposta/aposta.module';
         BolaoRodadaModule,
         BolaoPartidaModule,
         BolaoClubeModule,
-        BolaoApostaModule,
+        BolaoApostaModule,       
         /* jhipster-needle-add-entity-module - JHipster will add entity modules here */
     ],
     declarations: [],

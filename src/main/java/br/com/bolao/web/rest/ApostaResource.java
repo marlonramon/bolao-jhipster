@@ -21,7 +21,6 @@ import com.codahale.metrics.annotation.Timed;
 
 import br.com.bolao.domain.Aposta;
 import br.com.bolao.domain.User;
-import br.com.bolao.repository.ApostaRepository;
 import br.com.bolao.security.AuthoritiesConstants;
 import br.com.bolao.service.ApostaService;
 import br.com.bolao.service.UserService;
@@ -38,8 +37,6 @@ public class ApostaResource {
 
     private static final String ENTITY_NAME = "aposta";
 
-    private final ApostaRepository apostaRepository;
-
     private final ApostaMapper apostaMapper;
 
 	private ApostaService apostaService;
@@ -47,8 +44,7 @@ public class ApostaResource {
 	private UserService userService;
 	
 
-    public ApostaResource(ApostaRepository apostaRepository, ApostaMapper apostaMapper, ApostaService apostaService, UserService userService) {
-        this.apostaRepository = apostaRepository;
+    public ApostaResource(ApostaMapper apostaMapper, ApostaService apostaService, UserService userService) {
         this.apostaMapper = apostaMapper;
         this.apostaService = apostaService;
         this.userService = userService;
@@ -59,12 +55,18 @@ public class ApostaResource {
     @Timed
     public ResponseEntity<ApostaDTO> createAposta(@RequestBody ApostaDTO apostaDTO) throws URISyntaxException {
         log.debug("REST request to save Aposta : {}", apostaDTO);
+        
         if (apostaDTO.getId() != null) {
-            throw new BadRequestAlertException("A new aposta cannot already have an ID", ENTITY_NAME, "idexists");
+            throw new BadRequestAlertException("Uma nova aposta não pode ter id", ENTITY_NAME, "idexists");
         }
+        
         Aposta aposta = apostaMapper.toEntity(apostaDTO);
-        aposta = apostaRepository.save(aposta);
+        
+        
+        aposta = apostaService.criarAposta(aposta);
+        
         ApostaDTO result = apostaMapper.toDto(aposta);
+        
         return ResponseEntity.created(new URI("/api/apostas/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -74,12 +76,18 @@ public class ApostaResource {
     @Timed
     public ResponseEntity<ApostaDTO> updateAposta(@RequestBody ApostaDTO apostaDTO) throws URISyntaxException {
         log.debug("REST request to update Aposta : {}", apostaDTO);
+        
         if (apostaDTO.getId() == null) {
             return createAposta(apostaDTO);
         }
+        
         Aposta aposta = apostaMapper.toEntity(apostaDTO);
-        aposta = apostaRepository.save(aposta);
+        
+        
+        aposta = apostaService.alterarAposta(aposta);
+        
         ApostaDTO result = apostaMapper.toDto(aposta);
+        
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, apostaDTO.getId().toString()))
             .body(result);

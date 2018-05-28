@@ -15,6 +15,8 @@ public class ApostaDTO implements Serializable {
     private ZonedDateTime dataAposta;
 
     private PartidaDTO partida;
+    
+    private PlacarDTO placar;
 
     public Long getId() {
         return id;
@@ -39,6 +41,14 @@ public class ApostaDTO implements Serializable {
     public void setPartida(PartidaDTO partida) {
         this.partida = partida;
     }
+    
+    public PlacarDTO getPlacar() {
+		return placar;
+	}
+    
+    public void setPlacar(PlacarDTO placar) {
+		this.placar = placar;
+	}
 
     @Override
     public boolean equals(Object o) {

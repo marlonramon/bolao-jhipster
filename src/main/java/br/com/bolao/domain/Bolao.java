@@ -20,9 +20,6 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-/**
- * A Bolao.
- */
 @Entity
 @Table(name = "bolao")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)

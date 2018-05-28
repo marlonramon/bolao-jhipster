@@ -13,6 +13,12 @@
                                  constraintName="fk_aposta_partida_id"
                                  referencedColumnNames="id"
                                  referencedTableName="partida"/>
+                                 
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="aposta"
+                                 constraintName="fk_aposta_user_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>                         
 
     </changeSet>
 </databaseChangeLog>

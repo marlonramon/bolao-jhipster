@@ -40,6 +40,11 @@ export class ApostaService {
             .map((res: HttpResponse<Aposta[]>) => this.convertArrayResponse(res));
     }
 
+    queryByLoggedUserAndRodada(idRodada: number): Observable<HttpResponse<Aposta[]>> {
+        return this.http.get<Aposta[]>(`/api/user/me/rodada/${idRodada}/apostas`, {observe: 'response' })
+            .map((res: HttpResponse<Aposta[]>) => this.convertArrayResponse(res));
+    }
+
     delete(id: number): Observable<HttpResponse<any>> {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response'});
     }
@@ -74,7 +79,6 @@ export class ApostaService {
     private convert(aposta: Aposta): Aposta {
         const copy: Aposta = Object.assign({}, aposta);
 
-        copy.dataAposta = this.dateUtils.toDate(aposta.dataAposta);
         return copy;
     }
 }

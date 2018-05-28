@@ -35,6 +35,8 @@ public class Aposta implements Serializable {
     @ManyToOne
     private User user;
     
+    private Long pontuacao;
+    
     public Aposta() {
 	
 	}
@@ -94,6 +96,18 @@ public class Aposta implements Serializable {
     
     public void setUser(User user) {
 		this.user = user;
+	}
+    
+    public boolean isValida() {
+    	return placar != null && placar.isValido();
+    }
+    
+    public Long getPontuacao() {
+		return pontuacao;
+	}
+    
+    public void setPontuacao(Long pontuacao) {
+		this.pontuacao = pontuacao;
 	}
     
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove

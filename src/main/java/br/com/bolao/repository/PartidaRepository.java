@@ -1,16 +1,17 @@
 package br.com.bolao.repository;
 
-import br.com.bolao.domain.Partida;
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import org.springframework.data.jpa.repository.*;
+import br.com.bolao.domain.Partida;
+import br.com.bolao.domain.Rodada;
 
 
-/**
- * Spring Data JPA repository for the Partida entity.
- */
-@SuppressWarnings("unused")
+
 @Repository
 public interface PartidaRepository extends JpaRepository<Partida, Long> {
-
+	
+	List<Partida> findByRodada(Rodada rodada);
 }

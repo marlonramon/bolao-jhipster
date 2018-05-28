@@ -4,6 +4,7 @@ import com.codahale.metrics.annotation.Timed;
 import br.com.bolao.domain.Partida;
 
 import br.com.bolao.repository.PartidaRepository;
+import br.com.bolao.security.AuthoritiesConstants;
 import br.com.bolao.web.rest.errors.BadRequestAlertException;
 import br.com.bolao.web.rest.util.HeaderUtil;
 import br.com.bolao.web.rest.util.PaginationUtil;
@@ -17,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -46,14 +48,8 @@ public class PartidaResource {
         this.partidaMapper = partidaMapper;
     }
 
-    /**
-     * POST  /partidas : Create a new partida.
-     *
-     * @param partidaDTO the partidaDTO to create
-     * @return the ResponseEntity with status 201 (Created) and with body the new partidaDTO, or with status 400 (Bad Request) if the partida has already an ID
-     * @throws URISyntaxException if the Location URI syntax is incorrect
-     */
     @PostMapping("/partidas")
+    @Secured(AuthoritiesConstants.ADMIN)
     @Timed
     public ResponseEntity<PartidaDTO> createPartida(@Valid @RequestBody PartidaDTO partidaDTO) throws URISyntaxException {
         log.debug("REST request to save Partida : {}", partidaDTO);
@@ -68,16 +64,8 @@ public class PartidaResource {
             .body(result);
     }
 
-    /**
-     * PUT  /partidas : Updates an existing partida.
-     *
-     * @param partidaDTO the partidaDTO to update
-     * @return the ResponseEntity with status 200 (OK) and with body the updated partidaDTO,
-     * or with status 400 (Bad Request) if the partidaDTO is not valid,
-     * or with status 500 (Internal Server Error) if the partidaDTO couldn't be updated
-     * @throws URISyntaxException if the Location URI syntax is incorrect
-     */
     @PutMapping("/partidas")
+    @Secured(AuthoritiesConstants.ADMIN)
     @Timed
     public ResponseEntity<PartidaDTO> updatePartida(@Valid @RequestBody PartidaDTO partidaDTO) throws URISyntaxException {
         log.debug("REST request to update Partida : {}", partidaDTO);
@@ -92,12 +80,6 @@ public class PartidaResource {
             .body(result);
     }
 
-    /**
-     * GET  /partidas : get all the partidas.
-     *
-     * @param pageable the pagination information
-     * @return the ResponseEntity with status 200 (OK) and the list of partidas in body
-     */
     @GetMapping("/partidas")
     @Timed
     public ResponseEntity<List<PartidaDTO>> getAllPartidas(Pageable pageable) {
@@ -107,12 +89,6 @@ public class PartidaResource {
         return new ResponseEntity<>(partidaMapper.toDto(page.getContent()), headers, HttpStatus.OK);
     }
 
-    /**
-     * GET  /partidas/:id : get the "id" partida.
-     *
-     * @param id the id of the partidaDTO to retrieve
-     * @return the ResponseEntity with status 200 (OK) and with body the partidaDTO, or with status 404 (Not Found)
-     */
     @GetMapping("/partidas/{id}")
     @Timed
     public ResponseEntity<PartidaDTO> getPartida(@PathVariable Long id) {
@@ -122,13 +98,8 @@ public class PartidaResource {
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(partidaDTO));
     }
 
-    /**
-     * DELETE  /partidas/:id : delete the "id" partida.
-     *
-     * @param id the id of the partidaDTO to delete
-     * @return the ResponseEntity with status 200 (OK)
-     */
     @DeleteMapping("/partidas/{id}")
+    @Secured(AuthoritiesConstants.ADMIN)
     @Timed
     public ResponseEntity<Void> deletePartida(@PathVariable Long id) {
         log.debug("REST request to delete Partida : {}", id);
