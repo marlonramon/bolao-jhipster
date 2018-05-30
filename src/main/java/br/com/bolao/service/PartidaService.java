@@ -11,6 +11,7 @@ import br.com.bolao.domain.Aposta;
 import br.com.bolao.domain.Bolao;
 import br.com.bolao.domain.Campeonato;
 import br.com.bolao.domain.Partida;
+import br.com.bolao.domain.Placar;
 import br.com.bolao.repository.ApostaRepository;
 import br.com.bolao.repository.BolaoRepository;
 
@@ -28,23 +29,47 @@ public class PartidaService {
 	
 	public void encerrarPartida(Partida partida) {
 		
-		Set<Aposta> apostasDaPartida = apostaRepository.findByPartida(partida);
+		Placar placarPartida = partida.getPlacar();
 		
-		for (Aposta aposta : apostasDaPartida) {
+		if (placarPartida != null && placarPartida.isValido()) {
 			
-			Campeonato campeonato = partida.getRodada().getCampeonato();
+			Set<Aposta> apostasDaPartida = apostaRepository.findByPartida(partida);
 			
-			Bolao bolao = bolaoRepository.findByCampeonatoAndUser(campeonato, aposta.getUser().getLogin());
-			
-			
-			
-			
+			for (Aposta aposta : apostasDaPartida) {
+				
+				if (aposta.isValida()) {
+					
+					new ValidadorAposta(aposta).validar();
+					
+					aposta = atualizarPontuacaoAposta(partida, aposta);
+					
+					apostaRepository.save(aposta);					
+					
+				}
+			}
 		}
 		
+	}
+
+
+
+	private Aposta atualizarPontuacaoAposta(Partida partida, Aposta aposta) {
 		
+		Campeonato campeonato = partida.getRodada().getCampeonato();
+		
+		Bolao bolao = bolaoRepository.findByCampeonatoAndUser(campeonato, aposta.getUser());
+		
+		Placar placarAposta  = aposta.getPlacar();
+		Placar placarPartida = partida.getPlacar();
+		
+		Long pontuacaoAposta =  new CalculadoraPontuacaoAposta(placarAposta, placarPartida, bolao).calcularPontuacao();
+		
+		aposta.setPontuacao(pontuacaoAposta);
+		
+		return aposta;
 	}
 	
 	
-	private Enum
+
 
 }

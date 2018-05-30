@@ -17,6 +17,8 @@ public class ApostaDTO implements Serializable {
     private PartidaDTO partida;
     
     private PlacarDTO placar;
+    
+    private Long pontuacao;
 
     public Long getId() {
         return id;
@@ -48,6 +50,14 @@ public class ApostaDTO implements Serializable {
     
     public void setPlacar(PlacarDTO placar) {
 		this.placar = placar;
+	}
+    
+    public Long getPontuacao() {
+		return pontuacao;
+	}
+    
+    public void setPontuacao(Long pontuacao) {
+		this.pontuacao = pontuacao;
 	}
 
     @Override

@@ -8,11 +8,13 @@ import br.com.bolao.security.AuthoritiesConstants;
 import br.com.bolao.web.rest.errors.BadRequestAlertException;
 import br.com.bolao.web.rest.util.HeaderUtil;
 import br.com.bolao.web.rest.util.PaginationUtil;
+import br.com.bolao.service.PartidaService;
 import br.com.bolao.service.dto.PartidaDTO;
 import br.com.bolao.service.mapper.PartidaMapper;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
@@ -42,6 +44,9 @@ public class PartidaResource {
     private final PartidaRepository partidaRepository;
 
     private final PartidaMapper partidaMapper;
+    
+    @Autowired
+    private PartidaService partidaService;
 
     public PartidaResource(PartidaRepository partidaRepository, PartidaMapper partidaMapper) {
         this.partidaRepository = partidaRepository;
@@ -69,12 +74,19 @@ public class PartidaResource {
     @Timed
     public ResponseEntity<PartidaDTO> updatePartida(@Valid @RequestBody PartidaDTO partidaDTO) throws URISyntaxException {
         log.debug("REST request to update Partida : {}", partidaDTO);
+        
         if (partidaDTO.getId() == null) {
             return createPartida(partidaDTO);
         }
+        
         Partida partida = partidaMapper.toEntity(partidaDTO);
+        
         partida = partidaRepository.save(partida);
+        
+        partidaService.encerrarPartida(partida);        
+        
         PartidaDTO result = partidaMapper.toDto(partida);
+        
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, partidaDTO.getId().toString()))
             .body(result);

@@ -5,13 +5,9 @@ import br.com.bolao.domain.Resultado;
 
 public class CalculadorResultadoPlacar {
 
-	private Placar placar;
+		
 
-	public CalculadorResultadoPlacar(Placar placar) {
-		this.placar = placar;
-	}
-
-	public Resultado calcularResultado() {
+	public Resultado calcularResultado(Placar placar) {
 
 		if (placar.isValido()) {
 

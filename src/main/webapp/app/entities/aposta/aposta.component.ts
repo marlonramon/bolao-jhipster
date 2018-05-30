@@ -20,6 +20,8 @@ import { ITEMS_PER_PAGE, Principal } from '../../shared';
 })
 export class ApostaComponent implements OnInit, OnDestroy {
 
+    
+
     rodadas: Rodada[];
     apostas: Aposta[];
     isSaving: boolean;
@@ -57,7 +59,6 @@ export class ApostaComponent implements OnInit, OnDestroy {
     }
 
     loadAll() {
-        
         this.bolaoService.queryByLoggedUser().subscribe(
             (res: HttpResponse<Aposta[]>) => {this.onSuccessBolao(res.body, res.headers)},
             (res: HttpErrorResponse) => this.onError(res.message),
@@ -107,13 +108,23 @@ export class ApostaComponent implements OnInit, OnDestroy {
     }
 
     salvarApostas() {
+        
         const calls = []
         this.isSaving = true;
         this.apostas.forEach(aposta => {
             calls.push(this.save(aposta))
         });
 
-        Observable.forkJoin(calls).subscribe();
+        Observable.forkJoin(calls).subscribe( 
+            data => {
+                this.jhiAlertService.success("Aposta salvas com sucesso.");
+                
+
+            },
+            (res: HttpErrorResponse) => this.onError(res.message)
+        );
+
+
 
         this.isSaving = false;        
 
@@ -163,6 +174,7 @@ export class ApostaComponent implements OnInit, OnDestroy {
         for (let i = 0; i < data.length; i++) {
             this.apostas.push(data[i]);
         }
+        
     }
 
     private onSuccessBolao(data, headers) {

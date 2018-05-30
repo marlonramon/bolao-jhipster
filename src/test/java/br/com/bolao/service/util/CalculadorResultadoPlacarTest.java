@@ -17,7 +17,7 @@ public class CalculadorResultadoPlacarTest {
 		
 		Placar placar = new Placar(placarMandante, placarVisitante);
 		
-		Resultado resultadoCalculado = new CalculadorResultadoPlacar(placar).calcularResultado();
+		Resultado resultadoCalculado = new CalculadorResultadoPlacar().calcularResultado(placar);
 		
 		assertEquals(Resultado.EMPATE, resultadoCalculado);
 		
@@ -33,7 +33,7 @@ public class CalculadorResultadoPlacarTest {
 		
 		Placar placar = new Placar(placarMandante, placarVisitante);
 		
-		Resultado resultadoCalculado = new CalculadorResultadoPlacar(placar).calcularResultado();
+		Resultado resultadoCalculado = new CalculadorResultadoPlacar().calcularResultado(placar);
 		
 		assertEquals(Resultado.MANDANTE, resultadoCalculado);
 		
@@ -49,7 +49,7 @@ public class CalculadorResultadoPlacarTest {
 		
 		Placar placar = new Placar(placarMandante, placarVisitante);
 		
-		Resultado resultadoCalculado = new CalculadorResultadoPlacar(placar).calcularResultado();
+		Resultado resultadoCalculado = new CalculadorResultadoPlacar().calcularResultado(placar);
 		
 		assertEquals(Resultado.VISITANTE, resultadoCalculado);
 		

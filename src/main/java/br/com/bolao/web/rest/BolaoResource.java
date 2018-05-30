@@ -10,6 +10,7 @@ import br.com.bolao.web.rest.errors.BadRequestAlertException;
 import br.com.bolao.web.rest.util.HeaderUtil;
 import br.com.bolao.web.rest.util.PaginationUtil;
 import br.com.bolao.service.dto.BolaoDTO;
+import br.com.bolao.service.dto.RankingDTO;
 import br.com.bolao.service.mapper.BolaoMapper;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
@@ -28,6 +29,7 @@ import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
@@ -120,6 +122,21 @@ public class BolaoResource {
         bolaoRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
+    
+    
+    @GetMapping("/bolao/{id}/ranking")
+    @Timed    
+    public ResponseEntity<List<RankingDTO>> getRankingBolao(@PathVariable Long id) {
+        
+    	log.debug("REST request to get Bolao : {}", id);
+        
+        List<RankingDTO> results = bolaoRepository.findByRankingFromBolao(id);
+        
+        
+        return new ResponseEntity<>(results, HttpStatus.OK);
+    }
+    
+    
     
     
     

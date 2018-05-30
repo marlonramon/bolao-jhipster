@@ -18,6 +18,7 @@ import { BolaoAccountModule } from './account/account.module';
 import { BolaoEntityModule } from './entities/entity.module';
 import { PaginationConfig } from './blocks/config/uib-pagination.config';
 import { BlockUIModule } from 'ng-block-ui';
+import { BlockUIHttpModule } from 'ng-block-ui/http';
 
 // jhipster-needle-angular-add-module-import JHipster will add new module here
 import {
@@ -36,6 +37,7 @@ import {
         BolaoAppRoutingModule,
         Ng2Webstorage.forRoot({ prefix: 'jhi', separator: '-'}),
         BlockUIModule.forRoot(),
+        BlockUIHttpModule.forRoot(),
         BolaoSharedModule,
         BolaoHomeModule,
         BolaoAdminModule,

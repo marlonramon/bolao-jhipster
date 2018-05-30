@@ -28,7 +28,7 @@ export const clubeRoute: Routes = [
         path: 'clube-new',
         component: ClubePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Clubes'
         },
         canActivate: [UserRouteAccessService],
@@ -38,7 +38,7 @@ export const clubeRoute: Routes = [
         path: 'clube/:id/edit',
         component: ClubePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Clubes'
         },
         canActivate: [UserRouteAccessService],
@@ -48,7 +48,7 @@ export const clubeRoute: Routes = [
         path: 'clube/:id/delete',
         component: ClubeDeletePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Clubes'
         },
         canActivate: [UserRouteAccessService],

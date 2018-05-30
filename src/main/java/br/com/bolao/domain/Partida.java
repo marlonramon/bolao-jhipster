@@ -9,6 +9,7 @@ import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * A Partida.
@@ -39,6 +40,9 @@ public class Partida implements Serializable {
     
     @Embedded
     private Placar placar ;
+    
+    @OneToMany(fetch=FetchType.LAZY, mappedBy="partida")
+    Set<Aposta> apostas;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -108,6 +112,15 @@ public class Partida implements Serializable {
     public void setRodada(Rodada rodada) {
         this.rodada = rodada;
     }
+    
+    public Set<Aposta> getApostas() {
+		return apostas;
+	}
+    
+    public void setApostas(Set<Aposta> apostas) {
+		this.apostas = apostas;
+	}
+    
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override

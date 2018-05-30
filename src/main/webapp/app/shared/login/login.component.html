@@ -1,42 +1,60 @@
+
 <div class="modal-header">
-    <h4 class="modal-title">Sign in</h4>
-    <button aria-label="Close" data-dismiss="modal" class="close" type="button" (click)="activeModal.dismiss('closed')"><span aria-hidden="true">x</span>
+    <h4 class="modal-title">Entrar</h4>
+    <button aria-label="Close" data-dismiss="modal" class="close" type="button" (click)="activeModal.dismiss('closed')">
+        <span aria-hidden="true">x</span>
     </button>
 </div>
+
 <div class="modal-body">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div class="alert alert-danger" *ngIf="authenticationError">
-                <strong>Failed to sign in!</strong> Please check your credentials and try again.
+                <strong>Erro ao entrar!</strong> Verifique seu login e senha e tente novamente.
             </div>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-12">
+
             <form class="form" role="form" (ngSubmit)="login()">
-                <div class="form-group">
-                    <label for="username">Login</label>
-                    <input type="text" class="form-control" name="username" id="username" placeholder="Your username"
-                    [(ngModel)]="username">
+
+                <div class="col-md-12">
+                    <mat-form-field class="example-full-width">
+                        <input type="text" matInput name="username" id="username" placeholder="Usuário" [(ngModel)]="username">
+                    </mat-form-field>
                 </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" class="form-control" name="password" id="password" placeholder="Your password"
-                           [(ngModel)]="password">
+
+
+                <div class="col-md-12">
+                    <mat-form-field class="example-full-width">
+                        <input type="password" matInput name="password" id="password" placeholder="Senha" [(ngModel)]="password">
+                    </mat-form-field>
+
                 </div>
-                <div class="form-check">
-                    <label class="form-check-label" for="rememberMe">
-                        <input class="form-check-input" type="checkbox" name="rememberMe" id="rememberMe" [(ngModel)]="rememberMe" checked>
-                        <span>Remember me</span>
-                    </label>
+
+
+                <div class="col-md-12">
+                    <div class="form-check">
+                        <label class="form-check-label" for="rememberMe">
+                            <input class="form-check-input" type="checkbox" name="rememberMe" id="rememberMe" [(ngModel)]="rememberMe" checked>
+                            Manter conectado
+                            <span class="form-check-sign">
+                                   <span class="check"></span>
+                             </span>
+                        </label>
+                    </div>
                 </div>
-                <button type="submit" class="btn btn-primary">Sign in</button>
+
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-primary">Entrar</button>
+                </div>
             </form>
             <p></p>
             <div class="alert alert-warning">
-                <a class="alert-link" (click)="requestResetPassword()">Did you forget your password?</a>
+                <a class="alert-link" (click)="requestResetPassword()">Esqueceu sua senha?</a>
             </div>
             <div class="alert alert-warning">
-                <span>You don't have an account yet?</span>
-                <a class="alert-link" (click)="register()">Register a new account</a>
+                <span>Ainda não se cadastrou?</span>
+                <a class="alert-link" (click)="register()">Cadastrar-se</a>
             </div>
         </div>
     </div>

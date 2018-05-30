@@ -31,7 +31,7 @@ export const campeonatoPopupRoute: Routes = [
         path: 'campeonato-new',
         component: CampeonatoPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Campeonatoes'
         },
         canActivate: [UserRouteAccessService],
@@ -41,7 +41,7 @@ export const campeonatoPopupRoute: Routes = [
         path: 'campeonato/:id/edit',
         component: CampeonatoPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Campeonatoes'
         },
         canActivate: [UserRouteAccessService],
@@ -51,7 +51,7 @@ export const campeonatoPopupRoute: Routes = [
         path: 'campeonato/:id/delete',
         component: CampeonatoDeletePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Campeonatoes'
         },
         canActivate: [UserRouteAccessService],

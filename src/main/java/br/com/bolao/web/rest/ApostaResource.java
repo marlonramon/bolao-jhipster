@@ -67,8 +67,7 @@ public class ApostaResource {
         
         ApostaDTO result = apostaMapper.toDto(aposta);
         
-        return ResponseEntity.created(new URI("/api/apostas/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
+        return ResponseEntity.created(new URI("/api/apostas/" + result.getId()))            
             .body(result);
     }
 
@@ -89,7 +88,6 @@ public class ApostaResource {
         ApostaDTO result = apostaMapper.toDto(aposta);
         
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, apostaDTO.getId().toString()))
             .body(result);
     }
     

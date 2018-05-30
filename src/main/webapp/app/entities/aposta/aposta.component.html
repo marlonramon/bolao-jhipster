@@ -1,62 +1,68 @@
 <div class="main-content" *ngIf="bolao">
     <div class="container-fluid">
+        <jhi-alert></jhi-alert>
+        
         <div class="row">
+
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header card-header-tabs card-header-primary">
-                        <h3>{{bolao.descricao + ' - ' + bolao.campeonatoDTO.descricao}}</h3>
+                        <h6>{{bolao.descricao + ' - ' + bolao.campeonatoDTO.descricao}}</h6>
                         <div class="nav-tabs-navigation">
                             <div class="nav-tabs-wrapper" *ngIf="rodadas">
                                 <span class="nav-tabs-title">Rodadas:</span>
-                                <ul class="nav nav-tabs" data-tabs="tabs" >
-                                        <li class="nav-item" *ngFor="let rodada of rodadas" >
-                                                <a mat-button class="nav-link" [ngClass]="{ 'active':rodada.numero === 1}" (click)="loadApostas(rodada)" data-toggle="tab">
-                                                    {{rodada.numero}}
-                                                    <div class="ripple-container"></div>
-                                                </a>
-                                        </li>
+                                <ul class="nav nav-tabs" data-tabs="tabs">
+                                    <li class="nav-item" *ngFor="let rodada of rodadas">
+                                        <a mat-button class="nav-link" [ngClass]="{ 'active':rodada.numero === 1}" (click)="loadApostas(rodada)" data-toggle="tab">
+                                            {{rodada.numero}}
+                                            <div class="ripple-container"></div>
+                                        </a>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                     <div class="card-body">
-                        
+
                         <div class="tab-content">
                             <button mat-raised-button type="submit" (click)="salvarApostas()" class="btn btn-primary pull-right">Salvar Apostas</button>
                             <div class="tab-pane active" id="rodadaAtiva">
-                                
+
                                 <table class="table">
-                                    <tbody *ngIf="apostas" >
+                                    <tbody *ngIf="apostas">
                                         <tr *ngFor="let aposta of apostas">
-                                            <td>{{aposta.partida.dataPartida |  date: 'dd/MM/yyyy hh:mm'}}</td>
-                                            <td>{{aposta.partida.clubeMandante.nome}}</td>
-                                            <td><img class="img-teams" [src]="loadBandeira(aposta.partida.clubeMandante.bandeira)"/></td>
-                                            <td><input class="form-control text-right" type="number"  
-                                                id="inputPlacarVisitante" 
-                                                min="0" max="99"
-                                                [(ngModel)]="aposta.placar.placarMandante"
-                                                style="width: 70px" />
+                                            <td class="td-apostas">{{aposta.partida.dataPartida | date: 'dd/MM/yyyy hh:mm'}}</td>
+                                            <td class="td-apostas">{{aposta.partida.clubeMandante.nome}}</td>
+                                            <td>
+                                                <img class="img-teams" [src]="loadBandeira(aposta.partida.clubeMandante.bandeira)" />
                                             </td>
-                                            <td> 
-                                                <input class="form-control text-right" type="number"  
-                                                        id="inputPlacarVisitante" 
-							                            min="0" max="99"
-                                                        [(ngModel)]="aposta.placar.placarVisitante"
-                                                        style="width: 70px" />
+                                            <td>
+                                                <input class="form-control text-right" type="number" id="inputPlacarVisitante" min="0" max="99" [(ngModel)]="aposta.placar.placarMandante"
+                                                    style="width: 70px" />
+                                            </td>
+                                            <td>
+                                                <input class="form-control text-right" type="number" id="inputPlacarVisitante" min="0" max="99" [(ngModel)]="aposta.placar.placarVisitante"
+                                                    style="width: 70px" />
 
                                             </td>
-                                            <td><img class="img-teams" [src]="loadBandeira(aposta.partida.clubeVisitante.bandeira)"/></td>
-                                            <td>{{aposta.partida.clubeVisitante.nome}}</td>
-                                            
-                                            
+                                            <td>
+                                                <img class="img-teams" [src]="loadBandeira(aposta.partida.clubeVisitante.bandeira)" />
+                                            </td>
+                                            <td class="td-apostas">{{aposta.partida.clubeVisitante.nome}}</td>
+
+
                                         </tr>
-                                        
+
                                     </tbody>
                                 </table>
-                            </div>                            
+                            </div>
                         </div>
                     </div>
-            </div>            
+                </div>
+
+            </div>
+
+
         </div>
+        
     </div>
-  </div>

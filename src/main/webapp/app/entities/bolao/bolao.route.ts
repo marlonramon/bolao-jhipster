@@ -31,7 +31,7 @@ export const bolaoPopupRoute: Routes = [
         path: 'bolao-new',
         component: BolaoPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Bolaos'
         },
         canActivate: [UserRouteAccessService],
@@ -41,7 +41,7 @@ export const bolaoPopupRoute: Routes = [
         path: 'bolao/:id/edit',
         component: BolaoPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Bolaos'
         },
         canActivate: [UserRouteAccessService],
@@ -51,7 +51,7 @@ export const bolaoPopupRoute: Routes = [
         path: 'bolao/:id/delete',
         component: BolaoDeletePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Bolaos'
         },
         canActivate: [UserRouteAccessService],

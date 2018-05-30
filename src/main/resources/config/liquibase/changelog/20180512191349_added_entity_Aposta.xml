@@ -38,8 +38,8 @@
                 <constraints nullable="true" />
             </column>
             
-            <column name="pontuacao" type="int">
-                <constraints nullable="true" />
+            <column name="pontuacao" type="int" defaultValue="0">
+                <constraints nullable="false"  />
             </column>
             
             <column name="user_id" type="bigint">

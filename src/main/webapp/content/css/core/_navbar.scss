@@ -178,10 +178,17 @@
   }
 }
 
+.navbar-title {
+    font-size: xx-large;        
+}
+
 .navbar{
   .navbar-minimize{
     padding: 3px 0 0 15px;
   }
+
+  
+
 
   &.navbar-transparent{
     padding-top: 10px;

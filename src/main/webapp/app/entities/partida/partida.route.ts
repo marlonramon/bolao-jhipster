@@ -31,7 +31,7 @@ export const partidaPopupRoute: Routes = [
         path: 'partida-new',
         component: PartidaPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Partidas'
         },
         canActivate: [UserRouteAccessService],
@@ -41,7 +41,7 @@ export const partidaPopupRoute: Routes = [
         path: 'partida/:id/edit',
         component: PartidaPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Partidas'
         },
         canActivate: [UserRouteAccessService],
@@ -51,7 +51,7 @@ export const partidaPopupRoute: Routes = [
         path: 'partida/:id/delete',
         component: PartidaDeletePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Partidas'
         },
         canActivate: [UserRouteAccessService],
