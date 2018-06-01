@@ -31,7 +31,7 @@
             </column>
             
             <column name="fim_rodada" type="timestamp">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
             <column name="campeonato_id" type="bigint">

@@ -5,6 +5,7 @@ export class Rodada implements BaseEntity {
         public id?: number,
         public numero?: number,
         public inicioRodada?: any,
+        public fimRodada?: any,
         public campeonatoId?: number,
     ) {
     }

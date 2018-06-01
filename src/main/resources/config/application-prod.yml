@@ -34,9 +34,9 @@ spring:
             enabled: false
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
-        url: jdbc:mysql://localhost:3306/bolao?useUnicode=true&characterEncoding=utf8&useSSL=false
-        username: root
-        password:
+        url: jdbc:mysql://localhost:3306/bolao_prod?useUnicode=true&characterEncoding=utf8&useSSL=false
+        username: bolao
+        password: bolao
         hikari:
             data-source-properties:
                 cachePrepStmts: true
@@ -54,10 +54,16 @@ spring:
             hibernate.generate_statistics: false
             hibernate.cache.region.factory_class: io.github.jhipster.config.jcache.NoDefaultJCacheRegionFactory
     mail:
-        host: localhost
-        port: 25
-        username:
-        password:
+        host: correio.datacoper.com.br
+        port: 587
+        username: marlon.ramon@datacoper.com.br
+        password: mr142536_Ramon
+        protocol: smtp
+        tls: true
+        properties.mail.smtp:
+            auth: true
+            starttls.enable: true
+            ssl.trust: correio.datacoper.com.br   
     thymeleaf:
         cache: true
     zipkin: # Use the "zipkin" Maven profile to have the Spring Cloud Zipkin dependencies

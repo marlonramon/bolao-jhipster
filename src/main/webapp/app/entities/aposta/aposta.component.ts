@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs/Subscription';
-import { JhiEventManager, JhiParseLinks, JhiAlertService } from 'ng-jhipster';
+import { JhiEventManager, JhiParseLinks, JhiAlertService, JhiDateUtils } from 'ng-jhipster';
+
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/forkJoin';
@@ -36,6 +37,7 @@ export class ApostaComponent implements OnInit, OnDestroy {
     queryCount: any;
     reverse: any;
     totalItems: number;
+    rodada_ativa: Rodada;
 
     constructor(
         private apostaService: ApostaService,
@@ -44,7 +46,8 @@ export class ApostaComponent implements OnInit, OnDestroy {
         private parseLinks: JhiParseLinks,
         private principal: Principal,
         private bolaoService: BolaoService,
-        private rodadaService: RodadaService
+        private rodadaService: RodadaService,
+        private dateUtils: JhiDateUtils
     ) {
         this.apostas = [];
         this.boloes = [];
@@ -55,7 +58,7 @@ export class ApostaComponent implements OnInit, OnDestroy {
             last: 0
         };
         this.predicate = 'id';
-        this.reverse = true;
+        this.reverse = true;        
     }
 
     loadAll() {
@@ -96,6 +99,12 @@ export class ApostaComponent implements OnInit, OnDestroy {
         this.eventSubscriber = this.eventManager.subscribe('apostaListModification', (response) => this.reset());
     }
 
+    isPartidaIniciada(partida) {
+        let dataPartida = this.dateUtils.toDate(partida.dataPartida);
+        let currentDate = new Date();
+        return dataPartida.getTime() < currentDate.getTime();
+    }
+
     loadRodadas(idCampeonato) {
         this.rodadaService.queryByCampeonato(idCampeonato).subscribe(
             (res: HttpResponse<Rodada[]>) => this.onSuccessRodada(res.body, res.headers),
@@ -112,16 +121,18 @@ export class ApostaComponent implements OnInit, OnDestroy {
         const calls = []
         this.isSaving = true;
         this.apostas.forEach(aposta => {
-            calls.push(this.save(aposta))
+            let isPartidaIniciada = this.isPartidaIniciada(aposta.partida);
+            if (!isPartidaIniciada) {                
+                calls.push(this.save(aposta))
+            }    
         });
 
         Observable.forkJoin(calls).subscribe( 
             data => {
-                this.jhiAlertService.success("Aposta salvas com sucesso.");
-                
+                this.jhiAlertService.success("Aposta salvas com sucesso.");              
 
             },
-            (res: HttpErrorResponse) => this.onError(res.message)
+            (res: HttpErrorResponse) => this.onError(res.error)
         );
 
 
@@ -132,8 +143,7 @@ export class ApostaComponent implements OnInit, OnDestroy {
         
     }
 
-    save(aposta) {
-        
+    save(aposta): Observable<HttpResponse<Aposta>> {
         if (aposta.id !== undefined) {
             return this.apostaService.update(aposta);
         } else {
@@ -151,6 +161,7 @@ export class ApostaComponent implements OnInit, OnDestroy {
     }
 
     loadApostas(rodada) {
+        this.rodada_ativa = rodada;
         this.apostaService.queryByLoggedUserAndRodada(rodada.id).subscribe(
             (res: HttpResponse<Aposta[]>) => this.onSuccess(res.body, res.headers),
             (res: HttpErrorResponse) => this.onError(res.message)
@@ -184,18 +195,41 @@ export class ApostaComponent implements OnInit, OnDestroy {
         }
     }
 
+    private definirRodadaAtual() : Rodada {
+        let rodadarodada
+
+        for (let index = 0; index <  this.rodadas.length; index++) {
+            let rodada = this.rodadas[index];
+            
+            let dataRodada = this.dateUtils.toDate(rodada.fimRodada)
+            let dataAtual = new Date();
+            
+            if (dataAtual.getTime() < dataRodada.getTime()) {
+                return rodada;                
+            }            
+        }        
+
+    }
+
+    isRodadaAtiva(rodada) {
+        return rodada === this.rodada_ativa;
+    }
+
     private onSuccessRodada(data, headers) {
         for (let i = 0; i < data.length; i++) {
             let rodada = data[i];
-            this.rodadas.push(rodada);
-            if (rodada.numero === 1) {
-                this.loadApostas(rodada);
-            }
-
+            this.rodadas.push(rodada);            
         }
+
+        this.rodada_ativa =  this.definirRodadaAtual();
+        
+        this.loadApostas(this.rodada_ativa);
+        
+
     }
 
     private onError(error) {
         this.jhiAlertService.error(error.message, null, null);
+        
     }
 }

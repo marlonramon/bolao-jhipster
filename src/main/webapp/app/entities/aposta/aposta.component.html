@@ -13,7 +13,7 @@
                                 <span class="nav-tabs-title">Rodadas:</span>
                                 <ul class="nav nav-tabs" data-tabs="tabs">
                                     <li class="nav-item" *ngFor="let rodada of rodadas">
-                                        <a mat-button class="nav-link" [ngClass]="{ 'active':rodada.numero === 1}" (click)="loadApostas(rodada)" data-toggle="tab">
+                                        <a mat-button class="nav-link" [ngClass]="{ 'active':isRodadaAtiva(rodada)}" (click)="loadApostas(rodada)" data-toggle="tab">
                                             {{rodada.numero}}
                                             <div class="ripple-container"></div>
                                         </a>
@@ -38,11 +38,11 @@
                                             </td>
                                             <td>
                                                 <input class="form-control text-right" type="number" id="inputPlacarVisitante" min="0" max="99" [(ngModel)]="aposta.placar.placarMandante"
-                                                    style="width: 70px" />
+                                                    style="width: 70px" [disabled]="isPartidaIniciada(aposta.partida)"/>
                                             </td>
                                             <td>
                                                 <input class="form-control text-right" type="number" id="inputPlacarVisitante" min="0" max="99" [(ngModel)]="aposta.placar.placarVisitante"
-                                                    style="width: 70px" />
+                                                    style="width: 70px" [disabled]="isPartidaIniciada(aposta.partida)" />
 
                                             </td>
                                             <td>

@@ -1,14 +1,11 @@
 package br.com.bolao.web.rest.errors;
 
-import org.zalando.problem.AbstractThrowableProblem;
-import org.zalando.problem.Status;
-
-public class ApostaDuplicadaException extends AbstractThrowableProblem {
+public class ApostaDuplicadaException extends CustomParameterizedException {
 
 	private static final long serialVersionUID = 1L;
 	
 	public ApostaDuplicadaException(String message) {
-        super(ErrorConstants.DEFAULT_TYPE, message, Status.BAD_REQUEST);
+        super(message);
     }
 	
 

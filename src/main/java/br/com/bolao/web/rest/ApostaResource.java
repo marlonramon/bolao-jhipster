@@ -27,7 +27,6 @@ import br.com.bolao.service.UserService;
 import br.com.bolao.service.dto.ApostaDTO;
 import br.com.bolao.service.mapper.ApostaMapper;
 import br.com.bolao.web.rest.errors.BadRequestAlertException;
-import br.com.bolao.web.rest.util.HeaderUtil;
 
 @RestController
 @RequestMapping("/api")

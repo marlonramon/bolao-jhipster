@@ -32,7 +32,7 @@ public interface BolaoRepository extends JpaRepository<Bolao, Long> {
     
     @Query(" select new br.com.bolao.service.dto.RankingDTO(bolao.id, "
     		+ "	            user.login, "
-    		+ "	            user.firstName || ' ' ||  user.lastName, "
+    		+ "	            user.firstName, "
     		+ "             sum(apostas.pontuacao)) from Bolao bolao "
     		+ " join bolao.campeonato campeonato "
     		+ " join campeonato.rodadas rodadas "

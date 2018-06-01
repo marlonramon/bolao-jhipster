@@ -1,26 +1,41 @@
 package br.com.bolao.web.rest;
 
+import java.util.Optional;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.transaction.Transactional;
+import javax.validation.Valid;
+
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.codahale.metrics.annotation.Timed;
 
+import br.com.bolao.domain.Bolao;
 import br.com.bolao.domain.User;
+import br.com.bolao.repository.BolaoRepository;
 import br.com.bolao.repository.UserRepository;
 import br.com.bolao.security.SecurityUtils;
 import br.com.bolao.service.MailService;
 import br.com.bolao.service.UserService;
 import br.com.bolao.service.dto.UserDTO;
-import br.com.bolao.web.rest.errors.*;
+import br.com.bolao.web.rest.errors.EmailAlreadyUsedException;
+import br.com.bolao.web.rest.errors.EmailNotFoundException;
+import br.com.bolao.web.rest.errors.InternalServerErrorException;
+import br.com.bolao.web.rest.errors.InvalidPasswordException;
+import br.com.bolao.web.rest.errors.LoginAlreadyUsedException;
 import br.com.bolao.web.rest.vm.KeyAndPasswordVM;
 import br.com.bolao.web.rest.vm.ManagedUserVM;
-
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-import java.util.*;
 
 /**
  * REST controller for managing the current user's account.
@@ -36,7 +51,10 @@ public class AccountResource {
     private final UserService userService;
 
     private final MailService mailService;
-
+    
+    @Autowired
+    private BolaoRepository bolaoRepository;
+    
     public AccountResource(UserRepository userRepository, UserService userService, MailService mailService) {
 
         this.userRepository = userRepository;
@@ -55,6 +73,7 @@ public class AccountResource {
     @PostMapping("/register")
     @Timed
     @ResponseStatus(HttpStatus.CREATED)
+    @Transactional
     public void registerAccount(@Valid @RequestBody ManagedUserVM managedUserVM) {
         if (!checkPasswordLength(managedUserVM.getPassword())) {
             throw new InvalidPasswordException();
@@ -62,7 +81,20 @@ public class AccountResource {
         userRepository.findOneByLogin(managedUserVM.getLogin().toLowerCase()).ifPresent(u -> {throw new LoginAlreadyUsedException();});
         userRepository.findOneByEmailIgnoreCase(managedUserVM.getEmail()).ifPresent(u -> {throw new EmailAlreadyUsedException();});
         User user = userService.registerUser(managedUserVM, managedUserVM.getPassword());
+        
+        vincularUsuarioAoBolao(user);
+        
         mailService.sendActivationEmail(user);
+    }
+    
+    
+    private void vincularUsuarioAoBolao(User user) {
+    	//TODO acertar posteriorente
+    	Bolao bolao = bolaoRepository.findOne(1L);
+    	bolao.addUsersBolao(user);
+    	
+    	bolaoRepository.save(bolao);
+    	
     }
 
     /**

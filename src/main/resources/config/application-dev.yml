@@ -68,7 +68,8 @@ spring:
         tls: true
         properties.mail.smtp:
             auth: true
-            starttls.enable: true            
+            starttls.enable: true
+            ssl.trust: correio.datacoper.com.br            
     messages:
         cache-seconds: 1
     thymeleaf:
