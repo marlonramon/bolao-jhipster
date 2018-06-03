@@ -68,13 +68,7 @@
                 </small>
             </div>
         </div>
-
-        <div class="form-group">
-            <label for="field_usersBolao">Users Bolao</label>
-            <select class="form-control" id="field_usersBolao" multiple name="usersBolao" [(ngModel)]="bolao.usersBolaos">
-                <option [ngValue]="getSelected(bolao.usersBolaos, userOption)" *ngFor="let userOption of users; trackBy: trackUserById">{{userOption.id}}</option>
-            </select>
-        </div>
+        
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
