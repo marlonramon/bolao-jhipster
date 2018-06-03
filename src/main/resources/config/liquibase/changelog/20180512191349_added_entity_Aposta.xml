@@ -30,15 +30,15 @@
                 <constraints nullable="true" />
             </column>
             
-            <column name="placar_mandante" type="int">
+            <column name="placar_mandante" type="smallint">
                 <constraints nullable="true" />
             </column>
             
-            <column name="placar_visitante" type="int">
+            <column name="placar_visitante" type="smallint">
                 <constraints nullable="true" />
             </column>
             
-            <column name="pontuacao" type="int" defaultValue="0">
+            <column name="pontuacao" type="bigint" defaultValue="0">
                 <constraints nullable="false"  />
             </column>
             

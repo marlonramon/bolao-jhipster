@@ -112,7 +112,7 @@ public class BolaoResourceIntTest {
 
         // Create the Bolao
         BolaoDTO bolaoDTO = bolaoMapper.toDto(bolao);
-        restBolaoMockMvc.perform(post("/api/bolaos")
+        restBolaoMockMvc.perform(post("/api/bolao")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(bolaoDTO)))
             .andExpect(status().isCreated());
@@ -137,7 +137,7 @@ public class BolaoResourceIntTest {
         BolaoDTO bolaoDTO = bolaoMapper.toDto(bolao);
 
         // An entity with an existing ID cannot be created, so this API call must fail
-        restBolaoMockMvc.perform(post("/api/bolaos")
+        restBolaoMockMvc.perform(post("/api/bolao")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(bolaoDTO)))
             .andExpect(status().isBadRequest());
@@ -157,7 +157,7 @@ public class BolaoResourceIntTest {
         // Create the Bolao, which fails.
         BolaoDTO bolaoDTO = bolaoMapper.toDto(bolao);
 
-        restBolaoMockMvc.perform(post("/api/bolaos")
+        restBolaoMockMvc.perform(post("/api/bolao")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(bolaoDTO)))
             .andExpect(status().isBadRequest());
@@ -176,7 +176,7 @@ public class BolaoResourceIntTest {
         // Create the Bolao, which fails.
         BolaoDTO bolaoDTO = bolaoMapper.toDto(bolao);
 
-        restBolaoMockMvc.perform(post("/api/bolaos")
+        restBolaoMockMvc.perform(post("/api/bolao")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(bolaoDTO)))
             .andExpect(status().isBadRequest());
@@ -195,7 +195,7 @@ public class BolaoResourceIntTest {
         // Create the Bolao, which fails.
         BolaoDTO bolaoDTO = bolaoMapper.toDto(bolao);
 
-        restBolaoMockMvc.perform(post("/api/bolaos")
+        restBolaoMockMvc.perform(post("/api/bolao")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(bolaoDTO)))
             .andExpect(status().isBadRequest());
@@ -214,7 +214,7 @@ public class BolaoResourceIntTest {
         // Create the Bolao, which fails.
         BolaoDTO bolaoDTO = bolaoMapper.toDto(bolao);
 
-        restBolaoMockMvc.perform(post("/api/bolaos")
+        restBolaoMockMvc.perform(post("/api/bolao")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(bolaoDTO)))
             .andExpect(status().isBadRequest());
@@ -230,7 +230,7 @@ public class BolaoResourceIntTest {
         bolaoRepository.saveAndFlush(bolao);
 
         // Get all the bolaoList
-        restBolaoMockMvc.perform(get("/api/bolaos?sort=id,desc"))
+        restBolaoMockMvc.perform(get("/api/bolao?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(bolao.getId().intValue())))
@@ -247,7 +247,7 @@ public class BolaoResourceIntTest {
         bolaoRepository.saveAndFlush(bolao);
 
         // Get the bolao
-        restBolaoMockMvc.perform(get("/api/bolaos/{id}", bolao.getId()))
+        restBolaoMockMvc.perform(get("/api/bolao/{id}", bolao.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(bolao.getId().intValue()))
@@ -261,7 +261,7 @@ public class BolaoResourceIntTest {
     @Transactional
     public void getNonExistingBolao() throws Exception {
         // Get the bolao
-        restBolaoMockMvc.perform(get("/api/bolaos/{id}", Long.MAX_VALUE))
+        restBolaoMockMvc.perform(get("/api/bolao/{id}", Long.MAX_VALUE))
             .andExpect(status().isNotFound());
     }
 
@@ -283,7 +283,7 @@ public class BolaoResourceIntTest {
             .pontosAcertoResultado(UPDATED_PONTOS_ACERTO_RESULTADO);
         BolaoDTO bolaoDTO = bolaoMapper.toDto(updatedBolao);
 
-        restBolaoMockMvc.perform(put("/api/bolaos")
+        restBolaoMockMvc.perform(put("/api/bolao")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(bolaoDTO)))
             .andExpect(status().isOk());
@@ -307,7 +307,7 @@ public class BolaoResourceIntTest {
         BolaoDTO bolaoDTO = bolaoMapper.toDto(bolao);
 
         // If the entity doesn't have an ID, it will be created instead of just being updated
-        restBolaoMockMvc.perform(put("/api/bolaos")
+        restBolaoMockMvc.perform(put("/api/bolao")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(bolaoDTO)))
             .andExpect(status().isCreated());
@@ -325,7 +325,7 @@ public class BolaoResourceIntTest {
         int databaseSizeBeforeDelete = bolaoRepository.findAll().size();
 
         // Get the bolao
-        restBolaoMockMvc.perform(delete("/api/bolaos/{id}", bolao.getId())
+        restBolaoMockMvc.perform(delete("/api/bolao/{id}", bolao.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
 

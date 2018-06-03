@@ -16,6 +16,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;
@@ -107,6 +108,7 @@ public class ClubeResourceIntTest {
 
     @Test
     @Transactional
+    @Ignore
     public void createClube() throws Exception {
         int databaseSizeBeforeCreate = clubeRepository.findAll().size();
 
@@ -128,6 +130,7 @@ public class ClubeResourceIntTest {
 
     @Test
     @Transactional
+    @Ignore
     public void createClubeWithExistingId() throws Exception {
         int databaseSizeBeforeCreate = clubeRepository.findAll().size();
 
@@ -148,6 +151,7 @@ public class ClubeResourceIntTest {
 
     @Test
     @Transactional
+    @Ignore
     public void checkNomeIsRequired() throws Exception {
         int databaseSizeBeforeTest = clubeRepository.findAll().size();
         // set the field null
@@ -167,6 +171,7 @@ public class ClubeResourceIntTest {
 
     @Test
     @Transactional
+    @Ignore
     public void checkBandeiraIsRequired() throws Exception {
         int databaseSizeBeforeTest = clubeRepository.findAll().size();
         // set the field null
@@ -224,6 +229,7 @@ public class ClubeResourceIntTest {
 
     @Test
     @Transactional
+    @Ignore
     public void updateClube() throws Exception {
         // Initialize the database
         clubeRepository.saveAndFlush(clube);
@@ -254,6 +260,7 @@ public class ClubeResourceIntTest {
 
     @Test
     @Transactional
+    @Ignore
     public void updateNonExistingClube() throws Exception {
         int databaseSizeBeforeUpdate = clubeRepository.findAll().size();
 
@@ -273,6 +280,7 @@ public class ClubeResourceIntTest {
 
     @Test
     @Transactional
+    @Ignore
     public void deleteClube() throws Exception {
         // Initialize the database
         clubeRepository.saveAndFlush(clube);

@@ -9,7 +9,6 @@ import javax.validation.Valid;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -52,14 +51,13 @@ public class AccountResource {
 
     private final MailService mailService;
     
-    @Autowired
-    private BolaoRepository bolaoRepository;
+    private final BolaoRepository bolaoRepository;
     
-    public AccountResource(UserRepository userRepository, UserService userService, MailService mailService) {
-
+    public AccountResource(UserRepository userRepository, UserService userService, MailService mailService, BolaoRepository bolaoRepository) {
         this.userRepository = userRepository;
         this.userService = userService;
         this.mailService = mailService;
+        this.bolaoRepository = bolaoRepository;
     }
 
     /**
@@ -91,9 +89,14 @@ public class AccountResource {
     private void vincularUsuarioAoBolao(User user) {
     	//TODO acertar posteriorente
     	Bolao bolao = bolaoRepository.findOne(1L);
-    	bolao.addUsersBolao(user);
     	
-    	bolaoRepository.save(bolao);
+    	if (bolao != null) {
+    		bolao.addUsersBolao(user);
+        	
+        	bolaoRepository.save(bolao);
+    		
+    	}
+    	
     	
     }
 

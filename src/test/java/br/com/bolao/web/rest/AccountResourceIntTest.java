@@ -1,20 +1,22 @@
 package br.com.bolao.web.rest;
 
-import br.com.bolao.config.Constants;
-import br.com.bolao.BolaoApp;
-import br.com.bolao.domain.Authority;
-import br.com.bolao.domain.User;
-import br.com.bolao.repository.AuthorityRepository;
-import br.com.bolao.repository.UserRepository;
-import br.com.bolao.security.AuthoritiesConstants;
-import br.com.bolao.service.MailService;
-import br.com.bolao.service.dto.UserDTO;
-import br.com.bolao.web.rest.errors.ExceptionTranslator;
-import br.com.bolao.web.rest.vm.KeyAndPasswordVM;
-import br.com.bolao.web.rest.vm.ManagedUserVM;
-import br.com.bolao.service.UserService;
-import org.apache.commons.lang3.RandomStringUtils;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Matchers.anyObject;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.time.Instant;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
+
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,18 +32,21 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import java.time.Instant;
-import java.time.LocalDate;
 
-import java.util.*;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Matchers.anyObject;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import br.com.bolao.BolaoApp;
+import br.com.bolao.config.Constants;
+import br.com.bolao.domain.Authority;
+import br.com.bolao.domain.User;
+import br.com.bolao.repository.AuthorityRepository;
+import br.com.bolao.repository.BolaoRepository;
+import br.com.bolao.repository.UserRepository;
+import br.com.bolao.security.AuthoritiesConstants;
+import br.com.bolao.service.MailService;
+import br.com.bolao.service.UserService;
+import br.com.bolao.service.dto.UserDTO;
+import br.com.bolao.web.rest.errors.ExceptionTranslator;
+import br.com.bolao.web.rest.vm.KeyAndPasswordVM;
+import br.com.bolao.web.rest.vm.ManagedUserVM;
 
 /**
  * Test class for the AccountResource REST controller.
@@ -54,6 +59,9 @@ public class AccountResourceIntTest {
 
     @Autowired
     private UserRepository userRepository;
+    
+    @Autowired
+    private BolaoRepository bolaoRepository;
 
     @Autowired
     private AuthorityRepository authorityRepository;
@@ -85,10 +93,10 @@ public class AccountResourceIntTest {
         MockitoAnnotations.initMocks(this);
         doNothing().when(mockMailService).sendActivationEmail(anyObject());
         AccountResource accountResource =
-            new AccountResource(userRepository, userService, mockMailService);
+            new AccountResource(userRepository, userService, mockMailService,bolaoRepository);
 
         AccountResource accountUserMockResource =
-            new AccountResource(userRepository, mockUserService, mockMailService);
+            new AccountResource(userRepository, mockUserService, mockMailService,bolaoRepository);
         this.restMvc = MockMvcBuilders.standaloneSetup(accountResource)
             .setMessageConverters(httpMessageConverters)
             .setControllerAdvice(exceptionTranslator)
