@@ -30,6 +30,14 @@
     "jhiPrefix": "jhi",
     "enableTranslation": false,
     "herokuDeployType": "jar",
-    "herokuAppName": "bolao-2018"
+    "herokuAppName": "bolao-2018",
+    "appsFolders": [
+      "bolao-jhipster"
+    ],
+    "directoryPath": "/home/marlon/projetos/",
+    "dockerRepositoryName": "marlonramon",
+    "dockerPushCommand": "gcloud docker push",
+    "kubernetesNamespace": "default",
+    "kubernetesServiceType": "LoadBalancer"
   }
 }
