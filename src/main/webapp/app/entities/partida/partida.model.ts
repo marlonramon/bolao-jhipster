@@ -8,8 +8,11 @@ export class Partida implements BaseEntity {
         public dataPartida?: any,
         public clubeMandante?: Clube,
         public clubeVisitante?: Clube,
-        public placar?: Placar,
+        public placar: Placar = {
+        },
         public rodadaId?: number,
     ) {
+
+        
     }
 }

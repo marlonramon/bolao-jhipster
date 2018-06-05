@@ -1,4 +1,4 @@
-<div class="main-content" >
+<div class="main-content">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
@@ -7,7 +7,7 @@
                         <h3>Partidas</h3>
                     </div>
                     <div class="card-body">
-                        <button class="btn btn-primary float-right jh-create-entity create-partida" [routerLink]="['/', { outlets: { popup: ['partida-new'] } }]">
+                        <button class="btn btn-primary float-right jh-create-entity create-partida" [routerLink]="['/', { outlets: { popup: ['partida-new'] } }]" replaceUrl="true">
                             <span class="fa fa-plus"></span>
                             <span>
                                 Nova Partida
@@ -43,7 +43,7 @@
                                 </thead>
                                 <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
                                     <tr *ngFor="let partida of partidas ;trackBy: trackId">
-                                        
+
                                         <td>{{partida.dataPartida | date:'dd/MM/yyyy hh:mm'}}</td>
                                         <td>
                                             <div *ngIf="partida.clubeMandante">
@@ -63,19 +63,20 @@
                                         <td class="td-actions text-right">
                                             <div class="btn-group flex-btn-group-container">
 
-                                                <button mat-raised-button type="button" [routerLink]="['../partida', partida.id ]" matTooltip="Visualizar Partida" [matTooltipPosition]="'above'" class="btn btn-primary btn-link btn-sm btn-just-icon">
+                                                <button mat-raised-button type="button" [routerLink]="['../partida', partida.id ]" matTooltip="Visualizar Partida" [matTooltipPosition]="'above'"
+                                                    class="btn btn-primary btn-link btn-sm btn-just-icon">
                                                     <i class="material-icons">visibility</i>
                                                 </button>
 
-                                                <button mat-raised-button type="button" [routerLink]="['/', { outlets: { popup: 'partida/'+ partida.id + '/edit'} }]" 
-                                                            replaceUrl="true" queryParamsHandling="merge"
-                                                             matTooltip="Editar Partida" [matTooltipPosition]="'above'" class="btn btn-warning btn-link btn-sm btn-just-icon">
+                                                <button mat-raised-button type="button" [routerLink]="['/', { outlets: { popup: 'partida/'+ partida.id + '/edit'} }]" replaceUrl="true"
+                                                    queryParamsHandling="merge" matTooltip="Editar Partida" [matTooltipPosition]="'above'"
+                                                    class="btn btn-warning btn-link btn-sm btn-just-icon">
                                                     <i class="material-icons">edit</i>
                                                 </button>
 
-                                                <button mat-raised-button type="button" [routerLink]="['/', { outlets: { popup: 'partida/'+ partida.id + '/delete'} }]" 
-                                                            replaceUrl="true" queryParamsHandling="merge"
-                                                            matTooltip="Excluir Partida" [matTooltipPosition]="'above'" class="btn btn-danger btn-link btn-sm btn-just-icon">
+                                                <button mat-raised-button type="button" [routerLink]="['/', { outlets: { popup: 'partida/'+ partida.id + '/delete'} }]" replaceUrl="true"
+                                                    queryParamsHandling="merge" matTooltip="Excluir Partida" [matTooltipPosition]="'above'"
+                                                    class="btn btn-danger btn-link btn-sm btn-just-icon">
                                                     <i class="material-icons">delete</i>
                                                 </button>
 
@@ -90,3 +91,4 @@
             </div>
         </div>
     </div>
+</div>

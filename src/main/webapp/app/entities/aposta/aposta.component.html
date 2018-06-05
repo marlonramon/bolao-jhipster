@@ -1,7 +1,7 @@
 <div class="main-content" *ngIf="bolao">
     <div class="container-fluid">
         <jhi-alert></jhi-alert>
-        
+
         <div class="row">
 
             <div class="col-md-12">
@@ -38,7 +38,7 @@
                                             </td>
                                             <td>
                                                 <input class="form-control text-right" type="number" id="inputPlacarVisitante" min="0" max="99" [(ngModel)]="aposta.placar.placarMandante"
-                                                    style="width: 70px" [disabled]="isPartidaIniciada(aposta.partida)"/>
+                                                    style="width: 70px" [disabled]="isPartidaIniciada(aposta.partida)" />
                                             </td>
                                             <td>
                                                 <input class="form-control text-right" type="number" id="inputPlacarVisitante" min="0" max="99" [(ngModel)]="aposta.placar.placarVisitante"
@@ -64,5 +64,7 @@
 
 
         </div>
-        
+
     </div>
+
+</div>
