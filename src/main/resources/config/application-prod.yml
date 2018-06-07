@@ -54,16 +54,16 @@ spring:
             hibernate.generate_statistics: false
             hibernate.cache.region.factory_class: io.github.jhipster.config.jcache.NoDefaultJCacheRegionFactory
     mail:
-        host: correio.datacoper.com.br
+        host: smtp.gmail.com
         port: 587
-        username: marlon.ramon@datacoper.com.br
-        password: mr142536_Ramon
+        username: marlonramon@gmail.com
+        password: 
         protocol: smtp
         tls: true
         properties.mail.smtp:
             auth: true
             starttls.enable: true
-            ssl.trust: correio.datacoper.com.br   
+            ssl.trust: smtp.gmail.com   
     thymeleaf:
         cache: true
     zipkin: # Use the "zipkin" Maven profile to have the Spring Cloud Zipkin dependencies

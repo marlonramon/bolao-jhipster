@@ -67,6 +67,7 @@ public class ApostaService {
 		
 		aposta.setPartida(partida);
 		aposta.setPlacar(new Placar());
+		aposta.setPontuacao(0L);
 		
 		return aposta;
 		
@@ -86,6 +87,7 @@ public class ApostaService {
 			
 			aposta.setUser(user);
 			aposta.setDataAposta(ZonedDateTime.now());
+			aposta.setPontuacao(0L);
 			
 			new ValidadorAposta(aposta).validar();
 			
