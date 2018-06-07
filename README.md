@@ -6,7 +6,7 @@ You will need to push your image to a registry. If you have not done so, use the
 
 ```
 $ docker image tag bolao marlonramon/bolao
-$ gcloud docker push marlonramon/bolao
+$ docker push marlonramon/bolao
 ```
 
 ## Deployment

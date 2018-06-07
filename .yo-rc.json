@@ -36,7 +36,7 @@
     ],
     "directoryPath": "/home/marlon/projetos/",
     "dockerRepositoryName": "marlonramon",
-    "dockerPushCommand": "gcloud docker push",
+    "dockerPushCommand": "docker push",
     "kubernetesNamespace": "default",
     "kubernetesServiceType": "LoadBalancer"
   }

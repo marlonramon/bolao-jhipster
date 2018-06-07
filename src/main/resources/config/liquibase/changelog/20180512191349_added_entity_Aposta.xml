@@ -38,7 +38,7 @@
                 <constraints nullable="true" />
             </column>
             
-            <column name="pontuacao" type="bigint" defaultValue="0">
+            <column name="pontuacao" type="bigint" defaultValueNumeric="0">
                 <constraints nullable="false"  />
             </column>
             
