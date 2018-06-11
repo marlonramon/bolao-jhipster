@@ -7,13 +7,20 @@
             </a>
             <a class="navbar-brand logo float-left" routerLink="/" (click)="collapseNavbar()">
                 <span class="logo-img"></span>
-                <span class="navbar-title" style="font-size: xx-large">Bolão</span>                
+                <span class="navbar-title" style="font-size: xx-large">Bolão</span>
             </a>
         </div>
 
         <div class="navbar-collapse collapse" id="navbarResponsive" [ngbCollapse]="isNavbarCollapsed">
 
             <ul class="navbar-nav ml-auto" [ngSwitch]="isAuthenticated()">
+
+                <li class="nav-item">
+                        <a class="nav-link" routerLink="regulamento" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                          <i class="material-icons">rate_review</i>
+                          <span>Regulamento</span>
+                      </a>
+                </li>
 
                 <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
 
@@ -29,7 +36,25 @@
                         <span>Ranking</span>
                     </a>
                 </li>
-                <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
+
+
+                <li *ngIf="!account" class="nav-item">
+                        <a class="nav-link" routerLink="register" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                            <i class="material-icons">perm_identity</i>
+                            <span>Registrar</span>
+                        </a>
+                    </li>
+
+                <li *ngIf="!account" class="nav-item">
+                    <a class="nav-link" href="javascript:void(0);" (click)="login()" routerLinkActive="active" id="login">
+                        <i class="material-icons">account_circle</i>
+                        <span>Entrar</span>
+                    </a>
+                </li>
+               
+
+
+
 
                 <li *jhiHasAnyAuthority="'ROLE_ADMIN'" ngbDropdown class="nav-item dropdown pointer" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                     <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="cadastros-menu">
@@ -39,26 +64,26 @@
                         </span>
                     </a>
                     <ul class="dropdown-menu" ngbDropdownMenu>
-                            <li>
-                                <a class="dropdown-item" routerLink="partida" routerLinkActive="active" (click)="collapseNavbar()">
-                                    <i class="material-icons">assignment</i>
-                                    <span>Partidas</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" routerLink="clube" routerLinkActive="active" (click)="collapseNavbar()">
-                                    <i class="material-icons">contacts</i>
-                                    <span>Clubes</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" routerLink="bolao" routerLinkActive="active" (click)="collapseNavbar()">
-                                    <i class="material-icons">add_circle</i>
-                                    <span>Bolão</span>
-                                </a>
-                            </li>
-                            
-                        </ul>
+                        <li>
+                            <a class="dropdown-item" routerLink="partida" routerLinkActive="active" (click)="collapseNavbar()">
+                                <i class="material-icons">assignment</i>
+                                <span>Partidas</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" routerLink="clube" routerLinkActive="active" (click)="collapseNavbar()">
+                                <i class="material-icons">contacts</i>
+                                <span>Clubes</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" routerLink="bolao" routerLinkActive="active" (click)="collapseNavbar()">
+                                <i class="material-icons">add_circle</i>
+                                <span>Bolão</span>
+                            </a>
+                        </li>
+
+                    </ul>
 
                 </li>
 
@@ -121,12 +146,12 @@
                         </li>
                     </ul>
                 </li>
-                <li ngbDropdown class="nav-item dropdown pointer" placement="bottom-right" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                <li *ngIf="account" ngbDropdown class="nav-item dropdown pointer" placement="bottom-right" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                     <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="account-menu">
                         <span *ngIf="!getImageUrl()">
                             <i class="material-icons">account_box</i>
-                            <span></span>
-                            Participar!
+                            <span *ngIf="account">Ola! {{account.firstname}}</span>
+
                         </span>
                         </span>
                         <span *ngIf="getImageUrl()">
@@ -142,7 +167,7 @@
                         </li>
                         <li *ngSwitchCase="true">
                             <a class="dropdown-item" routerLink="password" routerLinkActive="active" (click)="collapseNavbar()">
-                                <i class="material-icons">fingerprint</i>
+                                <i class="material-icons">security</i>
                                 <span>Mudar senha</span>
                             </a>
                         </li>
@@ -152,16 +177,7 @@
                                 <span>Sair</span>
                             </a>
                         </li>
-                        <li *ngSwitchCase="false">
-                            <a class="dropdown-item" (click)="login()" routerLinkActive="active" id="login">
-                                <span>Entrar</span>
-                            </a>
-                        </li>
-                        <li *ngSwitchCase="false">
-                            <a class="dropdown-item" routerLink="register" routerLinkActive="active" (click)="collapseNavbar()">
-                                <span>Registrar</span>
-                            </a>
-                        </li>
+
                     </ul>
                 </li>
             </ul>

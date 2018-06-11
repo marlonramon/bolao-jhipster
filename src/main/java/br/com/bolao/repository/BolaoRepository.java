@@ -33,7 +33,7 @@ public interface BolaoRepository extends JpaRepository<Bolao, Long> {
     @Query(" select new br.com.bolao.service.dto.RankingDTO(bolao.id, "
     		+ "	            user.login, "
     		+ "	            user.firstName, "
-    		+ "             sum(apostas.pontuacao)) from Bolao bolao "
+    		+ "             sum(apostas.pontuacao) as pontuacaoAtual)   from Bolao bolao "
     		+ " join bolao.campeonato campeonato "
     		+ " join campeonato.rodadas rodadas "
     		+ " join rodadas.partidas   partidas "
@@ -41,7 +41,9 @@ public interface BolaoRepository extends JpaRepository<Bolao, Long> {
     		+ " join apostas.user       user "
     		+ "  where bolao.id =:idBolao "    		
     		+ " group by bolao.id,  "
-    		+ "          user.login ")
+    		+ "          user.login"
+    		+ " order by pontuacaoAtual desc,"
+    		+ "          user.firstName")
     List<RankingDTO> findByRankingFromBolao(@Param("idBolao")Long idBolao);
     
     

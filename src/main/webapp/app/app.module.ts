@@ -14,6 +14,7 @@ import { NotificationInterceptor } from './blocks/interceptor/notification.inter
 import { BolaoSharedModule, UserRouteAccessService } from './shared';
 import { BolaoAppRoutingModule} from './app-routing.module';
 import { BolaoHomeModule } from './home/home.module';
+import { BolaoRegulamentoModule } from './regulamento/regulamento.module';
 import { BolaoAdminModule } from './admin/admin.module';
 import { BolaoAccountModule } from './account/account.module';
 import { BolaoEntityModule } from './entities/entity.module';
@@ -42,6 +43,7 @@ import {
         BlockUIHttpModule.forRoot(),
         BolaoSharedModule,
         BolaoHomeModule,
+        BolaoRegulamentoModule,
         BolaoAdminModule,
         BolaoAccountModule,
         BolaoEntityModule ,   

@@ -60,6 +60,7 @@ spring:
         password: 
         protocol: smtp
         tls: true
+        defaultEncoding: UTF-8
         properties.mail.smtp:
             auth: true
             starttls.enable: true

@@ -38,6 +38,7 @@ export class ApostaComponent implements OnInit, OnDestroy {
     reverse: any;
     totalItems: number;
     rodada_ativa: Rodada;
+  
 
     constructor(
         private apostaService: ApostaService,
@@ -48,6 +49,7 @@ export class ApostaComponent implements OnInit, OnDestroy {
         private bolaoService: BolaoService,
         private rodadaService: RodadaService,
         private dateUtils: JhiDateUtils
+        
     ) {
         this.apostas = [];
         this.boloes = [];

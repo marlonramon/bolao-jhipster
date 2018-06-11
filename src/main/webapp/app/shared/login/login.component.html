@@ -1,61 +1,65 @@
+<div class="card" style="margin-top: 0pt; margin-bottom: 0pt">
 
-<div class="modal-header">
-    <h4 class="modal-title">Entrar</h4>
-    <button aria-label="Close" data-dismiss="modal" class="close" type="button" (click)="activeModal.dismiss('closed')">
-        <span aria-hidden="true">x</span>
-    </button>
-</div>
-
-<div class="modal-body">
-    <div class="row justify-content-center">
-        <div class="col-md-12">
-            <div class="alert alert-danger" *ngIf="authenticationError">
-                <strong>Erro ao entrar!</strong> Verifique seu login e senha e tente novamente.
-            </div>
+    <div class="card-header card-header-icon card-header-primary">
+        <div class="card-icon">
+            <i class="material-icons"></i>
         </div>
-        <div class="col-md-12">
+        <h3 class="card-title">Entrar</h3>
+    </div>
 
-            <form role="form" (ngSubmit)="login()">
 
-                <div class="col-md-12">
-                    <mat-form-field class="example-full-width">
-                        <input type="text" matInput name="username" id="username" placeholder="Usuário" [(ngModel)]="username">
-                    </mat-form-field>
+    <div class="card-body">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <div class="alert alert-danger" *ngIf="authenticationError">
+                    <strong>Erro ao entrar!</strong> Verifique seu login e senha e tente novamente.
                 </div>
+            </div>
+            <div class="col-md-12">
+
+                <form role="form" (ngSubmit)="login()">
+
+                    <div class="col-md-12">
+                        <mat-form-field class="example-full-width">
+                            <input type="text" matInput name="username" id="username" placeholder="Usuário" [(ngModel)]="username">
+                        </mat-form-field>
+                    </div>
 
 
+                    <div class="col-md-12">
+                        <mat-form-field class="example-full-width">
+                            <input type="password" matInput name="password" id="password" placeholder="Senha" [(ngModel)]="password">
+                        </mat-form-field>
+
+                    </div>
+
+
+                    <div class="col-md-12">
+                        <div class="form-check">
+                            <label class="form-check-label" for="rememberMe" style="margin-bottom: 20px">
+                                <input class="form-check-input" type="checkbox" name="rememberMe" id="rememberMe" [(ngModel)]="rememberMe" checked> Manter conectado
+                                <span class="form-check-sign">
+                                    <span class="check"></span>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-primary btn-block">Entrar</button>
+                    </div>
+                </form>
+                <p></p>
                 <div class="col-md-12">
-                    <mat-form-field class="example-full-width">
-                        <input type="password" matInput name="password" id="password" placeholder="Senha" [(ngModel)]="password">
-                    </mat-form-field>
-
-                </div>
-
-
-                <div class="col-md-12">
-                    <div class="form-check">
-                        <label class="form-check-label" for="rememberMe">
-                            <input class="form-check-input" type="checkbox" name="rememberMe" id="rememberMe" [(ngModel)]="rememberMe" checked>
-                            Manter conectado
-                            <span class="form-check-sign">
-                                   <span class="check"></span>
-                             </span>
-                        </label>
+                    <div class="col-md-12">
+                        <a href="javascript:void(0);" (click)="requestResetPassword()">Esqueceu sua senha?</a>
+                    </div>                    
+                    <div class="col-md-12">
+                        <a href="javascript:void(0);" (click)="register()">Cadastrar-se</a>
                     </div>
                 </div>
-
-                <div class="col-md-12">
-                    <button type="submit" class="btn btn-primary">Entrar</button>
-                </div>
-            </form>
-            <p></p>
-            <div class="alert alert-warning">
-                <a class="alert-link" (click)="requestResetPassword()">Esqueceu sua senha?</a>
-            </div>
-            <div class="alert alert-warning">
-                <span>Ainda não se cadastrou?</span>
-                <a class="alert-link" (click)="register()">Cadastrar-se</a>
             </div>
         </div>
     </div>
+
 </div>
