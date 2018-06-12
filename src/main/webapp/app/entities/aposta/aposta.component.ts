@@ -131,7 +131,9 @@ export class ApostaComponent implements OnInit, OnDestroy {
 
         Observable.forkJoin(calls).subscribe( 
             data => {
-                this.jhiAlertService.success("Aposta salvas com sucesso.");              
+                this.jhiAlertService.success("Aposta salvas com sucesso.");       
+                this.isSaving = false;        
+                this.loadApostas(this.rodadas[0]);       
 
             },
             (res: HttpErrorResponse) => this.onError(res.error)
@@ -139,9 +141,9 @@ export class ApostaComponent implements OnInit, OnDestroy {
 
 
 
-        this.isSaving = false;        
+        
 
-        this.loadApostas(this.rodadas[0]);
+        
         
     }
 

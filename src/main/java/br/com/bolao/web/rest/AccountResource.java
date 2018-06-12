@@ -82,7 +82,7 @@ public class AccountResource {
         
         vincularUsuarioAoBolao(user);
         
-        mailService.sendActivationEmail(user);
+        //mailService.sendActivationEmail(user);
     }
     
     

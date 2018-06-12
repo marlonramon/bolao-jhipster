@@ -31,7 +31,7 @@
                                 <table class="table">
                                     <tbody *ngIf="apostas">
                                         <tr *ngFor="let aposta of apostas">
-                                            <td class="td-apostas">{{aposta.partida.dataPartida | date: 'dd/MM/yyyy hh:mm'}}</td>
+                                            <td class="td-apostas">{{aposta.partida.dataPartida | date: 'dd/MM/yyyy HH:mm'}}</td>
                                             <td class="td-apostas">{{aposta.partida.clubeMandante.nome}}</td>
                                             <td>
                                                 <img class="img-teams" [src]="loadBandeira(aposta.partida.clubeMandante.bandeira)" />
