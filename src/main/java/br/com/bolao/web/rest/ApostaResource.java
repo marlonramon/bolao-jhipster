@@ -52,6 +52,7 @@ public class ApostaResource {
 
     @PostMapping("/apostas")
     @Timed
+    @Secured(AuthoritiesConstants.USER)
     public ResponseEntity<ApostaDTO> createAposta(@RequestBody ApostaDTO apostaDTO) throws URISyntaxException {
         log.debug("REST request to save Aposta : {}", apostaDTO);
         
@@ -72,6 +73,7 @@ public class ApostaResource {
 
     @PutMapping("/apostas")
     @Timed
+    @Secured(AuthoritiesConstants.USER)
     public ResponseEntity<ApostaDTO> updateAposta(@RequestBody ApostaDTO apostaDTO) throws URISyntaxException {
         log.debug("REST request to update Aposta : {}", apostaDTO);
         
@@ -102,6 +104,21 @@ public class ApostaResource {
         List<Aposta> obterApostasUsuarioParaRodada = apostaService.obterApostasUsuarioParaRodada(userLogado, idRodada);
         
 		return new ResponseEntity<>(apostaMapper.toDto(obterApostasUsuarioParaRodada), HttpStatus.OK);
+    }
+    
+    
+    @GetMapping("/user/{login}/rodada/{idRodada}/apostas")
+    @Timed
+    @Secured(AuthoritiesConstants.USER)
+    public ResponseEntity<List<ApostaDTO>> getApostasFromRodada(@PathVariable String login, @PathVariable Long idRodada ) {
+        
+    	log.debug("REST request to get a page partidas finalizadas");
+    	
+        User user = userService.getUserWithAuthoritiesByLogin(login).get();
+        
+        List<Aposta> apostasFinalizadas = apostaService.obterApostasFinalizadasPorUsuario(user, idRodada); 
+        
+		return new ResponseEntity<>(apostaMapper.toDto(apostasFinalizadas), HttpStatus.OK);
     }
 
     

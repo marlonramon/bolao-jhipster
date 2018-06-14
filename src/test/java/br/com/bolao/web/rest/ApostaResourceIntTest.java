@@ -4,6 +4,9 @@ import static br.com.bolao.web.rest.TestUtil.createFormattingConversionService;
 import static br.com.bolao.web.rest.TestUtil.sameInstant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.any;
+import static org.mockito.Mockito.when;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -18,6 +21,7 @@ import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.EntityManager;
 
@@ -25,6 +29,7 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -40,19 +45,16 @@ import br.com.bolao.BolaoApp;
 import br.com.bolao.domain.Aposta;
 import br.com.bolao.domain.Partida;
 import br.com.bolao.domain.Placar;
+import br.com.bolao.domain.User;
 import br.com.bolao.repository.ApostaRepository;
 import br.com.bolao.repository.PartidaRepository;
+import br.com.bolao.repository.RodadaRepository;
 import br.com.bolao.service.ApostaService;
 import br.com.bolao.service.UserService;
 import br.com.bolao.service.dto.ApostaDTO;
 import br.com.bolao.service.mapper.ApostaMapper;
 import br.com.bolao.web.rest.errors.ExceptionTranslator;
 
-/**
- * Test class for the ApostaResource REST controller.
- *
- * @see ApostaResource
- */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = BolaoApp.class)
 public class ApostaResourceIntTest {
@@ -66,19 +68,22 @@ public class ApostaResourceIntTest {
     private static final ZonedDateTime DEFAULT_DATA_PARTIDA = ZonedDateTime.of(LocalDateTime.of(2018, Month.JUNE,  22,   16,   30), 
 			   																	ZoneOffset.UTC);
 
-    @Autowired
-    private ApostaRepository apostaRepository;
+    @Mock
+    private ApostaRepository apostaRepositoryMock;
+    
     
     @Autowired
     private PartidaRepository partidaRepository;
 
     @Autowired
     private ApostaMapper apostaMapper;
+
+    @Mock    
+    private UserService userServiceMock;
     
     @Autowired
-    private UserService userService;
+    private RodadaRepository rodadaRepository;
     
-    @Autowired
     private ApostaService apostaService;
 
     @Autowired
@@ -100,7 +105,9 @@ public class ApostaResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final ApostaResource apostaResource = new ApostaResource(apostaMapper, apostaService, userService);
+        apostaService = new ApostaService(userServiceMock, partidaRepository, rodadaRepository, apostaRepositoryMock);
+        
+        final ApostaResource apostaResource = new ApostaResource(apostaMapper, apostaService, userServiceMock);
         this.restApostaMockMvc = MockMvcBuilders.standaloneSetup(apostaResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -118,6 +125,8 @@ public class ApostaResourceIntTest {
         Aposta aposta = new Aposta()
             .dataAposta(DEFAULT_DATA_APOSTA);
         
+        aposta.setPontuacao(0L);
+        
         return aposta;
     }
 
@@ -130,7 +139,7 @@ public class ApostaResourceIntTest {
     @Transactional
     @Ignore
     public void createAposta() throws Exception {
-        int databaseSizeBeforeCreate = apostaRepository.findAll().size();
+        int databaseSizeBeforeCreate = apostaRepositoryMock.findAll().size();
 
         Partida partida = new Partida();
         partida.setDataPartida(DEFAULT_DATA_PARTIDA);
@@ -144,6 +153,14 @@ public class ApostaResourceIntTest {
         
         aposta.setPartida(partida);
         
+        User user = new User();
+        	
+        
+        
+        when(userServiceMock.getUserWithAuthorities()).thenReturn(Optional.of(user));
+        when(apostaRepositoryMock.findByPartidaAndUser(partida, user)).thenReturn(Optional.ofNullable(null));
+       // when(apostaRepositoryMock.save(aposta)).thenReturn(aposta);
+        
         // Create the Aposta
         ApostaDTO apostaDTO = apostaMapper.toDto(aposta);
         restApostaMockMvc.perform(post("/api/apostas")
@@ -152,7 +169,7 @@ public class ApostaResourceIntTest {
             .andExpect(status().isCreated());
 
         // Validate the Aposta in the database
-        List<Aposta> apostaList = apostaRepository.findAll();
+        List<Aposta> apostaList = apostaRepositoryMock.findAll();
         assertThat(apostaList).hasSize(databaseSizeBeforeCreate + 1);
         Aposta testAposta = apostaList.get(apostaList.size() - 1);
         assertThat(testAposta.getDataAposta()).isEqualTo(DEFAULT_DATA_APOSTA);
@@ -162,7 +179,7 @@ public class ApostaResourceIntTest {
     @Transactional
     @Ignore
     public void createApostaWithExistingId() throws Exception {
-        int databaseSizeBeforeCreate = apostaRepository.findAll().size();
+        int databaseSizeBeforeCreate = apostaRepositoryMock.findAll().size();
 
         // Create the Aposta with an existing ID
         aposta.setId(1L);
@@ -175,59 +192,21 @@ public class ApostaResourceIntTest {
             .andExpect(status().isBadRequest());
 
         // Validate the Aposta in the database
-        List<Aposta> apostaList = apostaRepository.findAll();
+        List<Aposta> apostaList = apostaRepositoryMock.findAll();
         assertThat(apostaList).hasSize(databaseSizeBeforeCreate);
     }
 
-    @Test
-    @Transactional
-    @Ignore
-    public void getAllApostas() throws Exception {
-        // Initialize the database
-        apostaRepository.saveAndFlush(aposta);
-
-        // Get all the apostaList
-        restApostaMockMvc.perform(get("/api/apostas?sort=id,desc"))
-            .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(aposta.getId().intValue())))
-            .andExpect(jsonPath("$.[*].dataAposta").value(hasItem(sameInstant(DEFAULT_DATA_APOSTA))));
-    }
-
-    @Test
-    @Transactional
-    @Ignore
-    public void getAposta() throws Exception {
-        // Initialize the database
-        apostaRepository.saveAndFlush(aposta);
-
-        // Get the aposta
-        restApostaMockMvc.perform(get("/api/apostas/{id}", aposta.getId()))
-            .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.id").value(aposta.getId().intValue()))
-            .andExpect(jsonPath("$.dataAposta").value(sameInstant(DEFAULT_DATA_APOSTA)));
-    }
-
-    @Test
-    @Transactional
-    @Ignore
-    public void getNonExistingAposta() throws Exception {
-        // Get the aposta
-        restApostaMockMvc.perform(get("/api/apostas/{id}", Long.MAX_VALUE))
-            .andExpect(status().isNotFound());
-    }
 
     @Test
     @Transactional
     @Ignore
     public void updateAposta() throws Exception {
         // Initialize the database
-        apostaRepository.saveAndFlush(aposta);
-        int databaseSizeBeforeUpdate = apostaRepository.findAll().size();
+        apostaRepositoryMock.saveAndFlush(aposta);
+        int databaseSizeBeforeUpdate = apostaRepositoryMock.findAll().size();
 
         // Update the aposta
-        Aposta updatedAposta = apostaRepository.findOne(aposta.getId());
+        Aposta updatedAposta = apostaRepositoryMock.findOne(aposta.getId());
         // Disconnect from session so that the updates on updatedAposta are not directly saved in db
         em.detach(updatedAposta);
         updatedAposta
@@ -240,7 +219,7 @@ public class ApostaResourceIntTest {
             .andExpect(status().isOk());
 
         // Validate the Aposta in the database
-        List<Aposta> apostaList = apostaRepository.findAll();
+        List<Aposta> apostaList = apostaRepositoryMock.findAll();
         assertThat(apostaList).hasSize(databaseSizeBeforeUpdate);
         Aposta testAposta = apostaList.get(apostaList.size() - 1);
         assertThat(testAposta.getDataAposta()).isEqualTo(UPDATED_DATA_APOSTA);
@@ -250,7 +229,7 @@ public class ApostaResourceIntTest {
     @Transactional
     @Ignore
     public void updateNonExistingAposta() throws Exception {
-        int databaseSizeBeforeUpdate = apostaRepository.findAll().size();
+        int databaseSizeBeforeUpdate = apostaRepositoryMock.findAll().size();
 
         // Create the Aposta
         ApostaDTO apostaDTO = apostaMapper.toDto(aposta);
@@ -262,7 +241,7 @@ public class ApostaResourceIntTest {
             .andExpect(status().isCreated());
 
         // Validate the Aposta in the database
-        List<Aposta> apostaList = apostaRepository.findAll();
+        List<Aposta> apostaList = apostaRepositoryMock.findAll();
         assertThat(apostaList).hasSize(databaseSizeBeforeUpdate + 1);
     }
 
@@ -271,8 +250,8 @@ public class ApostaResourceIntTest {
     @Ignore
     public void deleteAposta() throws Exception {
         // Initialize the database
-        apostaRepository.saveAndFlush(aposta);
-        int databaseSizeBeforeDelete = apostaRepository.findAll().size();
+        apostaRepositoryMock.saveAndFlush(aposta);
+        int databaseSizeBeforeDelete = apostaRepositoryMock.findAll().size();
 
         // Get the aposta
         restApostaMockMvc.perform(delete("/api/apostas/{id}", aposta.getId())
@@ -280,7 +259,7 @@ public class ApostaResourceIntTest {
             .andExpect(status().isOk());
 
         // Validate the database is empty
-        List<Aposta> apostaList = apostaRepository.findAll();
+        List<Aposta> apostaList = apostaRepositoryMock.findAll();
         assertThat(apostaList).hasSize(databaseSizeBeforeDelete - 1);
     }
 

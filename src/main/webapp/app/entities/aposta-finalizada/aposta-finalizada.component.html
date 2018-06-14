@@ -7,7 +7,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header card-header-tabs card-header-primary">
-                        <h6>{{bolao.descricao + ' - ' + bolao.campeonatoDTO.descricao}}</h6>
+                        <h6>{{user.firstName}}</h6>
                         <div class="nav-tabs-navigation">
                             <div class="nav-tabs-wrapper" *ngIf="rodadas">
                                 <span class="nav-tabs-title">Rodadas:</span>
@@ -25,7 +25,7 @@
                     <div class="card-body">
 
                         <div class="tab-content">
-                            <button mat-raised-button type="submit" (click)="salvarApostas()" class="btn btn-primary pull-right">Salvar Apostas</button>
+                            
                             <div class="tab-pane active" id="rodadaAtiva">
 
                                 <table class="table">
@@ -37,13 +37,10 @@
                                                 <img class="img-teams" [src]="loadBandeira(aposta.partida.clubeMandante.bandeira)" />
                                             </td>
                                             <td>
-                                                <input class="form-control text-right" type="number" id="inputPlacarVisitante" min="0" max="99" [(ngModel)]="aposta.placar.placarMandante"
-                                                    style="width: 70px" [disabled]="isPartidaIniciada(aposta.partida)" />
+                                                {{aposta.placar.placarMandante}}
                                             </td>
                                             <td>
-                                                <input class="form-control text-right" type="number" id="inputPlacarVisitante" min="0" max="99" [(ngModel)]="aposta.placar.placarVisitante"
-                                                    style="width: 70px" [disabled]="isPartidaIniciada(aposta.partida)" />
-
+                                                {{aposta.placar.placarVisitante}}
                                             </td>
                                             <td>
                                                 <img class="img-teams" [src]="loadBandeira(aposta.partida.clubeVisitante.bandeira)" />

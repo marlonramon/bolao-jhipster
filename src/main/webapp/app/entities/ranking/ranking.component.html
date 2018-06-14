@@ -12,7 +12,7 @@
                         <table class="table">
                             <tbody *ngIf="ranking">
                                 <tr *ngFor="let rank of ranking">
-                                    <td>{{rank.username}}</td>
+                                    <td><a [routerLink]="['../apostas-finalizadas/', rank.login ]">{{rank.username}}</a> </td>
                                     <td>{{rank.pontuacaoAtual}}</td>                                    
                                 </tr>
 

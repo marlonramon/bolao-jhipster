@@ -45,6 +45,11 @@ export class ApostaService {
             .map((res: HttpResponse<Aposta[]>) => this.convertArrayResponse(res));
     }
 
+    queryByLoginAndRodada(login: String, idRodada: number): Observable<HttpResponse<Aposta[]>> {
+        return this.http.get<Aposta[]>(`/api/user/${login}/rodada/${idRodada}/apostas`, {observe: 'response' })
+            .map((res: HttpResponse<Aposta[]>) => this.convertArrayResponse(res));
+    }
+
     delete(id: number): Observable<HttpResponse<any>> {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response'});
     }

@@ -8,11 +8,11 @@ import br.com.bolao.domain.Partida;
 import br.com.bolao.web.rest.errors.ApostaAposInicioPartidaException;
 import br.com.bolao.web.rest.errors.CustomParameterizedException;
 
-public class ValidadorAposta {
+public class ValidadorDataAposta {
 	
 	private Aposta aposta;
 	
-	public ValidadorAposta(Aposta aposta) {
+	public ValidadorDataAposta(Aposta aposta) {
 		 this.aposta = aposta;
 	}
 	
@@ -31,7 +31,9 @@ public class ValidadorAposta {
 		ZonedDateTime dataAposta = aposta.getDataAposta();
 		ZonedDateTime dataPartida = partida.getDataPartida();
 		
-		if (dataAposta.isAfter(dataPartida)) {
+		ZonedDateTime dataPartidaMenos10Min = dataPartida.minusMinutes(10);
+		
+		if (dataAposta.isAfter(dataPartidaMenos10Min)) {
 			throw new ApostaAposInicioPartidaException();
 		}
 		

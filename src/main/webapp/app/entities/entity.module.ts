@@ -7,6 +7,8 @@ import { BolaoPartidaModule } from './partida/partida.module';
 import { BolaoClubeModule } from './clube/clube.module';
 import { BolaoApostaModule } from './aposta/aposta.module';
 import { BolaoRankingModule } from './ranking/ranking.module';
+import { BolaoApostaFinalizadaModule } from './aposta-finalizada/aposta-finalizada.module';
+
 /* jhipster-needle-add-entity-module-import - JHipster will add entity modules imports here */
 
 
@@ -19,7 +21,8 @@ import { BolaoRankingModule } from './ranking/ranking.module';
         BolaoPartidaModule,
         BolaoClubeModule,
         BolaoApostaModule, 
-        BolaoRankingModule      
+        BolaoRankingModule,
+        BolaoApostaFinalizadaModule      
         /* jhipster-needle-add-entity-module - JHipster will add entity modules here */
     ],
     declarations: [],
