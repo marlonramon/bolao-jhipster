@@ -12,7 +12,7 @@
                             <div class="nav-tabs-wrapper" *ngIf="rodadas">
                                 <span class="nav-tabs-title">Rodadas:</span>
                                 <ul class="nav nav-tabs" data-tabs="tabs">
-                                    <li class="nav-item" *ngFor="let rodada of rodadas" [ngStyle]="{'width': (100 / rodadas.length) + '%'}">
+                                    <li class="nav-item rodadas" *ngFor="let rodada of rodadas" [ngStyle]="{'width': (100 / rodadas.length) + '%'}">
                                         <a mat-button class="nav-link" [ngClass]="{ 'active':isRodadaAtiva(rodada)}" (click)="loadApostas(rodada)" data-toggle="tab">
                                             {{rodada.numero}}
                                         </a>
