@@ -10,14 +10,14 @@ import br.com.bolao.domain.Aposta;
 import br.com.bolao.domain.Partida;
 import br.com.bolao.web.rest.errors.ApostaAposInicioPartidaException;
 
-public class ValidadorApostaTest {
+public class ValidadorDataApostaTest {
 
 	@Test(expected=ApostaAposInicioPartidaException.class)
 	public void deveRetornarErroAoValidarUmaApostaAposAHoraLimite() {
 		
 		LocalDateTime dataPartida = LocalDateTime.of(2018, 6, 14, 12, 00);
 		
-		LocalDateTime dataAposta = LocalDateTime.of(2018, 6, 14, 11, 51);
+		LocalDateTime dataAposta = LocalDateTime.of(2018, 6, 14, 12, 01);
 		
 		Aposta aposta = new Aposta();
 		

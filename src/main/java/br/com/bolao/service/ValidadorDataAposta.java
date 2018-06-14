@@ -31,9 +31,8 @@ public class ValidadorDataAposta {
 		ZonedDateTime dataAposta = aposta.getDataAposta();
 		ZonedDateTime dataPartida = partida.getDataPartida();
 		
-		ZonedDateTime dataPartidaMenos10Min = dataPartida.minusMinutes(10);
 		
-		if (dataAposta.isAfter(dataPartidaMenos10Min)) {
+		if (dataAposta.isAfter(dataPartida)) {
 			throw new ApostaAposInicioPartidaException();
 		}
 		
