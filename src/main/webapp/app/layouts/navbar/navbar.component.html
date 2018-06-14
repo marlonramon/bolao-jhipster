@@ -1,9 +1,9 @@
 <nav class="navbar navbar-expand-lg navbar">
     <div class="container">
         <div class="jh-logo-container float-left">
-            <a class="jh-navbar-toggler d-lg-none float-right" href="javascript:void(0);" data-toggle="collapse" data-target="#navbarResponsive"
+            <a class="jh-navbar-toggler d-lg-none float-right" href="javascript:void(0);" data-toggle="isNavbarCollapsed" data-target="#navbarResponsive"
                 aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation" (click)="toggleNavbar()">
-                <i class="fas fa-bars"></i>
+                <i class="fa fa-{{isNavbarCollapsed ? 'bars' : 'remove'}}"></i>
             </a>
             <a class="navbar-brand logo float-left" routerLink="/" (click)="collapseNavbar()">
                 <span class="logo-img"></span>
@@ -13,7 +13,7 @@
 
         <div class="navbar-collapse collapse" id="navbarResponsive" [ngbCollapse]="isNavbarCollapsed">
 
-            <ul class="navbar-nav ml-auto" [ngSwitch]="isAuthenticated()">
+            <ul class="navbar-nav ml-auto card" [ngSwitch]="isAuthenticated()">
 
                 <li class="nav-item">
                         <a class="nav-link" routerLink="regulamento" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">

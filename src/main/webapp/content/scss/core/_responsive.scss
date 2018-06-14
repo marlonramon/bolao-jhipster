@@ -487,11 +487,11 @@
         @include transitions (0.33s, cubic-bezier(0.685, 0.0473, 0.346, 1));
     }
 
-    .navbar .navbar-collapse.collapse,
-    .navbar .navbar-collapse.collapse.in,
-    .navbar .navbar-collapse.collapsing{
-        display: none !important;
-    }
+    // .navbar .navbar-collapse.collapse,
+    // .navbar .navbar-collapse.collapse.in,
+    // .navbar .navbar-collapse.collapsing{
+    //     display: none !important;
+    // }
 
     .off-canvas-sidebar .navbar .navbar-collapse.collapse,
     .off-canvas-sidebar .navbar .navbar-collapse.collapse.in,
@@ -827,4 +827,12 @@
   .sidebar .navbar-form{
     display: none !important;
   }
+}
+
+.navbar-collapse.collapse.show {
+    display: contents;
+}
+
+.jh-logo-container.float-left {
+    z-index: 2;
 }

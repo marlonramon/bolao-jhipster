@@ -12,10 +12,9 @@
                             <div class="nav-tabs-wrapper" *ngIf="rodadas">
                                 <span class="nav-tabs-title">Rodadas:</span>
                                 <ul class="nav nav-tabs" data-tabs="tabs">
-                                    <li class="nav-item" *ngFor="let rodada of rodadas">
+                                    <li class="nav-item" *ngFor="let rodada of rodadas" [ngStyle]="{'width': (100 / rodadas.length) + '%'}">
                                         <a mat-button class="nav-link" [ngClass]="{ 'active':isRodadaAtiva(rodada)}" (click)="loadApostas(rodada)" data-toggle="tab">
                                             {{rodada.numero}}
-                                            <div class="ripple-container"></div>
                                         </a>
                                     </li>
                                 </ul>
@@ -23,9 +22,8 @@
                         </div>
                     </div>
                     <div class="card-body">
-
-                        <div class="tab-content">
-                            <button mat-raised-button type="submit" (click)="salvarApostas()" class="btn btn-primary pull-right">Salvar Apostas</button>
+                        <button mat-raised-button type="submit" (click)="salvarApostas()" class="btn btn-primary pull-right" id="salvar-apostas">Salvar Apostas</button>
+                        <div class="table-responsive">
                             <div class="tab-pane active" id="rodadaAtiva">
 
                                 <table class="table">
