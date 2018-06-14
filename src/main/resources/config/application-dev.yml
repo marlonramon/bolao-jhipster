@@ -62,8 +62,8 @@ spring:
     mail:
         host: correio.datacoper.com.br
         port: 587
-        username: marlon.ramon@datacoper.com.br
-        password: mr142536_Ramon
+        username: mudar@localhost
+        password: mudar
         protocol: smtp
         tls: true
         properties.mail.smtp:

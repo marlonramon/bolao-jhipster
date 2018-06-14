@@ -1,0 +1,32 @@
+@media (max-width: 991px) {
+    #salvar-apostas {
+        float: left;
+        width: 100%;
+    }
+
+    li.nav-item {
+        a.mat-button.nav-link {
+            min-width: 10px;
+            width: 100%;
+        }
+    }
+
+    nav.navbar {
+        z-index: 10;
+
+        .navbar-collapse.collapse.show {
+            display: contents;
+
+            ul.navbar-nav {
+                position: fixed;
+                top: 60px;
+                right: 0;
+                background-color: white;
+            }
+        }
+    }
+
+    .jh-logo-container.float-left {
+        z-index: 2;
+    }
+}

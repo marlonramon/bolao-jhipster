@@ -39,7 +39,7 @@ public class PartidaService {
 				
 				if (aposta.isValida()) {
 					
-					new ValidadorAposta(aposta).validar();
+					new ValidadorDataAposta(aposta).validar();
 					
 					aposta = atualizarPontuacaoAposta(partida, aposta);
 					

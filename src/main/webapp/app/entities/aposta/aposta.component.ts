@@ -18,11 +18,10 @@ import { ITEMS_PER_PAGE, Principal } from '../../shared';
     selector: 'jhi-aposta',
     templateUrl: './aposta.component.html',
     styleUrls: ['aposta.scss']
-
 })
 export class ApostaComponent implements OnInit, OnDestroy {
 
-
+    
 
     rodadas: Rodada[];
     apostas: Aposta[];
@@ -39,7 +38,7 @@ export class ApostaComponent implements OnInit, OnDestroy {
     reverse: any;
     totalItems: number;
     rodada_ativa: Rodada;
-
+  
 
     constructor(
         private apostaService: ApostaService,
@@ -50,7 +49,7 @@ export class ApostaComponent implements OnInit, OnDestroy {
         private bolaoService: BolaoService,
         private rodadaService: RodadaService,
         private dateUtils: JhiDateUtils
-
+        
     ) {
         this.apostas = [];
         this.boloes = [];
@@ -61,16 +60,16 @@ export class ApostaComponent implements OnInit, OnDestroy {
             last: 0
         };
         this.predicate = 'id';
-        this.reverse = true;
+        this.reverse = true;        
     }
 
     loadAll() {
         this.bolaoService.queryByLoggedUser().subscribe(
-            (res: HttpResponse<Aposta[]>) => { this.onSuccessBolao(res.body, res.headers) },
+            (res: HttpResponse<Aposta[]>) => {this.onSuccessBolao(res.body, res.headers)},
             (res: HttpErrorResponse) => this.onError(res.message),
 
         );
-
+        
     }
 
     reset() {
@@ -105,7 +104,7 @@ export class ApostaComponent implements OnInit, OnDestroy {
     isPartidaIniciada(partida) {
         let dataPartida = this.dateUtils.toDate(partida.dataPartida);
         let currentDate = new Date();
-        return dataPartida.getTime() < currentDate.getTime();
+        return dataPartida.setMinutes(dataPartida.getMinutes() - 10)  < currentDate.getTime();
     }
 
     loadRodadas(idCampeonato) {
@@ -120,31 +119,34 @@ export class ApostaComponent implements OnInit, OnDestroy {
     }
 
     salvarApostas() {
-
+        
         const calls = []
         this.isSaving = true;
         this.apostas.forEach(aposta => {
-            let isPartidaIniciada = this.isPartidaIniciada(aposta.partida);
-            if (!isPartidaIniciada) {
+            let isPartidaIniciada = this.isPartidaIniciada(aposta.partida);           
+            if (!isPartidaIniciada && this.isApostaValida(aposta)) {                
                 calls.push(this.save(aposta))
-            }
+            }    
         });
 
-        Observable.forkJoin(calls).subscribe(
+        Observable.forkJoin(calls).subscribe( 
             data => {
-                this.jhiAlertService.success("Aposta salvas com sucesso.");
-                this.isSaving = false;
-                this.loadApostas(this.rodadas[0]);
+                this.jhiAlertService.success("Aposta salvas com sucesso.");       
+                this.isSaving = false;        
+                this.loadApostas(this.rodadas[0]);       
 
             },
             (res: HttpErrorResponse) => this.onError(res.error)
         );
+        
+    }
 
+    private isApostaValida(aposta) {
 
-
-
-
-
+        if (aposta && aposta.placar) {
+            let placar = aposta.placar;
+            return placar.placarMandante != null && placar.placarVisitante != null;
+        }  
 
     }
 
@@ -152,17 +154,17 @@ export class ApostaComponent implements OnInit, OnDestroy {
         if (aposta.id !== undefined) {
             return this.apostaService.update(aposta);
         } else {
-            return this.apostaService.create(aposta);
+            return  this.apostaService.create(aposta);
         }
     }
 
     private subscribeToSaveResponse(result: Observable<HttpResponse<Aposta>>) {
-        result.subscribe((res: HttpResponse<Aposta>) => (res: HttpErrorResponse) => this.onSaveError());
+        result.subscribe((res: HttpResponse<Aposta>) =>(res: HttpErrorResponse) => this.onSaveError());
     }
 
     private onSaveSuccess(result: Aposta) {
-        this.eventManager.broadcast({ name: 'apostaListModification', content: 'OK' });
-
+        this.eventManager.broadcast({ name: 'apostaListModification', content: 'OK'});
+        
     }
 
     loadApostas(rodada) {
@@ -172,7 +174,7 @@ export class ApostaComponent implements OnInit, OnDestroy {
             (res: HttpErrorResponse) => this.onError(res.message)
         );
     }
-
+    
     private onSaveError() {
         this.isSaving = false;
     }
@@ -190,29 +192,29 @@ export class ApostaComponent implements OnInit, OnDestroy {
         for (let i = 0; i < data.length; i++) {
             this.apostas.push(data[i]);
         }
-
+        
     }
 
     private onSuccessBolao(data, headers) {
         for (let i = 0; i < data.length; i++) {
-            this.bolao = data[i];
+            this.bolao = data[i];            
             this.loadRodadas(this.bolao.campeonatoDTO.id);
         }
     }
 
-    private definirRodadaAtual(): Rodada {
+    private definirRodadaAtual() : Rodada {
         let rodadarodada
 
-        for (let index = 0; index < this.rodadas.length; index++) {
+        for (let index = 0; index <  this.rodadas.length; index++) {
             let rodada = this.rodadas[index];
-
+            
             let dataRodada = this.dateUtils.toDate(rodada.fimRodada)
             let dataAtual = new Date();
-
+            
             if (dataAtual.getTime() < dataRodada.getTime()) {
-                return rodada;
-            }
-        }
+                return rodada;                
+            }            
+        }        
 
     }
 
@@ -223,18 +225,18 @@ export class ApostaComponent implements OnInit, OnDestroy {
     private onSuccessRodada(data, headers) {
         for (let i = 0; i < data.length; i++) {
             let rodada = data[i];
-            this.rodadas.push(rodada);
+            this.rodadas.push(rodada);            
         }
 
-        this.rodada_ativa = this.definirRodadaAtual();
-
+        this.rodada_ativa =  this.definirRodadaAtual();
+        
         this.loadApostas(this.rodada_ativa);
-
+        
 
     }
 
     private onError(error) {
         this.jhiAlertService.error(error.message, null, null);
-
+        
     }
 }
