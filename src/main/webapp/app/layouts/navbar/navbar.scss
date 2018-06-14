@@ -51,6 +51,17 @@ Navbar
     .jh-logo-container {
         width: 100%;
     }
+
+    nav.navbar,
+    nav.navbar .jh-logo-container,
+    nav.navbar .navbar-collapse {
+        z-index: 10;
+        ul {
+            position: fixed;
+            top: 55px;
+            left: 0;
+        }
+    }
 }
 
 .navbar-title {
