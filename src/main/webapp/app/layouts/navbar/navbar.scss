@@ -62,6 +62,11 @@ Navbar
             left: 0;
         }
     }
+
+    li.nav-item.dropdown ul.dropdown-menu.user-options {
+        position: initial;
+        height: unset;
+    }
 }
 
 .navbar-title {
