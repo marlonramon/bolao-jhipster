@@ -36,3 +36,18 @@
         max-width: 88px;
     }
 }
+
+@media (max-width: 767px) {
+    table > tbody > tr > td {
+        &.nome-clube,
+        &.data-partida {
+            display: none;
+        }
+        &.palpite-clube input {
+            max-width: 35px;
+        }
+        &.palpite-clube-visitante input {
+            text-align: left;
+        }
+    }
+}
