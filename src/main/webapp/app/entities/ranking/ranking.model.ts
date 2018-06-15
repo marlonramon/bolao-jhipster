@@ -4,6 +4,9 @@ export class Ranking  {
         public login?: string,
         public username?: string,
         public pontuacaoAtual?: number,
+        public apostaCerteira?: number,
+        public apostaResultado?: number,
+        public apostaUmPlacar?: number,
     ) {
     }
 }

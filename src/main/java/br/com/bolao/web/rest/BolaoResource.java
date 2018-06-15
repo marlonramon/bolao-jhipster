@@ -139,7 +139,6 @@ public class BolaoResource {
         
         List<RankingDTO> results = bolaoRepository.findByRankingFromBolao(id);
         
-        
         return new ResponseEntity<>(results, HttpStatus.OK);
     }
     

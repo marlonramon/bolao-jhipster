@@ -9,17 +9,34 @@
                     </div>
                     <div class="card-body">
 
-                        <table class="table">
-                            <tbody *ngIf="ranking">
-                                <tr *ngFor="let rank of ranking">
-                                    <td><a [routerLink]="['../apostas-finalizadas/', rank.login ]">{{rank.username}}</a> </td>
-                                    <td>{{rank.pontuacaoAtual}}</td>                                    
-                                </tr>
+                        <div class="table-responsive">
 
-                            </tbody>
-                        </table>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th>AC</th>
+                                        <th>AR</th>
+                                        <th>AUP</th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngIf="ranking">
 
+                                    <tr *ngFor="let rank of ranking">
+                                        <td>
+                                            <a [routerLink]="['../apostas-finalizadas/', rank.login ]">{{rank.username}}</a>
+                                        </td>
+                                        <td>{{rank.pontuacaoAtual}}</td>
+                                        <td>{{rank.apostaCerteira}}</td>
+                                        <td>{{rank.apostaResultado}}</td>
+                                        <td>{{rank.apostaUmPlacar}}</td>
+                                    </tr>
 
+                                </tbody>
+                            </table>
+
+                        </div>
                     </div>
                 </div>
             </div>
