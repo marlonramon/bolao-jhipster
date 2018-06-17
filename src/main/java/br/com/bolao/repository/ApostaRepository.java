@@ -21,10 +21,12 @@ public interface ApostaRepository extends JpaRepository<Aposta, Long> {
 	
 	Optional<Aposta> findByPartidaAndUser(Partida partida, User user);
 	
-	@Query("select aposta from Aposta aposta join fetch aposta.partida partida where partida.dataPartida < :data and aposta.user =:user and partida.rodada =:rodada order by partida.dataPartida desc")
+	@Query("select aposta from Aposta aposta join fetch aposta.partida partida where partida.dataPartida < :data and aposta.user =:user and partida.rodada =:rodada order by partida.dataPartida asc")
 	List<Aposta> findByDateAndUser(@Param("data") ZonedDateTime data, @Param("user") User user, @Param("rodada") Rodada rodada);
 	
 	Set<Aposta> findByPartida(Partida partida);
+	
+	Set<Aposta> findByUser(User user);
 	
 	
 

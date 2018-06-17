@@ -8,6 +8,8 @@ export class Aposta implements BaseEntity {
         public dataAposta?: any,
         public partida?: Partida,
         public placar?: Placar,
+        public pontuacao?: number,
+
     ) {
     }
 }

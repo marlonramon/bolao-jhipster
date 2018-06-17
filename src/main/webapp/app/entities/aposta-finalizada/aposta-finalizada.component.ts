@@ -1,8 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs/Subscription';
 import { JhiEventManager, JhiParseLinks, JhiAlertService, JhiDateUtils } from 'ng-jhipster';
+import * as Chartist from 'chartist';
 
 
 import { Observable } from 'rxjs/Observable';
@@ -18,14 +19,15 @@ import { BolaoService } from '../bolao/bolao.service';
 import { ITEMS_PER_PAGE, Principal } from '../../shared';
 
 @Component({
-    selector: 'jhi-aposta',
-    templateUrl: './aposta-finalizada.component.html'
+    selector: 'jhi-aposta-finalizada',
+    templateUrl: './aposta-finalizada.component.html',
+    styleUrls: ['aposta-finalizada.scss']
     
 })
 export class ApostaFinalizadaComponent implements OnInit, OnDestroy {
 
-    rodadas: Rodada[];
-    apostas: Aposta[];
+    rodadas: Rodada[];    
+    @Input() apostas: Aposta[];    
     isSaving: boolean;
     boloes: Bolao[];
     bolao: Bolao;
@@ -118,6 +120,40 @@ export class ApostaFinalizadaComponent implements OnInit, OnDestroy {
         return require('../../../content/images/bandeiras/' + bandeira);
     }
 
+    startAnimationForLineChart(chart){
+        let seq: any, delays: any, durations: any;
+        seq = 0;
+        delays = 80;
+        durations = 500;
+  
+        chart.on('draw', function(data) {
+          if(data.type === 'line' || data.type === 'area') {
+            data.element.animate({
+              d: {
+                begin: 600,
+                dur: 700,
+                from: data.path.clone().scale(1, 0).translate(0, data.chartRect.height()).stringify(),
+                to: data.path.clone().stringify(),
+                easing: Chartist.Svg.Easing.easeOutQuint
+              }
+            });
+          } else if(data.type === 'point') {
+                seq++;
+                data.element.animate({
+                  opacity: {
+                    begin: seq * delays,
+                    dur: durations,
+                    from: 0,
+                    to: 1,
+                    easing: 'ease'
+                  }
+                });
+            }
+        });
+  
+        seq = 0;
+    };
+
     loadApostas(rodada) {
         this.rodada_ativa = rodada;
         this.apostaService.queryByLoginAndRodada(this.login, rodada.id).subscribe(
@@ -128,11 +164,39 @@ export class ApostaFinalizadaComponent implements OnInit, OnDestroy {
  
     private onSuccess(data, headers) {
         this.apostas = [];
+        const partidas = [];
+        const pontuacao = [];
         for (let i = 0; i < data.length; i++) {
-            this.apostas.push(data[i]);
+            let aposta = data[i]
+            this.apostas.push(aposta);
+            partidas.push(i+1);
+            pontuacao.push(aposta.pontuacao);
         }
         
+        const dataCompletedTasksChart: any = {
+            labels: partidas,
+            series: [
+                pontuacao
+            ]
+        };
+  
+       const optionsCompletedTasksChart: any = {
+            lineSmooth: Chartist.Interpolation.cardinal({
+                tension: 0
+            }),
+            low: 0,
+            high: 20, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+            chartPadding: { top: 0, right: 0, bottom: 0, left: 0}
+        }
+  
+        var completedTasksChart = new Chartist.Line('#completedTasksChart', dataCompletedTasksChart, optionsCompletedTasksChart);
+  
+        // start animation for the Completed Tasks Chart - Line Chart
+        this.startAnimationForLineChart(completedTasksChart);
+
     }
+
+
 
     private onSuccessUser(data, headers) {
         this.user = data;

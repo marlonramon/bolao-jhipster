@@ -225,9 +225,23 @@
   dependencies:
     typescript "~2.6.2"
 
+"@types/bootstrap@3.3.32":
+  version "3.3.32"
+  resolved "https://registry.yarnpkg.com/@types/bootstrap/-/bootstrap-3.3.32.tgz#abaf4b364d086de0cb7791db0cfd55703b591fad"
+  dependencies:
+    "@types/jquery" "*"
+
+"@types/chartist@^0.9.41":
+  version "0.9.41"
+  resolved "https://registry.yarnpkg.com/@types/chartist/-/chartist-0.9.41.tgz#bc1140a6e4dbbb3436390f2bcd5d7dc4a9ee4d41"
+
 "@types/jasmine@2.5.53":
   version "2.5.53"
   resolved "https://registry.yarnpkg.com/@types/jasmine/-/jasmine-2.5.53.tgz#4e0cefad09df5ec48c8dd40433512f84b1568d61"
+
+"@types/jquery@*":
+  version "3.3.2"
+  resolved "https://registry.yarnpkg.com/@types/jquery/-/jquery-3.3.2.tgz#8700226bdde24b6f98e3a60126dbaab3b2a3ab41"
 
 "@types/node@8.0.18":
   version "8.0.18"
@@ -1199,6 +1213,10 @@ chardet@^0.4.0:
   version "0.4.2"
   resolved "https://registry.yarnpkg.com/chardet/-/chardet-0.4.2.tgz#b5473b33dc97c424e5d98dc87d55d4d8a29c8bf2"
 
+chartist@^0.11.0:
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/chartist/-/chartist-0.11.0.tgz#84ba5e05490d096d93dcfa9343ebc31ef6a3bd28"
+
 cheerio@0.22.0:
   version "0.22.0"
   resolved "https://registry.yarnpkg.com/cheerio/-/cheerio-0.22.0.tgz#a9baa860a3f9b595a6b81b1a86873121ed3a269e"
@@ -1292,6 +1310,10 @@ class-utils@^0.3.5:
     define-property "^0.2.5"
     isobject "^3.0.0"
     static-extend "^0.1.1"
+
+classlist.js@1.1.20150312:
+  version "1.1.20150312"
+  resolved "https://registry.yarnpkg.com/classlist.js/-/classlist.js-1.1.20150312.tgz#1d70842f7022f08d9ac086ce69e5b250f2c57789"
 
 clean-css@4.1.x:
   version "4.1.11"
@@ -5586,6 +5608,12 @@ next-tick@1:
 ng-block-ui@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/ng-block-ui/-/ng-block-ui-1.0.4.tgz#41b4ebf137316d766eea34215b29d9305f0deaae"
+
+ng-chartist@^2.0.0-beta.1:
+  version "2.0.0-beta.1"
+  resolved "https://registry.yarnpkg.com/ng-chartist/-/ng-chartist-2.0.0-beta.1.tgz#4a188d7e50846ff4dffcbd2480eb93866e5956fc"
+  dependencies:
+    tslib "^1.7.1"
 
 ng-jhipster@0.4.0:
   version "0.4.0"

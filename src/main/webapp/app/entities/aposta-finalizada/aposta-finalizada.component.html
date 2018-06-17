@@ -23,36 +23,50 @@
                         </div>
                     </div>
                     <div class="card-body">
+                        <div class="table-responsive">
+                            <div class="tab-content">
 
-                        <div class="tab-content">
-                            
-                            <div class="tab-pane active" id="rodadaAtiva">
+                                <div class="tab-pane active" id="rodadaAtiva">
 
-                                <table class="table">
-                                    <tbody *ngIf="apostas">
-                                        <tr *ngFor="let aposta of apostas">
-                                            <td class="td-apostas">{{aposta.partida.dataPartida | date: 'dd/MM/yyyy HH:mm'}}</td>
-                                            <td class="td-apostas">{{aposta.partida.clubeMandante.nome}}</td>
-                                            <td>
-                                                <img class="img-teams" [src]="loadBandeira(aposta.partida.clubeMandante.bandeira)" />
-                                            </td>
-                                            <td>
-                                                {{aposta.placar.placarMandante}}
-                                            </td>
-                                            <td>
-                                                {{aposta.placar.placarVisitante}}
-                                            </td>
-                                            <td>
-                                                <img class="img-teams" [src]="loadBandeira(aposta.partida.clubeVisitante.bandeira)" />
-                                            </td>
-                                            <td class="td-apostas">{{aposta.partida.clubeVisitante.nome}}</td>
-                                            <td class="td-apostas">{{aposta.pontuacao}}</td>
+                                    <div *ngIf="apostas" class="col-md-12">
+                                        <div class="card card-chart">
+                                            <div class="card-header card-header-primary">
+                                                <div class="ct-chart" id="completedTasksChart"></div>
+                                            </div>
+                                            <div class="card-body">
+                                                <h4 class="card-title">Pontos por Partida</h4>
+                                            </div>
+
+                                        </div>
+                                    </div>
 
 
-                                        </tr>
+                                    <table class="table">
+                                        <tbody *ngIf="apostas">
+                                            <tr *ngFor="let aposta of apostas">
+                                                <td class="td-apostas data-partida">{{aposta.partida.dataPartida | date: 'dd/MM/yyyy HH:mm'}}</td>
+                                                <td class="td-apostas nome-clube">{{aposta.partida.clubeMandante.nome}}</td>
+                                                <td class="bandeira-clube text-right">
+                                                    <img class="img-teams" [src]="loadBandeira(aposta.partida.clubeMandante.bandeira)" />
+                                                </td>
+                                                <td class="palpite-clube">
+                                                    {{aposta.placar.placarMandante}}
+                                                </td>
+                                                <td class="palpite-clube palpite-clube-visitante" >
+                                                    {{aposta.placar.placarVisitante}}
+                                                </td>
+                                                <td class="bandeira-clube" >
+                                                    <img class="img-teams" [src]="loadBandeira(aposta.partida.clubeVisitante.bandeira)" />
+                                                </td>
+                                                <td class="td-apostas nome-clube">{{aposta.partida.clubeVisitante.nome}}</td>
+                                                <td class="td-apostas pontuacao">{{aposta.pontuacao}}</td>
 
-                                    </tbody>
-                                </table>
+
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -20,8 +20,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.bolao.config.Constants;
+import br.com.bolao.domain.Aposta;
 import br.com.bolao.domain.Authority;
 import br.com.bolao.domain.User;
+import br.com.bolao.repository.ApostaRepository;
 import br.com.bolao.repository.AuthorityRepository;
 import br.com.bolao.repository.BolaoRepository;
 import br.com.bolao.repository.UserRepository;
@@ -49,6 +51,9 @@ public class UserService {
     
     @Autowired
     private BolaoRepository bolaoRepository;
+    
+    @Autowired
+    private ApostaRepository apostaRepository;
 
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthorityRepository authorityRepository, CacheManager cacheManager) {
         this.userRepository = userRepository;
@@ -211,7 +216,12 @@ public class UserService {
 
     public void deleteUser(String login) {
         userRepository.findOneByLogin(login).ifPresent(user -> {
-            userRepository.delete(user);
+            
+        	Set<Aposta> apostas = apostaRepository.findByUser(user);
+            
+            apostaRepository.delete(apostas);
+        	
+        	userRepository.delete(user);
             
             bolaoRepository.findOne(1L).removeUsersBolao(user);
             
