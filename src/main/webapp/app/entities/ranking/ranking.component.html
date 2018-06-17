@@ -16,6 +16,7 @@
                                     <tr>
                                         <th></th>
                                         <th></th>
+                                        <th></th>
                                         <th>AC</th>
                                         <th>AR</th>
                                         <th>AP</th>
@@ -24,6 +25,7 @@
                                 <tbody *ngIf="ranking">
 
                                     <tr *ngFor="let rank of ranking">
+                                        <td>{{rank.posicao}}</td>    
                                         <td>
                                             <a [routerLink]="['../apostas-finalizadas/', rank.login ]">{{rank.username}}</a>
                                         </td>

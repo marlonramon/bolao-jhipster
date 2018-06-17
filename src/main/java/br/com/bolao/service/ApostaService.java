@@ -45,7 +45,7 @@ public class ApostaService {
 
 		List<Aposta> apostas = new ArrayList<>();
 
-		List<Partida> partidas = partidaRepository.findByRodada(rodadaSolicitada);
+		List<Partida> partidas = partidaRepository.findByRodadaOrderByDataPartida(rodadaSolicitada);
 
 		for (Partida partida : partidas) {
 

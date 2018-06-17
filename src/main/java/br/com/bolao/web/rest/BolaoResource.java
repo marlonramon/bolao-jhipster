@@ -2,6 +2,7 @@ package br.com.bolao.web.rest;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,10 +34,13 @@ import br.com.bolao.security.SecurityUtils;
 import br.com.bolao.service.dto.BolaoDTO;
 import br.com.bolao.service.dto.RankingDTO;
 import br.com.bolao.service.mapper.BolaoMapper;
+import br.com.bolao.service.util.AtualizadorPosicaoRanking;
+import br.com.bolao.service.util.CalculadoraPosicaoRanking;
 import br.com.bolao.web.rest.errors.BadRequestAlertException;
 import br.com.bolao.web.rest.util.HeaderUtil;
 import br.com.bolao.web.rest.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
+
 
 @RestController
 @RequestMapping("/api")
@@ -138,6 +142,10 @@ public class BolaoResource {
     	log.debug("REST request to get Bolao : {}", id);
         
         List<RankingDTO> results = bolaoRepository.findByRankingFromBolao(id);
+        
+        Collections.sort(results, new CalculadoraPosicaoRanking());
+        
+        new AtualizadorPosicaoRanking(results).atualizarPosicoes();
         
         return new ResponseEntity<>(results, HttpStatus.OK);
     }

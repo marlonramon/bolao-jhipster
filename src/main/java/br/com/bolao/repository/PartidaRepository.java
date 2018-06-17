@@ -13,5 +13,9 @@ import br.com.bolao.domain.Rodada;
 @Repository
 public interface PartidaRepository extends JpaRepository<Partida, Long> {
 	
-	List<Partida> findByRodada(Rodada rodada);
+	List<Partida> findByRodadaOrderByDataPartida(Rodada rodada);
+	
+	
+	
+	
 }

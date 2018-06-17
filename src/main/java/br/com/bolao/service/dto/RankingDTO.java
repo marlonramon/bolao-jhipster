@@ -2,11 +2,11 @@ package br.com.bolao.service.dto;
 
 import java.io.Serializable;
 
-public class RankingDTO implements Serializable, Comparable<RankingDTO> {
+public class RankingDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private int posicao;
+	private int posicao = 1;
 
 	private Long idBolao;
 
@@ -40,11 +40,11 @@ public class RankingDTO implements Serializable, Comparable<RankingDTO> {
 	public int getPosicao() {
 		return posicao;
 	}
-
+	
 	public void setPosicao(int posicao) {
-		this.posicao = posicao;
+		this.posicao = posicao > 0 ? posicao : 1;
 	}
-
+	
 	public Long getIdBolao() {
 		return idBolao;
 	}
@@ -100,31 +100,21 @@ public class RankingDTO implements Serializable, Comparable<RankingDTO> {
 	public void setApostaUmPlacar(Long apostaUmPlacar) {
 		this.apostaUmPlacar = apostaUmPlacar;
 	}
-
-	@Override
-	public int compareTo(RankingDTO rank) {
-
-		if (this.pontuacaoAtual > rank.getPontuacaoAtual()) {
-			return 1;
-		} else if (this.pontuacaoAtual.intValue() == rank.getPontuacaoAtual().intValue()) {
-			if (this.apostaCerteira > rank.getApostaCerteira()) {
-				return 1;
-			} else if (this.apostaCerteira == rank.getApostaCerteira()) {
-				if (this.apostaResultado > rank.apostaResultado) {
-					return 1;
-				} else if (this.apostaResultado == rank.apostaResultado) {
-					if (this.apostaUmPlacar > rank.getApostaUmPlacar()) {
-						return 1;
-					} else if (this.apostaUmPlacar == rank.getApostaUmPlacar()) {
-						return 0;
-					} else {
-						return -1;
-					}
-				}
-			}
-		}
-
-		return -1;
+	
+	public void subirPosicao() {
+		this.posicao = posicao-1 > 0 ? posicao-- : posicao;
+		
 	}
+	
+	public void descerPosicao() {
+		this.posicao++;		
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		RankingDTO ranking = (RankingDTO) obj;
+		return this.login.equals(ranking.getLogin());
+	}
+	
 
 }
