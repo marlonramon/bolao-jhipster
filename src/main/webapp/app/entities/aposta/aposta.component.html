@@ -29,25 +29,25 @@
                                 <table class="table">
                                     <tbody *ngIf="apostas">
                                         <tr *ngFor="let aposta of apostas">
-                                            <td class="td-apostas">{{aposta.partida.dataPartida | date: 'dd/MM/yyyy HH:mm'}}</td>
-                                            <td class="td-apostas">{{aposta.partida.clubeMandante.nome}}</td>
-                                            <td>
+                                            <td class="td-apostas data-partida">{{aposta.partida.dataPartida | date: 'dd/MM/yyyy HH:mm'}}</td>
+                                            <td class="td-apostas nome-clube">{{aposta.partida.clubeMandante.nome}}</td>
+                                            <td class="bandeira-clube text-right">
                                                 <img class="img-teams" [src]="loadBandeira(aposta.partida.clubeMandante.bandeira)" />
                                             </td>
-                                            <td>
+                                            <td class="palpite-clube">
                                                 <input class="form-control text-right" type="number" id="inputPlacarVisitante" min="0" max="99" [(ngModel)]="aposta.placar.placarMandante"
                                                     style="width: 70px" [disabled]="isPartidaIniciada(aposta.partida)" />
                                             </td>
-                                            <td>
-                                                <input class="form-control text-right" type="number" id="inputPlacarVisitante" min="0" max="99" [(ngModel)]="aposta.placar.placarVisitante"
+                                            <td class="palpite-clube palpite-clube-visitante">
+                                                <input class="form-control" type="number" id="inputPlacarVisitante" min="0" max="99" [(ngModel)]="aposta.placar.placarVisitante"
                                                     style="width: 70px" [disabled]="isPartidaIniciada(aposta.partida)" />
 
                                             </td>
-                                            <td>
+                                            <td class="bandeira-clube">
                                                 <img class="img-teams" [src]="loadBandeira(aposta.partida.clubeVisitante.bandeira)" />
                                             </td>
-                                            <td class="td-apostas">{{aposta.partida.clubeVisitante.nome}}</td>
-                                            <td class="td-apostas">{{aposta.pontuacao}}</td>
+                                            <td class="td-apostas nome-clube">{{aposta.partida.clubeVisitante.nome}}</td>
+                                            <td class="td-apostas pontuacao">{{aposta.pontuacao}}</td>
 
 
                                         </tr>
