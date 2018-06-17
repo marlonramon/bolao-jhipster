@@ -185,7 +185,7 @@ export class ApostaFinalizadaComponent implements OnInit, OnDestroy {
                 tension: 0
             }),
             low: 0,
-            high: 20, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+            high: 25, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
             chartPadding: { top: 0, right: 0, bottom: 0, left: 0}
         }
   
