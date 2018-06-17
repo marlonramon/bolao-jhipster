@@ -18,22 +18,31 @@ public class CalculadoraPosicaoRankingTest {
 		List<RankingDTO> rankings;
 		List<RankingDTO> rankingOrdenado;
 		
-		RankingDTO rank1 = new RankingDTO(1L,"marlon1","marlon1",5L,0L,0L,1L);
-		RankingDTO rank2 = new RankingDTO(1L,"marlon2","marlon2",0L,0L,0L,0L);
-		/*RankingDTO rank35 = new RankingDTO(1L,"marlon3.5","marlon3.5",15L,0L,1L,1L);
-		RankingDTO rank3 = new RankingDTO(1L,"marlon3","marlon3",15L,0L,1L,1L);
-		RankingDTO rank4 = new RankingDTO(1L,"marlon4","marlon4",30L,0L,2L,2L);
-		RankingDTO rank5 = new RankingDTO(1L,"marlon5","marlon5",30L,1L,1L,0L);*/
+		RankingDTO rank1 = new RankingDTO(1L,"marlon1","marlon1",95L,2L,3L,5L);
+		RankingDTO rank2 = new RankingDTO(1L,"marlon2","marlon2",95L,3L,2L,3L);
+		RankingDTO rank35 = new RankingDTO(1L,"marlon3.5","marlon3.5",95L,3L,3L,1L);
+		RankingDTO rank3 = new RankingDTO(1L,"marlon3","marlon3",100L,2L,4L,4L);
+		RankingDTO rank4 = new RankingDTO(1L,"marlon4","marlon4",105L,3L,3L,3L);
+		RankingDTO rank5 = new RankingDTO(1L,"fabiano","fabiano",115L,2L,5L,5L);
 		
-		rankings = Arrays.asList(rank1,rank2 /*,rank3,rank4,rank5,rank35*/);
 		
-		rankingOrdenado = Arrays.asList(/*rank5,rank4,rank3,rank35,*/rank1,rank2);
+		RankingDTO rank6 = new RankingDTO(1L,"silvana","silvana",95L,2L,3L,5L);
+		RankingDTO rank7 = new RankingDTO(1L,"daniel","daniel",90L,2L,4L,2L);
+		RankingDTO rank8 = new RankingDTO(1L,"carlos","carlos",90L,2L,3L,4L);
+		RankingDTO rank9 = new RankingDTO(1L,"mateus","mateus",90L,2L,3L,4L);
+		RankingDTO rank10 = new RankingDTO(1L,"dread","dread",90L,1L,4L,6L);
+		
+		
+		
+		rankings = Arrays.asList(rank1,rank2,rank3,rank4,rank5,rank35, rank6, rank7, rank8, rank9, rank10);
+		
+		rankingOrdenado = Arrays.asList(rank5,rank4,rank3,rank35,rank2,rank1,rank6,rank7,rank8,rank9,rank10);
 		
 		Collections.sort(rankings, new CalculadoraPosicaoRanking());
 		
 		new AtualizadorPosicaoRanking(rankings).atualizarPosicoes();
 		
-		for (RankingDTO rankingDTO : rankingOrdenado) {
+		for (RankingDTO rankingDTO : rankings) {
 			System.out.println(rankingDTO.getPosicao() + " - " + rankingDTO.getPontuacaoAtual());
 		}
 		

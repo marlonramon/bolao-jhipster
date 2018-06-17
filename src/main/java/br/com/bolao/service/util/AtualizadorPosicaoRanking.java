@@ -23,6 +23,11 @@ public class AtualizadorPosicaoRanking {
 		for (RankingDTO rankingDTO : rankings) {
 			
 			if (!rank.equals(rankingDTO)) {
+				
+				if(rank.getUsername().equals("carlos")) {
+					System.out.println("oi");
+				}
+				
 				int compararRankings = calculadoraPosicaoRanking.compare(rank, rankingDTO);
 				
 				if (compararRankings > 0) {
@@ -36,7 +41,7 @@ public class AtualizadorPosicaoRanking {
 					}
 					
 				} else if(compararRankings == 0 ) {
-					rank.setPosicao(rankingDTO.getPosicao());
+					rankingDTO.setPosicao(rank.getPosicao());
 				}
 				
 			}
