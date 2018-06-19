@@ -63,9 +63,13 @@ Navbar
         }
     }
 
-    li.nav-item.dropdown ul.dropdown-menu.user-options {
-        position: initial;
-        height: unset;
+    li.nav-item.dropdown ul.dropdown-menu {
+        &.user-options,
+        &.admin-options,
+        &.register-options {
+            position: initial;
+            height: unset;
+        }
     }
 }
 
