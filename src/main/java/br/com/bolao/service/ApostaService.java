@@ -4,7 +4,6 @@ import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import javax.transaction.Transactional;
 
@@ -85,13 +84,17 @@ public class ApostaService {
 		if (apostaBanco.isPresent()) {
 			throw new ApostaDuplicadaException("Já existe uma aposta para esta partida e usuário");
 		}
-
+		
 		aposta.setUser(user);
 		aposta.setDataAposta(ZonedDateTime.now());
 		aposta.setPontuacao(0L);
+		
+		Partida partida = partidaRepository.findOne(aposta.getId());
+		
+		new ValidadorDataAposta(aposta, partida).validar();
 
-		new ValidadorDataAposta(aposta).validar();
-
+		aposta.setPartida(partida);
+		
 		aposta = apostaRepository.save(aposta);
 
 		return aposta;
@@ -116,7 +119,7 @@ public class ApostaService {
 		apostaBanco.setPlacar(aposta.getPlacar());
 		apostaBanco.setDataAposta(ZonedDateTime.now());
 
-		new ValidadorDataAposta(apostaBanco).validar();
+		new ValidadorDataAposta(apostaBanco, apostaBanco.getPartida()).validar();
 
 		aposta = apostaRepository.save(apostaBanco);
 

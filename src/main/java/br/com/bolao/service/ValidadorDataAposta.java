@@ -11,9 +11,11 @@ import br.com.bolao.web.rest.errors.CustomParameterizedException;
 public class ValidadorDataAposta {
 	
 	private Aposta aposta;
+	private Partida partida;
 	
-	public ValidadorDataAposta(Aposta aposta) {
+	public ValidadorDataAposta(Aposta aposta, Partida partida) {
 		 this.aposta = aposta;
+		 this.partida = partida;
 	}
 	
 	public void validar() {
@@ -22,8 +24,6 @@ public class ValidadorDataAposta {
 			throw new CustomParameterizedException("Aposta inválida");
 		}
 
-		Partida partida = aposta.getPartida();
-		
 		if (Objects.isNull(partida)) {
 			throw new CustomParameterizedException("Aposta deve ser de uma partida");
 		}

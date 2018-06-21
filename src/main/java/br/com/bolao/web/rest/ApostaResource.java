@@ -32,95 +32,88 @@ import br.com.bolao.web.rest.errors.BadRequestAlertException;
 @RequestMapping("/api")
 public class ApostaResource {
 
-    private final Logger log = LoggerFactory.getLogger(ApostaResource.class);
+	private final Logger log = LoggerFactory.getLogger(ApostaResource.class);
 
-    private static final String ENTITY_NAME = "aposta";
+	private static final String ENTITY_NAME = "aposta";
 
-    private final ApostaMapper apostaMapper;
+	private final ApostaMapper apostaMapper;
 
 	private ApostaService apostaService;
 
 	private UserService userService;
-	
 
-    public ApostaResource(ApostaMapper apostaMapper, ApostaService apostaService, UserService userService) {
-        this.apostaMapper = apostaMapper;
-        this.apostaService = apostaService;
-        this.userService = userService;
-        
-    }
+	public ApostaResource(ApostaMapper apostaMapper, ApostaService apostaService, UserService userService) {
+		this.apostaMapper = apostaMapper;
+		this.apostaService = apostaService;
+		this.userService = userService;
 
-    @PostMapping("/apostas")
-    @Timed
-    @Secured(AuthoritiesConstants.USER)
-    public ResponseEntity<ApostaDTO> createAposta(@RequestBody ApostaDTO apostaDTO) throws URISyntaxException {
-        log.debug("REST request to save Aposta : {}", apostaDTO);
-        
-        if (apostaDTO.getId() != null) {
-            throw new BadRequestAlertException("Uma nova aposta não pode ter id", ENTITY_NAME, "idexists");
-        }
-        
-        Aposta aposta = apostaMapper.toEntity(apostaDTO);
-        
-        
-        aposta = apostaService.criarAposta(aposta);
-        
-        ApostaDTO result = apostaMapper.toDto(aposta);
-        
-        return ResponseEntity.created(new URI("/api/apostas/" + result.getId()))            
-            .body(result);
-    }
+	}
 
-    @PutMapping("/apostas")
-    @Timed
-    @Secured(AuthoritiesConstants.USER)
-    public ResponseEntity<ApostaDTO> updateAposta(@RequestBody ApostaDTO apostaDTO) throws URISyntaxException {
-        log.debug("REST request to update Aposta : {}", apostaDTO);
-        
-        if (apostaDTO.getId() == null) {
-            return createAposta(apostaDTO);
-        }
-        
-        Aposta aposta = apostaMapper.toEntity(apostaDTO);
-        
-        
-        aposta = apostaService.alterarAposta(aposta);
-        
-        ApostaDTO result = apostaMapper.toDto(aposta);
-        
-        return ResponseEntity.ok()
-            .body(result);
-    }
-    
-    @GetMapping("/user/me/rodada/{idRodada}/apostas")
-    @Timed
-    @Secured(AuthoritiesConstants.USER)
-    public ResponseEntity<List<ApostaDTO>> getApostasFromRodada(@PathVariable Long idRodada) {
-        
-    	log.debug("REST request to get a page of Rodadas");
-    	
-        User userLogado = userService.getUserWithAuthorities().get();
-        
-        List<Aposta> obterApostasUsuarioParaRodada = apostaService.obterApostasUsuarioParaRodada(userLogado, idRodada);
-        
+	@PostMapping("/apostas")
+	@Timed
+	@Secured(AuthoritiesConstants.USER)
+	public ResponseEntity<ApostaDTO> createAposta(@RequestBody ApostaDTO apostaDTO) throws URISyntaxException {
+		log.debug("REST request to save Aposta : {}", apostaDTO);
+
+		if (apostaDTO.getId() != null) {
+			throw new BadRequestAlertException("Uma nova aposta não pode ter id", ENTITY_NAME, "idexists");
+		}
+
+		Aposta aposta = apostaMapper.toEntity(apostaDTO);
+
+		aposta = apostaService.criarAposta(aposta);
+
+		ApostaDTO result = apostaMapper.toDto(aposta);
+
+		return ResponseEntity.created(new URI("/api/apostas/" + result.getId())).body(result);
+	}
+
+	@PutMapping("/apostas")
+	@Timed
+	@Secured(AuthoritiesConstants.USER)
+	public ResponseEntity<ApostaDTO> updateAposta(@RequestBody ApostaDTO apostaDTO) throws URISyntaxException {
+		log.debug("REST request to update Aposta : {}", apostaDTO);
+
+		if (apostaDTO.getId() == null) {
+			return createAposta(apostaDTO);
+		}
+
+		Aposta aposta = apostaMapper.toEntity(apostaDTO);
+
+		aposta = apostaService.alterarAposta(aposta);
+
+		ApostaDTO result = apostaMapper.toDto(aposta);
+
+		return ResponseEntity.ok().body(result);
+	}
+
+	@GetMapping("/user/me/rodada/{idRodada}/apostas")
+	@Timed
+	@Secured(AuthoritiesConstants.USER)
+	public ResponseEntity<List<ApostaDTO>> getApostasFromRodada(@PathVariable Long idRodada) {
+
+		log.debug("REST request to get a page of Rodadas");
+
+		User userLogado = userService.getUserWithAuthorities().get();
+
+		List<Aposta> obterApostasUsuarioParaRodada = apostaService.obterApostasUsuarioParaRodada(userLogado, idRodada);
+
 		return new ResponseEntity<>(apostaMapper.toDto(obterApostasUsuarioParaRodada), HttpStatus.OK);
-    }
-    
-    
-    @GetMapping("/user/{login}/rodada/{idRodada}/apostas")
-    @Timed
-    @Secured(AuthoritiesConstants.USER)
-    public ResponseEntity<List<ApostaDTO>> getApostasFromRodada(@PathVariable String login, @PathVariable Long idRodada ) {
-        
-    	log.debug("REST request to get a page partidas finalizadas");
-    	
-        User user = userService.getUserWithAuthoritiesByLogin(login).get();
-        
-        List<Aposta> apostasFinalizadas = apostaService.obterApostasFinalizadasPorUsuario(user, idRodada); 
-        
-		return new ResponseEntity<>(apostaMapper.toDto(apostasFinalizadas), HttpStatus.OK);
-    }
+	}
 
-    
-    
+	@GetMapping("/user/{login}/rodada/{idRodada}/apostas")
+	@Timed
+	@Secured(AuthoritiesConstants.USER)
+	public ResponseEntity<List<ApostaDTO>> getApostasFromRodada(@PathVariable String login,
+			@PathVariable Long idRodada) {
+
+		log.debug("REST request to get a page partidas finalizadas");
+
+		User user = userService.getUserWithAuthoritiesByLogin(login).get();
+
+		List<Aposta> apostasFinalizadas = apostaService.obterApostasFinalizadasPorUsuario(user, idRodada);
+
+		return new ResponseEntity<>(apostaMapper.toDto(apostasFinalizadas), HttpStatus.OK);
+	}
+
 }

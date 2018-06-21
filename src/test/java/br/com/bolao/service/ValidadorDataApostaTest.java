@@ -28,7 +28,7 @@ public class ValidadorDataApostaTest {
 		
 		aposta.setPartida(partida);
 		
-		new ValidadorDataAposta(aposta).validar();;
+		new ValidadorDataAposta(aposta, partida).validar();;
 		
 	}
 	
@@ -49,7 +49,7 @@ public class ValidadorDataApostaTest {
 		
 		aposta.setPartida(partida);
 		
-		new ValidadorDataAposta(aposta).validar();;
+		new ValidadorDataAposta(aposta, partida).validar();;
 		
 	}
 
