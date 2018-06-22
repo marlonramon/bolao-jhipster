@@ -89,7 +89,7 @@ public class ApostaService {
 		aposta.setDataAposta(ZonedDateTime.now());
 		aposta.setPontuacao(0L);
 		
-		Partida partida = partidaRepository.findOne(aposta.getId());
+		Partida partida = partidaRepository.findOne(aposta.getPartida().getId());
 		
 		new ValidadorDataAposta(aposta, partida).validar();
 
