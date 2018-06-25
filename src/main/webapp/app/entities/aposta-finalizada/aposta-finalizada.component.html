@@ -59,7 +59,9 @@
                                                     <img class="img-teams" [src]="loadBandeira(aposta.partida.clubeVisitante.bandeira)" />
                                                 </td>
                                                 <td class="td-apostas nome-clube">{{aposta.partida.clubeVisitante.nome}}</td>
-                                                <td class="td-apostas pontuacao">{{aposta.pontuacao}}</td>
+                                                <td class="td-apostas pontuacao" >
+                                                        <a [matTooltip]="montarMensagemResultado(aposta)" [matTooltipPosition]="'above'" [routerLink]="['../../apostas-finalizadas-partida/', aposta.partida.id ]">{{aposta.pontuacao}}</a>
+                                                    </td>
 
 
                                             </tr>

@@ -104,7 +104,7 @@ public class ApostaResource {
 	@GetMapping("/user/{login}/rodada/{idRodada}/apostas")
 	@Timed
 	@Secured(AuthoritiesConstants.USER)
-	public ResponseEntity<List<ApostaDTO>> getApostasFromRodada(@PathVariable String login,
+	public ResponseEntity<List<ApostaDTO>> getApostasFinalizadasFromRodadaByLogin(@PathVariable String login,
 			@PathVariable Long idRodada) {
 
 		log.debug("REST request to get a page partidas finalizadas");
@@ -115,5 +115,21 @@ public class ApostaResource {
 
 		return new ResponseEntity<>(apostaMapper.toDto(apostasFinalizadas), HttpStatus.OK);
 	}
+	
+	
+	@GetMapping("/partida/{idPartida}/apostas-finalizadas")
+	@Timed
+	@Secured(AuthoritiesConstants.USER)
+	public ResponseEntity<List<ApostaDTO>> getApostasFinalizadasFromPartida(@PathVariable Long idPartida) {
+
+		log.debug("REST request to get a page partidas finalizadas");
+
+		List<Aposta> apostasFinalizadas = apostaService.obterApostasFinalizadasPorPartida(idPartida);
+
+		return new ResponseEntity<>(apostaMapper.toDto(apostasFinalizadas), HttpStatus.OK);
+	}
+
+	
+	
 
 }

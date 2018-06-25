@@ -19,6 +19,8 @@ public class ApostaDTO implements Serializable {
     private PlacarDTO placar;
     
     private Long pontuacao;
+    
+    private String userFirstName;
 
     public Long getId() {
         return id;
@@ -27,6 +29,14 @@ public class ApostaDTO implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+    
+    public String getUserFirstName() {
+		return userFirstName;
+	}
+    
+    public void setUserFirstName(String userFirstName) {
+		this.userFirstName = userFirstName;
+	}
 
     public ZonedDateTime getDataAposta() {
         return dataAposta;

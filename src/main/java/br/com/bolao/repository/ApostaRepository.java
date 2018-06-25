@@ -26,6 +26,9 @@ public interface ApostaRepository extends JpaRepository<Aposta, Long> {
 	
 	Set<Aposta> findByPartida(Partida partida);
 	
+	@Query("select aposta from Aposta aposta join fetch aposta.partida partida where partida = :partida order by aposta.pontuacao desc")
+	List<Aposta> findByPartidaFetch(@Param("partida") Partida partida);
+	
 	Set<Aposta> findByUser(User user);
 	
 	

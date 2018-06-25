@@ -133,12 +133,29 @@ export class ApostaComponent implements OnInit, OnDestroy {
             data => {
                 this.jhiAlertService.success("Aposta salvas com sucesso.");       
                 this.isSaving = false;        
-                this.loadApostas(this.rodadas[0]);       
+                this.loadApostas(this.definirRodadaAtual());       
 
             },
             (res: HttpErrorResponse) => this.onError(res.error)
         );
         
+    }
+
+    montarMensagemResultado(aposta) {
+
+        const mandante = aposta.partida.clubeMandante.nome;
+        const visitante = aposta.partida.clubeVisitante.nome;
+
+        const placarMandante = aposta.partida.placar ? aposta.partida.placar.placarMandante : undefined;
+        const placarVisitante = aposta.partida.placar ? aposta.partida.placar.placarVisitante : undefined;
+
+        let mensagemResultado = "Não definido";
+
+        if (placarMandante != null && placarVisitante != null ) {
+            mensagemResultado = mandante + "  " + placarMandante + " x " + placarVisitante + "  "  + visitante ;
+        }
+
+        return mensagemResultado;
     }
 
     private isApostaValida(aposta) {

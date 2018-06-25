@@ -20,6 +20,7 @@ import br.com.bolao.repository.RodadaRepository;
 import br.com.bolao.web.rest.errors.ApostaDuplicadaException;
 import br.com.bolao.web.rest.errors.ApostaInvalidaException;
 import br.com.bolao.web.rest.errors.CustomParameterizedException;
+import br.com.bolao.web.rest.errors.PartidaAindaNaoIniciadaException;
 
 @Service
 @Transactional
@@ -132,6 +133,20 @@ public class ApostaService {
 		Rodada rodada = rodadaRepository.findOne(idRodada);
 		
 		return apostaRepository.findByDateAndUser(ZonedDateTime.now(), user, rodada);		
+	}
+	
+	
+	public List<Aposta> obterApostasFinalizadasPorPartida(Long idPartida) {
+		
+		Partida partida = partidaRepository.findOne(idPartida);
+		
+		ZonedDateTime dataPartida = partida.getDataPartida();
+		
+		if (dataPartida.isAfter(ZonedDateTime.now())) {
+			throw new PartidaAindaNaoIniciadaException();
+		}
+		
+		return apostaRepository.findByPartidaFetch(partida);		
 	}
 
 }

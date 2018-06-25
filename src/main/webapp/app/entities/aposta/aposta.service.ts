@@ -45,6 +45,11 @@ export class ApostaService {
             .map((res: HttpResponse<Aposta[]>) => this.convertArrayResponse(res));
     }
 
+    queryByPartidaFinalizada(idPartida: number): Observable<HttpResponse<Aposta[]>> {
+        return this.http.get<Aposta[]>(`/api/partida/${idPartida}/apostas-finalizadas`, {observe: 'response' })
+            .map((res: HttpResponse<Aposta[]>) => this.convertArrayResponse(res));
+    }
+
     queryByLoginAndRodada(login: String, idRodada: number): Observable<HttpResponse<Aposta[]>> {
         return this.http.get<Aposta[]>(`/api/user/${login}/rodada/${idRodada}/apostas`, {observe: 'response' })
             .map((res: HttpResponse<Aposta[]>) => this.convertArrayResponse(res));

@@ -196,7 +196,22 @@ export class ApostaFinalizadaComponent implements OnInit, OnDestroy {
 
     }
 
+    montarMensagemResultado(aposta) {
 
+        const mandante = aposta.partida.clubeMandante.nome;
+        const visitante = aposta.partida.clubeVisitante.nome;
+
+        const placarMandante = aposta.partida.placar ? aposta.partida.placar.placarMandante : undefined;
+        const placarVisitante = aposta.partida.placar ? aposta.partida.placar.placarVisitante : undefined;
+
+        let mensagemResultado = "Não definido";
+
+        if (placarMandante != null && placarVisitante != null ) {
+            mensagemResultado = mandante + "  " + placarMandante + " x " + placarVisitante + "  "  + visitante ;
+        }
+
+        return mensagemResultado;
+    }
 
     private onSuccessUser(data, headers) {
         this.user = data;

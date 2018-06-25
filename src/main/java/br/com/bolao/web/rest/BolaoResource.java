@@ -94,6 +94,7 @@ public class BolaoResource {
 
     @GetMapping("/bolao")
     @Timed    
+    @Secured(AuthoritiesConstants.ANONYMOUS)
     public ResponseEntity<List<BolaoDTO>> getAllBolaos(Pageable pageable) {
         log.debug("REST request to get a page of Bolaos");
         Page<Bolao> page = bolaoRepository.findAll(pageable);

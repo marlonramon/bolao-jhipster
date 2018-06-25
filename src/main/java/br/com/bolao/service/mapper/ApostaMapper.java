@@ -9,7 +9,7 @@ import br.com.bolao.service.dto.ApostaDTO;
 @Mapper(componentModel = "spring", uses = {PartidaMapper.class, PlacarMapper.class})
 public interface ApostaMapper extends EntityMapper<ApostaDTO, Aposta> {
 
-    
+	@Mapping(source="user.firstName" , target="userFirstName")
     ApostaDTO toDto(Aposta aposta);
 
     @Mapping(target="user", ignore=true)
