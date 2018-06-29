@@ -17,6 +17,9 @@
     <include file="config/liquibase/changelog/20180512191347_added_entity_constraints_Partida.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180512191349_added_entity_constraints_Aposta.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/201805161941_loaddata_copa2018.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/201806282310_loaddata_oitavas_copa2019.xml" relativeToChangelogFile="false"/>
+    
+    
     
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>
