@@ -1,5 +1,14 @@
 /* after changing this file run 'yarn run webpack:build' */
+@import "~ng-pick-datetime/assets/style/picker.min.css";
 $fa-font-path: '~font-awesome/fonts';
+
+ngb-modal-backdrop.modal-backdrop {
+    z-index: 998;
+}
+
+ngb-modal-window.modal {
+    z-index: 999;
+}
 
 /***************************
 put Sass variables here:

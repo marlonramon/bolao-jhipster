@@ -14,6 +14,7 @@ import {
     partidaRoute,
     partidaPopupRoute,
 } from './';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 
 const ENTITY_STATES = [
     ...partidaRoute,
@@ -23,7 +24,9 @@ const ENTITY_STATES = [
 @NgModule({
     imports: [
         BolaoSharedModule,
-        RouterModule.forChild(ENTITY_STATES)
+        RouterModule.forChild(ENTITY_STATES),
+        OwlDateTimeModule,
+        OwlNativeDateTimeModule
     ],
     declarations: [
         PartidaComponent,
@@ -46,4 +49,4 @@ const ENTITY_STATES = [
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class BolaoPartidaModule {}
+export class BolaoPartidaModule { }
