@@ -4,7 +4,9 @@ import { Subscription } from 'rxjs/Subscription';
 import { JhiEventManager, JhiParseLinks, JhiAlertService } from 'ng-jhipster';
 
 import { Rodada } from './rodada.model';
+import { Campeonato } from '../campeonato/campeonato.model';
 import { RodadaService } from './rodada.service';
+import { CampeonatoService } from '../campeonato/campeonato.service';
 import { ITEMS_PER_PAGE, Principal } from '../../shared';
 
 @Component({
@@ -29,7 +31,8 @@ export class RodadaComponent implements OnInit, OnDestroy {
         private jhiAlertService: JhiAlertService,
         private eventManager: JhiEventManager,
         private parseLinks: JhiParseLinks,
-        private principal: Principal
+        private principal: Principal,
+        private campeonatoService: CampeonatoService
     ) {
         this.rodadas = [];
         this.itemsPerPage = ITEMS_PER_PAGE;
@@ -89,11 +92,20 @@ export class RodadaComponent implements OnInit, OnDestroy {
         return result;
     }
 
+    buscarCampeonato(rodada) {
+        this.campeonatoService.find(rodada.campeonatoId).subscribe((campeonatoResponse: HttpResponse<Campeonato>) => {
+            rodada.campeonato = campeonatoResponse.body;
+            this.rodadas.push(rodada);
+        });
+    }
+
     private onSuccess(data, headers) {
         this.links = this.parseLinks.parse(headers.get('link'));
         this.totalItems = headers.get('X-Total-Count');
         for (let i = 0; i < data.length; i++) {
-            this.rodadas.push(data[i]);
+            let rodada = data[i];            
+            this.buscarCampeonato(rodada);
+            
         }
     }
 

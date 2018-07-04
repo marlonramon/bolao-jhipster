@@ -45,6 +45,7 @@ export class ApostaFinalizadaPartidaComponent implements OnInit, OnDestroy {
     idPartida: number;
 
 
+
     constructor(
         private apostaService: ApostaService,
         private jhiAlertService: JhiAlertService,

@@ -70,6 +70,9 @@ export class RodadaService {
         const copy: Rodada = Object.assign({}, rodada);
         copy.inicioRodada = this.dateUtils
             .convertDateTimeFromServer(rodada.inicioRodada);
+
+        copy.fimRodada = this.dateUtils
+        .convertDateTimeFromServer(rodada.fimRodada);
         return copy;
     }
 
@@ -80,6 +83,7 @@ export class RodadaService {
         const copy: Rodada = Object.assign({}, rodada);
 
         copy.inicioRodada = this.dateUtils.toDate(rodada.inicioRodada);
+        copy.fimRodada = this.dateUtils.toDate(rodada.fimRodada);
         return copy;
     }
 }

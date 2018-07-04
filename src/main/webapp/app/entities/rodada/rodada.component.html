@@ -4,7 +4,7 @@
 
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header card-header-warning">
+                <div class="card-header card-header-primary">
                     <h4 class="card-title">Rodadas</h4>
                 </div>
                 <div class="card-body">
@@ -13,7 +13,7 @@
                     <button class="btn btn-primary float-right jh-create-entity create-rodada" [routerLink]="['/', { outlets: { popup: ['rodada-new'] } }]">
                         <span class="fa fa-plus"></span>
                         <span>
-                            Create new Rodada
+                            Nova Rodada
                         </span>
                     </button>
 
@@ -33,6 +33,12 @@
                                         <span>Inicio Rodada</span>
                                         <span class="fa fa-sort"></span>
                                     </th>
+
+                                    <th jhiSortBy="inicioRodada">
+                                        <span>Fim Rodada</span>
+                                        <span class="fa fa-sort"></span>
+                                    </th>
+
                                     <th jhiSortBy="campeonatoId">
                                         <span>Campeonato</span>
                                         <span class="fa fa-sort"></span>
@@ -46,29 +52,35 @@
                                         <a [routerLink]="['../rodada', rodada.id ]">{{rodada.id}}</a>
                                     </td>
                                     <td>{{rodada.numero}}</td>
-                                    <td>{{rodada.inicioRodada | date:'medium'}}</td>
+                                    <td>{{rodada.inicioRodada | date:'dd/MM/yyyy HH:mm'}}</td>
+                                    <td>{{rodada.fimRodada | date:'dd/MM/yyyy HH:mm'}}</td>
                                     <td>
-                                        <div *ngIf="rodada.campeonatoId">
-                                            <a [routerLink]="['../campeonato', rodada.campeonatoId  ]">{{rodada.campeonatoId}}</a>
+                                        <div *ngIf="rodada.campeonato">
+                                            <a [routerLink]="['../campeonato', rodada.campeonato.id  ]">{{rodada.campeonato.descricao}}</a>
                                         </div>
                                     </td>
                                     <td class="text-right">
                                         <div class="btn-group flex-btn-group-container">
-                                            <button type="submit" [routerLink]="['../rodada', rodada.id ]" class="btn btn-info btn-sm">
-                                                <span class="fa fa-eye"></span>
-                                                <span class="d-none d-md-inline">View</span>
+
+                                            <button mat-raised-button type="button" [routerLink]="['../rodada', rodada.id ]" matTooltip="Visualizar Rodada" [matTooltipPosition]="'above'"
+                                                class="btn btn-primary btn-link btn-sm btn-just-icon">
+                                                <i class="material-icons">visibility</i>
                                             </button>
-                                            <button type="submit" [routerLink]="['/', { outlets: { popup: 'rodada/'+ rodada.id + '/edit'} }]" replaceUrl="true" queryParamsHandling="merge"
-                                                class="btn btn-primary btn-sm">
-                                                <span class="fa fa-pencil"></span>
-                                                <span class="d-none d-md-inline">Edit</span>
+
+                                            <button mat-raised-button type="button" [routerLink]="['/', { outlets: { popup: 'rodada/'+ rodada.id + '/edit'} }]" replaceUrl="true"
+                                                queryParamsHandling="merge" matTooltip="Editar Rodada" [matTooltipPosition]="'above'"
+                                                class="btn btn-warning btn-link btn-sm btn-just-icon">
+                                                <i class="material-icons">edit</i>
                                             </button>
-                                            <button type="submit" [routerLink]="['/', { outlets: { popup: 'rodada/'+ rodada.id + '/delete'} }]" replaceUrl="true" queryParamsHandling="merge"
-                                                class="btn btn-danger btn-sm">
-                                                <span class="fa fa-remove"></span>
-                                                <span class="d-none d-md-inline">Delete</span>
+
+                                            <button mat-raised-button type="button" [routerLink]="['/', { outlets: { popup: 'rodada/'+ rodada.id + '/delete'} }]" replaceUrl="true"
+                                                queryParamsHandling="merge" matTooltip="Excluir Rodada" [matTooltipPosition]="'above'"
+                                                class="btn btn-danger btn-link btn-sm btn-just-icon">
+                                                <i class="material-icons">delete</i>
                                             </button>
+
                                         </div>
+
                                     </td>
                                 </tr>
                             </tbody>

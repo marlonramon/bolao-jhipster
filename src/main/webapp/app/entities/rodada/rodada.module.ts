@@ -1,5 +1,6 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 
 import { BolaoSharedModule } from '../../shared';
 import {
@@ -23,7 +24,9 @@ const ENTITY_STATES = [
 @NgModule({
     imports: [
         BolaoSharedModule,
-        RouterModule.forChild(ENTITY_STATES)
+        RouterModule.forChild(ENTITY_STATES),
+        OwlDateTimeModule, 
+        OwlNativeDateTimeModule,
     ],
     declarations: [
         RodadaComponent,
