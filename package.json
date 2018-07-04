@@ -36,6 +36,7 @@
     "ng-block-ui": "^1.0.4",
     "ng-chartist": "^2.0.0-beta.1",
     "ng-jhipster": "0.4.0",
+    "ng-pick-datetime": "5.2.6",
     "ngx-cookie": "2.0.1",
     "ngx-infinite-scroll": "0.5.1",
     "ngx-webstorage": "2.0.1",

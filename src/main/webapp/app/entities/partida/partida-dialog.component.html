@@ -10,8 +10,10 @@
         <div class="form-group">
             <label class="form-control-label" for="field_dataPartida">Data Partida</label>
             <div class="d-flex">
-                <input id="field_dataPartida" type="datetime-local" class="form-control" name="dataPartida" [(ngModel)]="partida.dataPartida"
-                required/>
+                <input id="field_dataPartida" class="form-control" name="dataPartida" [(ngModel)]="partida.dataPartida"
+                required [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1"/>
+                <!-- <input [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" placeholder="Date Time"> -->
+                <owl-date-time #dt1></owl-date-time>
             </div>
             <div [hidden]="!(editForm.controls.dataPartida?.dirty && editForm.controls.dataPartida?.invalid)">
                 <small class="form-text text-danger"
