@@ -3,7 +3,6 @@ import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs/Subscription';
 import { JhiEventManager, JhiParseLinks, JhiAlertService, JhiDateUtils } from 'ng-jhipster';
 
-
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/forkJoin';
 import { Aposta } from './aposta.model';
@@ -21,8 +20,6 @@ import { ITEMS_PER_PAGE, Principal } from '../../shared';
 })
 export class ApostaComponent implements OnInit, OnDestroy {
 
-    
-
     rodadas: Rodada[];
     apostas: Aposta[];
     isSaving: boolean;
@@ -39,12 +36,10 @@ export class ApostaComponent implements OnInit, OnDestroy {
     totalItems: number;
     rodada_ativa: Rodada;
   
-
     constructor(
         private apostaService: ApostaService,
         private jhiAlertService: JhiAlertService,
-        private eventManager: JhiEventManager,
-        private parseLinks: JhiParseLinks,
+        private eventManager: JhiEventManager,        
         private principal: Principal,
         private bolaoService: BolaoService,
         private rodadaService: RodadaService,
@@ -65,10 +60,9 @@ export class ApostaComponent implements OnInit, OnDestroy {
 
     loadAll() {
         this.bolaoService.queryByLoggedUser().subscribe(
-            (res: HttpResponse<Aposta[]>) => {this.onSuccessBolao(res.body, res.headers)},
-            (res: HttpErrorResponse) => this.onError(res.message),
-
-        );
+            (res: HttpResponse<Aposta[]>) => {this.onSuccessBolao(res.body, res.headers);},
+            (res: HttpErrorResponse) => this.onError(res.message), 
+       );
         
     }
 
@@ -102,8 +96,8 @@ export class ApostaComponent implements OnInit, OnDestroy {
     }
 
     isPartidaIniciada(partida) {
-        let dataPartida = this.dateUtils.toDate(partida.dataPartida);
-        let currentDate = new Date();
+        const dataPartida = this.dateUtils.toDate(partida.dataPartida);
+        const currentDate = new Date();
         return dataPartida.setMinutes(dataPartida.getMinutes() - 10)  < currentDate.getTime();
     }
 
@@ -120,18 +114,18 @@ export class ApostaComponent implements OnInit, OnDestroy {
 
     salvarApostas() {
         
-        const calls = []
+        const calls = [];
         this.isSaving = true;
-        this.apostas.forEach(aposta => {
-            let isPartidaIniciada = this.isPartidaIniciada(aposta.partida);           
-            if (!isPartidaIniciada && this.isApostaValida(aposta)) {                
-                calls.push(this.save(aposta))
-            }    
+        this.apostas.forEach((aposta) => {
+            const isPartidaIniciada = this.isPartidaIniciada(aposta.partida);           
+            if (!isPartidaIniciada && this.isApostaValida(aposta)) {
+                calls.push(this.save(aposta));
+            }
         });
 
         Observable.forkJoin(calls).subscribe( 
-            data => {
-                this.jhiAlertService.success("Aposta salvas com sucesso.");       
+            (data) => {
+                this.jhiAlertService.success('Aposta salvas com sucesso.');       
                 this.isSaving = false;        
                 this.loadApostas(this.definirRodadaAtual());       
 
@@ -149,10 +143,10 @@ export class ApostaComponent implements OnInit, OnDestroy {
         const placarMandante = aposta.partida.placar ? aposta.partida.placar.placarMandante : undefined;
         const placarVisitante = aposta.partida.placar ? aposta.partida.placar.placarVisitante : undefined;
 
-        let mensagemResultado = "Não definido";
+        let mensagemResultado = 'Não definido';
 
         if (placarMandante != null && placarVisitante != null ) {
-            mensagemResultado = mandante + "  " + placarMandante + " x " + placarVisitante + "  "  + visitante ;
+            mensagemResultado = mandante + '  ' + placarMandante + ' x ' + placarVisitante + '  '  + visitante ;
         }
 
         return mensagemResultado;
@@ -161,7 +155,7 @@ export class ApostaComponent implements OnInit, OnDestroy {
     private isApostaValida(aposta) {
 
         if (aposta && aposta.placar) {
-            let placar = aposta.placar;
+            const placar = aposta.placar;
             return placar.placarMandante != null && placar.placarVisitante != null;
         }  
 
@@ -175,27 +169,14 @@ export class ApostaComponent implements OnInit, OnDestroy {
         }
     }
 
-    private subscribeToSaveResponse(result: Observable<HttpResponse<Aposta>>) {
-        result.subscribe((res: HttpResponse<Aposta>) =>(res: HttpErrorResponse) => this.onSaveError());
-    }
-
-    private onSaveSuccess(result: Aposta) {
-        this.eventManager.broadcast({ name: 'apostaListModification', content: 'OK'});
-        
-    }
-
     loadApostas(rodada) {
         this.rodada_ativa = rodada;
         this.apostaService.queryByLoggedUserAndRodada(rodada.id).subscribe(
-            (res: HttpResponse<Aposta[]>) => this.onSuccess(res.body, res.headers),
+            (res: HttpResponse<Aposta[]>) => this.onSuccess(res.body),
             (res: HttpErrorResponse) => this.onError(res.message)
         );
     }
-    
-    private onSaveError() {
-        this.isSaving = false;
-    }
-
+ 
     sort() {
         const result = [this.predicate + ',' + (this.reverse ? 'asc' : 'desc')];
         if (this.predicate !== 'id') {
@@ -204,12 +185,11 @@ export class ApostaComponent implements OnInit, OnDestroy {
         return result;
     }
 
-    private onSuccess(data, headers) {
+    private onSuccess(data) {
         this.apostas = [];
         for (let i = 0; i < data.length; i++) {
             this.apostas.push(data[i]);
         }
-        
     }
 
     private onSuccessBolao(data, headers) {
@@ -219,14 +199,13 @@ export class ApostaComponent implements OnInit, OnDestroy {
         }
     }
 
-    private definirRodadaAtual() : Rodada {
-        let rodadarodada
-
+    private definirRodadaAtual(): Rodada {
+        
         for (let index = 0; index <  this.rodadas.length; index++) {
-            let rodada = this.rodadas[index];
+            const rodada = this.rodadas[index];
             
-            let dataRodada = this.dateUtils.toDate(rodada.fimRodada)
-            let dataAtual = new Date();
+            const dataRodada = this.dateUtils.toDate(rodada.fimRodada);
+            const dataAtual = new Date();
             
             if (dataAtual.getTime() < dataRodada.getTime()) {
                 return rodada;                
@@ -241,15 +220,13 @@ export class ApostaComponent implements OnInit, OnDestroy {
 
     private onSuccessRodada(data, headers) {
         for (let i = 0; i < data.length; i++) {
-            let rodada = data[i];
+            const rodada = data[i];
             this.rodadas.push(rodada);            
         }
 
         this.rodada_ativa =  this.definirRodadaAtual();
         
         this.loadApostas(this.rodada_ativa);
-        
-
     }
 
     private onError(error) {

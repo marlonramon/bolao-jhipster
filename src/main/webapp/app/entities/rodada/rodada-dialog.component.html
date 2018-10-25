@@ -20,9 +20,9 @@
         <div class="form-group">
             <label class="form-control-label" for="field_inicioRodada">Inicio Rodada</label>
             <div class="d-flex">
-                <input id="field_inicioRodada" type="datetime-local" 
-                          class="form-control" name="inicioRodada" [(ngModel)]="rodada.inicioRodada"
-                required/>
+                <input id="field_inicioRodada" class="form-control" name="inicioRodada" [(ngModel)]="rodada.inicioRodada"
+                    required [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1"/>
+                <owl-date-time #dt1></owl-date-time>
             </div>
             <div [hidden]="!(editForm.controls.inicioRodada?.dirty && editForm.controls.inicioRodada?.invalid)">
                 <small class="form-text text-danger"
@@ -39,7 +39,9 @@
         <div class="form-group">
             <label class="form-control-label" for="field_fimRodada">Fim Rodada</label>
             <div class="d-flex">
-                <input id="field_fimRodada" type="datetime-local" class="form-control" name="fimRodada" [(ngModel)]="rodada.fimRodada" required/>
+                <input id="field_fimRodada" class="form-control" name="fimRodada" [(ngModel)]="rodada.fimRodada" 
+                    required [owlDateTime]="dt2" [owlDateTimeTrigger]="dt2"/>
+                <owl-date-time #dt2></owl-date-time>
             </div>
             <div [hidden]="!(editForm.controls.fimRodada?.dirty && editForm.controls.fimRodada?.invalid)">
                 <small class="form-text text-danger"

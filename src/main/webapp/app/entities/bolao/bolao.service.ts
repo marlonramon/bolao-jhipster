@@ -40,11 +40,9 @@ export class BolaoService {
 
     queryByLoggedUser(req?: any): Observable<HttpResponse<Bolao[]>> {
         const options = createRequestOption(req);
-        return this.http.get<Bolao[]>("api/user/me/bolao", { params: options, observe: 'response' })
+        return this.http.get<Bolao[]>('api/user/me/bolao', { params: options, observe: 'response' })
             .map((res: HttpResponse<Bolao[]>) => this.convertArrayResponse(res));
     }
-
-
 
     delete(id: number): Observable<HttpResponse<any>> {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response'});
@@ -68,7 +66,7 @@ export class BolaoService {
      * Convert a returned JSON object to Bolao.
      */
     private convertItemFromServer(bolao: Bolao): Bolao {
-        const copy: Bolao = Object.assign({}, bolao);          
+        const copy: Bolao = Object.assign({}, bolao);
         return copy;
     }
 

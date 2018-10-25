@@ -11,8 +11,6 @@ export class Partida implements BaseEntity {
         public placar: Placar = {
         },
         public rodadaId?: number,
-    ) {
-
-        
+    ) { 
     }
 }

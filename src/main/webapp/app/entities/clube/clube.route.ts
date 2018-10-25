@@ -23,7 +23,7 @@ export const clubeRoute: Routes = [
             pageTitle: 'Clubes'
         },
         canActivate: [UserRouteAccessService]
-    },   
+    },
     {
         path: 'clube-new',
         component: ClubePopupComponent,
@@ -31,8 +31,7 @@ export const clubeRoute: Routes = [
             authorities: ['ROLE_ADMIN'],
             pageTitle: 'Clubes'
         },
-        canActivate: [UserRouteAccessService],
-        
+        canActivate: [UserRouteAccessService],        
     },
     {
         path: 'clube/:id/edit',

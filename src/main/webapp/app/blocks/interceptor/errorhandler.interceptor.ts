@@ -10,7 +10,7 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         return next.handle(request).do((event: HttpEvent<any>) => {}, (err: any) => {
-            if (err instanceof HttpErrorResponse) {                
+            if (err instanceof HttpErrorResponse) {
                 if (!(err.status === 401 && (err.message === '' || (err.url && err.url.indexOf('/api/account') === 0)))) {
                     if (this.eventManager !== undefined) {
                         this.eventManager.broadcast({name: 'bolaoApp.httpError', content: err});

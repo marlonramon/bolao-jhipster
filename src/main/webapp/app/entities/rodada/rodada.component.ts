@@ -103,9 +103,8 @@ export class RodadaComponent implements OnInit, OnDestroy {
         this.links = this.parseLinks.parse(headers.get('link'));
         this.totalItems = headers.get('X-Total-Count');
         for (let i = 0; i < data.length; i++) {
-            let rodada = data[i];            
+            const rodada = data[i];
             this.buscarCampeonato(rodada);
-            
         }
     }
 

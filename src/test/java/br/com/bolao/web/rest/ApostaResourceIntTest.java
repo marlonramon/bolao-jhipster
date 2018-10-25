@@ -1,18 +1,11 @@
 package br.com.bolao.web.rest;
 
 import static br.com.bolao.web.rest.TestUtil.createFormattingConversionService;
-import static br.com.bolao.web.rest.TestUtil.sameInstant;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasItem;
-import static org.hamcrest.Matchers.any;
 import static org.mockito.Mockito.when;
-
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.time.LocalDateTime;
@@ -34,7 +27,6 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
-import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -115,12 +107,7 @@ public class ApostaResourceIntTest {
             .setMessageConverters(jacksonMessageConverter).build();
     }
 
-    /**
-     * Create an entity for this test.
-     *
-     * This is a static method, as tests for other entities might also need it,
-     * if they test an entity which requires the current entity.
-     */
+   
     public static Aposta createEntity(EntityManager em) {
         Aposta aposta = new Aposta()
             .dataAposta(DEFAULT_DATA_APOSTA);
@@ -136,8 +123,7 @@ public class ApostaResourceIntTest {
     }
 
     @Test
-    @Transactional
-    @Ignore
+    @Transactional    
     public void createAposta() throws Exception {
         int databaseSizeBeforeCreate = apostaRepositoryMock.findAll().size();
 
@@ -168,7 +154,7 @@ public class ApostaResourceIntTest {
             .content(TestUtil.convertObjectToJsonBytes(apostaDTO)))
             .andExpect(status().isCreated());
 
-        // Validate the Aposta in the database
+
         List<Aposta> apostaList = apostaRepositoryMock.findAll();
         assertThat(apostaList).hasSize(databaseSizeBeforeCreate + 1);
         Aposta testAposta = apostaList.get(apostaList.size() - 1);

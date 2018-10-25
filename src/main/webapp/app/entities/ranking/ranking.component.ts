@@ -1,15 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs/Subscription';
-import { JhiEventManager, JhiParseLinks, JhiAlertService } from 'ng-jhipster';
+import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 
-import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/forkJoin';
 import { Ranking } from './ranking.model';
-import { Rodada } from '../rodada/rodada.model';
 import { Bolao } from '../bolao/bolao.model';
 import { RankingService } from './ranking.service';
-import { RodadaService } from '../rodada/rodada.service';
 import { BolaoService } from '../bolao/bolao.service';
 import { ITEMS_PER_PAGE, Principal } from '../../shared';
 
@@ -38,10 +35,9 @@ export class RankingComponent implements OnInit, OnDestroy {
         private rankingService: RankingService,
         private jhiAlertService: JhiAlertService,
         private eventManager: JhiEventManager,
-        private parseLinks: JhiParseLinks,
         private principal: Principal,
         private bolaoService: BolaoService,
-        private rodadaService: RodadaService
+        
     ) {
         this.boloes = [];
         this.ranking = [];
@@ -55,13 +51,11 @@ export class RankingComponent implements OnInit, OnDestroy {
     }
 
     loadAll() {
-        
         this.bolaoService.queryByLoggedUser().subscribe(
-            (res: HttpResponse<Bolao[]>) => {this.onSuccessBolao(res.body, res.headers)},
+            (res: HttpResponse<Bolao[]>) => {this.onSuccessBolao(res.body, res.headers);},
             (res: HttpErrorResponse) => this.onError(res.message),
 
         );
-        
     }
 
     reset() {
@@ -86,12 +80,10 @@ export class RankingComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
         this.eventManager.destroy(this.eventSubscriber);
     }
-
     
     registerChangeInApostas() {
         this.eventSubscriber = this.eventManager.subscribe('apostaListModification', (response) => this.reset());
     }
-   
 
     private onSuccessBolao(data, headers) {
         for (let i = 0; i < data.length; i++) {

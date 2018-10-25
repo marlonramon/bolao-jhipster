@@ -13,4 +13,3 @@ export const apostaFinalizadaPartidaRoute: Routes = [
         canActivate: [UserRouteAccessService]
     }, 
 ];
-

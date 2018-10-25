@@ -46,8 +46,7 @@ import {
         BolaoRegulamentoModule,
         BolaoAdminModule,
         BolaoAccountModule,
-        BolaoEntityModule ,   
-       
+        BolaoEntityModule,
         // jhipster-needle-angular-add-module JHipster will add new module here
     ],
     declarations: [

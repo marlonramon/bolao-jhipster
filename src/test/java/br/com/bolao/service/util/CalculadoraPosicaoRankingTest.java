@@ -42,10 +42,6 @@ public class CalculadoraPosicaoRankingTest {
 		
 		new AtualizadorPosicaoRanking(rankings).atualizarPosicoes();
 		
-		for (RankingDTO rankingDTO : rankings) {
-			System.out.println(rankingDTO.getPosicao() + " - " + rankingDTO.getPontuacaoAtual());
-		}
-		
 		assertArrayEquals(rankings.toArray(), rankingOrdenado.toArray());
 		
 		

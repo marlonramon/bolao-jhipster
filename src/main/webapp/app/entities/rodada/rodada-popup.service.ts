@@ -33,6 +33,8 @@ export class RodadaPopupService {
                         const rodada: Rodada = rodadaResponse.body;
                         rodada.inicioRodada = this.datePipe
                             .transform(rodada.inicioRodada, 'yyyy-MM-ddTHH:mm:ss');
+                        rodada.fimRodada = this.datePipe
+                            .transform(rodada.fimRodada, 'yyyy-MM-ddTHH:mm:ss');
                         this.ngbModalRef = this.rodadaModalRef(component, rodada);
                         resolve(this.ngbModalRef);
                     });

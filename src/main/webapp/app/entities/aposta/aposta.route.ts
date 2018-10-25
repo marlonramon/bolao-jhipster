@@ -11,6 +11,5 @@ export const apostaRoute: Routes = [
             pageTitle: 'Apostas'
         },
         canActivate: [UserRouteAccessService]
-    }, 
+    },
 ];
-

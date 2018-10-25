@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterViewInit, Renderer, ElementRef } from '@angular/core';
 
 import { PasswordResetInitService } from './password-reset-init.service';
-import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import { EMAIL_NOT_FOUND_TYPE } from '../../../shared';
 
 @Component({

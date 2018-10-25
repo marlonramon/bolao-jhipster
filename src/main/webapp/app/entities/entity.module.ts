@@ -12,8 +12,6 @@ import { BolaoApostaFinalizadaPartidaModule } from './aposta-finalizada-partida/
 
 /* jhipster-needle-add-entity-module-import - JHipster will add entity modules imports here */
 
-
-
 @NgModule({
     imports: [
         BolaoBolaoModule,
@@ -21,7 +19,7 @@ import { BolaoApostaFinalizadaPartidaModule } from './aposta-finalizada-partida/
         BolaoRodadaModule,
         BolaoPartidaModule,
         BolaoClubeModule,
-        BolaoApostaModule, 
+        BolaoApostaModule,
         BolaoRankingModule,
         BolaoApostaFinalizadaModule,
         BolaoApostaFinalizadaPartidaModule      

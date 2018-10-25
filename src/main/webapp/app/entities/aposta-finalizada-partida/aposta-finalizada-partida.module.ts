@@ -6,7 +6,6 @@ import {
     ApostaService,
     ApostaFinalizadaPartidaComponent,
     apostaFinalizadaPartidaRoute,
-    
 } from './';
 
 const ENTITY_STATES = [

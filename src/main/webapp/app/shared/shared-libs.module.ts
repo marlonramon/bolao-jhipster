@@ -27,7 +27,7 @@ import {
         MatButtonModule,
         MatRippleModule,
         MatInputModule,
-        MatTooltipModule,  
+        MatTooltipModule,
         BrowserAnimationsModule,
     ],
     exports: [
@@ -40,7 +40,7 @@ import {
         MatButtonModule,
         MatRippleModule,
         MatInputModule,
-        MatTooltipModule,  
+        MatTooltipModule,
         BrowserAnimationsModule,
     ]
 })

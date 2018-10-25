@@ -33,8 +33,9 @@ export class RodadaDialogComponent implements OnInit {
 
     ngOnInit() {
         this.isSaving = false;
-        this.campeonatoService.query()
-            .subscribe((res: HttpResponse<Campeonato[]>) => { this.campeonatoes = res.body; }, (res: HttpErrorResponse) => this.onError(res.message));        
+        this.campeonatoService.query().subscribe((res: HttpResponse<Campeonato[]>) => {
+            this.campeonatoes = res.body; },
+            (res: HttpErrorResponse) => this.onError(res.message));
     }
 
     clear() {

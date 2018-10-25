@@ -34,7 +34,6 @@ export class NavbarComponent implements OnInit {
         private profileService: ProfileService,
         private router: Router,
         private eventManager: JhiEventManager,
-       
     ) {
         this.version = VERSION ? 'v' + VERSION : '';
         this.isNavbarCollapsed = true;
@@ -67,7 +66,6 @@ export class NavbarComponent implements OnInit {
     login() {
         this.modalRef = this.loginModalService.open();
     }
-
     
     logout() {
         this.collapseNavbar();

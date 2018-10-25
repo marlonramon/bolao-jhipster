@@ -2,11 +2,8 @@ import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs/Subscription';
-import { JhiEventManager, JhiParseLinks, JhiAlertService, JhiDateUtils } from 'ng-jhipster';
-import * as Chartist from 'chartist';
+import { JhiAlertService } from 'ng-jhipster';
 
-
-import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/forkJoin';
 import { Aposta } from '../aposta/aposta.model';
 import { Partida } from '../partida/partida.model';
@@ -14,9 +11,7 @@ import { Bolao } from '../bolao/bolao.model';
 import { User } from '../../shared';
 import { ApostaService } from '../aposta/aposta.service';
 import { PartidaService } from '../partida/partida.service';
-import { UserService } from '../../shared';
-import { BolaoService } from '../bolao/bolao.service';
-import { ITEMS_PER_PAGE, Principal } from '../../shared';
+import { ITEMS_PER_PAGE } from '../../shared';
 
 @Component({
     selector: 'jhi-aposta-finalizada-partida',
@@ -49,14 +44,8 @@ export class ApostaFinalizadaPartidaComponent implements OnInit, OnDestroy {
     constructor(
         private apostaService: ApostaService,
         private jhiAlertService: JhiAlertService,
-        private eventManager: JhiEventManager,
-        private parseLinks: JhiParseLinks,
-        private principal: Principal,
-        private bolaoService: BolaoService,
         private partidaService: PartidaService,
-        private userService: UserService,
         private route: ActivatedRoute,
-        private dateUtils: JhiDateUtils
 
     ) {
         this.apostas = [];
@@ -134,18 +123,16 @@ export class ApostaFinalizadaPartidaComponent implements OnInit, OnDestroy {
         const placarMandante = partida.placar ? partida.placar.placarMandante : undefined;
         const placarVisitante = partida.placar ? partida.placar.placarVisitante : undefined;
 
-        let mensagemResultado = mandante + " x " + visitante ;
+        let mensagemResultado = mandante + ' x ' + visitante ;
 
         if (placarMandante != null && placarVisitante != null ) {
-            mensagemResultado = mandante + "  " + placarMandante + " x " + placarVisitante + "  "  + visitante ;
+            mensagemResultado = mandante + '  ' + placarMandante + ' x ' + placarVisitante + '  '  + visitante;
         }
 
         return mensagemResultado;
     }
 
     private onError(error) {
-        console.log('erro ' + error);
         this.jhiAlertService.error(error.message, null, null);
-
     }
 }

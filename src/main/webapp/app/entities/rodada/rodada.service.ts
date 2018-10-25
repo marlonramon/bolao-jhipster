@@ -68,11 +68,11 @@ export class RodadaService {
      */
     private convertItemFromServer(rodada: Rodada): Rodada {
         const copy: Rodada = Object.assign({}, rodada);
-        copy.inicioRodada = this.dateUtils
-            .convertDateTimeFromServer(rodada.inicioRodada);
 
-        copy.fimRodada = this.dateUtils
-        .convertDateTimeFromServer(rodada.fimRodada);
+        copy.inicioRodada = this.dateUtils.convertDateTimeFromServer(rodada.inicioRodada);
+
+        copy.fimRodada = this.dateUtils.convertDateTimeFromServer(rodada.fimRodada);
+
         return copy;
     }
 
@@ -81,7 +81,8 @@ export class RodadaService {
      */
     private convert(rodada: Rodada): Rodada {
         const copy: Rodada = Object.assign({}, rodada);
-
+        console.log('inicio: ' + rodada.inicioRodada);
+        console.log('fim: ' + rodada.fimRodada);
         copy.inicioRodada = this.dateUtils.toDate(rodada.inicioRodada);
         copy.fimRodada = this.dateUtils.toDate(rodada.fimRodada);
         return copy;

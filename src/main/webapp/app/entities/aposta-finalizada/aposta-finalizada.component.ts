@@ -2,11 +2,9 @@ import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs/Subscription';
-import { JhiEventManager, JhiParseLinks, JhiAlertService, JhiDateUtils } from 'ng-jhipster';
+import { JhiAlertService, JhiDateUtils } from 'ng-jhipster';
 import * as Chartist from 'chartist';
 
-
-import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/forkJoin';
 import { Aposta } from '../aposta/aposta.model';
 import { Rodada } from '../rodada/rodada.model';
@@ -16,13 +14,12 @@ import { ApostaService } from '../aposta/aposta.service';
 import { RodadaService } from '../rodada/rodada.service';
 import { UserService } from '../../shared';
 import { BolaoService } from '../bolao/bolao.service';
-import { ITEMS_PER_PAGE, Principal } from '../../shared';
+import { ITEMS_PER_PAGE } from '../../shared';
 
 @Component({
     selector: 'jhi-aposta-finalizada',
     templateUrl: './aposta-finalizada.component.html',
     styleUrls: ['aposta-finalizada.scss']
-    
 })
 export class ApostaFinalizadaComponent implements OnInit, OnDestroy {
 
@@ -43,15 +40,11 @@ export class ApostaFinalizadaComponent implements OnInit, OnDestroy {
     rodada_ativa: Rodada;
     routeSub: any;
     user: User;
-    login : string;
-  
-
+    login: string;
+ 
     constructor(
         private apostaService: ApostaService,
         private jhiAlertService: JhiAlertService,
-        private eventManager: JhiEventManager,
-        private parseLinks: JhiParseLinks,
-        private principal: Principal,
         private bolaoService: BolaoService,
         private rodadaService: RodadaService,
         private userService: UserService,
@@ -152,7 +145,7 @@ export class ApostaFinalizadaComponent implements OnInit, OnDestroy {
         });
   
         seq = 0;
-    };
+    }
 
     loadApostas(rodada) {
         this.rodada_ativa = rodada;
@@ -167,7 +160,7 @@ export class ApostaFinalizadaComponent implements OnInit, OnDestroy {
         const partidas = [];
         const pontuacao = [];
         for (let i = 0; i < data.length; i++) {
-            let aposta = data[i]
+            const aposta = data[i]
             this.apostas.push(aposta);
             partidas.push(i+1);
             pontuacao.push(aposta.pontuacao);
@@ -189,7 +182,7 @@ export class ApostaFinalizadaComponent implements OnInit, OnDestroy {
             chartPadding: { top: 0, right: 0, bottom: 0, left: 0}
         }
   
-        var completedTasksChart = new Chartist.Line('#completedTasksChart', dataCompletedTasksChart, optionsCompletedTasksChart);
+        const completedTasksChart = new Chartist.Line('#completedTasksChart', dataCompletedTasksChart, optionsCompletedTasksChart);
   
         // start animation for the Completed Tasks Chart - Line Chart
         this.startAnimationForLineChart(completedTasksChart);
@@ -204,10 +197,10 @@ export class ApostaFinalizadaComponent implements OnInit, OnDestroy {
         const placarMandante = aposta.partida.placar ? aposta.partida.placar.placarMandante : undefined;
         const placarVisitante = aposta.partida.placar ? aposta.partida.placar.placarVisitante : undefined;
 
-        let mensagemResultado = "Não definido";
+        let mensagemResultado = 'Não definido';
 
         if (placarMandante != null && placarVisitante != null ) {
-            mensagemResultado = mandante + "  " + placarMandante + " x " + placarVisitante + "  "  + visitante ;
+            mensagemResultado = mandante + '  ' + placarMandante + ' x ' + placarVisitante + '  '  + visitante;
         }
 
         return mensagemResultado;
@@ -230,13 +223,12 @@ export class ApostaFinalizadaComponent implements OnInit, OnDestroy {
     }
 
     private definirRodadaAtual() : Rodada {
-        let rodadarodada
-
+        
         for (let index = 0; index <  this.rodadas.length; index++) {
-            let rodada = this.rodadas[index];
+            const rodada = this.rodadas[index];
             
-            let dataRodada = this.dateUtils.toDate(rodada.fimRodada)
-            let dataAtual = new Date();
+            const dataRodada = this.dateUtils.toDate(rodada.fimRodada)
+            const dataAtual = new Date();
             
             if (dataAtual.getTime() < dataRodada.getTime()) {
                 return rodada;                
@@ -251,15 +243,13 @@ export class ApostaFinalizadaComponent implements OnInit, OnDestroy {
 
     private onSuccessRodada(data, headers) {
         for (let i = 0; i < data.length; i++) {
-            let rodada = data[i];
+            const rodada = data[i];
             this.rodadas.push(rodada);            
         }
 
         this.rodada_ativa =  this.definirRodadaAtual();
         
         this.loadApostas(this.rodada_ativa);
-        
-
     }
 
     private onError(error) {

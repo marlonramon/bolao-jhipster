@@ -65,7 +65,7 @@ export class PartidaDialogComponent implements OnInit {
 
         }
 
-        return firstId && secondId && firstId.id == secondId.id;
+        return firstId && secondId && firstId.id === secondId.id;
 
     }
 

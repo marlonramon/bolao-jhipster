@@ -16,6 +16,8 @@ import {
     rodadaPopupRoute,
 } from './';
 
+import { OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
+
 const ENTITY_STATES = [
     ...rodadaRoute,
     ...rodadaPopupRoute,
@@ -46,6 +48,7 @@ const ENTITY_STATES = [
     providers: [
         RodadaService,
         RodadaPopupService,
+        {provide: OWL_DATE_TIME_LOCALE, useValue: 'pt-br'},
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

@@ -67,13 +67,13 @@ export class PartidaService {
         copy.dataPartida = this.dateUtils
             .convertDateTimeFromServer(partida.dataPartida);
 
-        let placar : Placar = {
+        const placar: Placar = {
 
-        }
+        };
+
         if(!copy.placar) {
             copy.placar = placar;
         }    
-
 
         return copy;
     }

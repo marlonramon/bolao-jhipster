@@ -6,12 +6,10 @@ import {
     ApostaService,
     ApostaComponent,
     apostaRoute,
-    
 } from './';
 
 const ENTITY_STATES = [
     ...apostaRoute,
-    
 ];
 
 @NgModule({
